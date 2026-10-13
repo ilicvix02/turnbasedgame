@@ -1,427 +1,427 @@
 {
-  "generated": "2026-10-13T20:37:03.225Z",
-  "battles": 1000,
+  "generated": "2026-10-13T21:53:21.010Z",
+  "battles": 1200,
   "ai": "normal",
   "heroes": [
     {
       "id": "seraphine",
       "name": "Seraphine",
       "rarity": 5,
-      "g": 140,
-      "wr": 0.7571428571428571
+      "g": 164,
+      "wr": 0.7439024390243902
     },
     {
       "id": "penumbra",
       "name": "Arcanist Penumbra",
       "rarity": 5,
-      "g": 133,
-      "wr": 0.7293233082706767
-    },
-    {
-      "id": "nocturne",
-      "name": "Nocturne Vael",
-      "rarity": 5,
-      "g": 146,
-      "wr": 0.726027397260274
+      "g": 161,
+      "wr": 0.7267080745341615
     },
     {
       "id": "ignara",
       "name": "Ignara",
       "rarity": 5,
-      "g": 149,
-      "wr": 0.7114093959731543
+      "g": 179,
+      "wr": 0.7206703910614525
+    },
+    {
+      "id": "nocturne",
+      "name": "Nocturne Vael",
+      "rarity": 5,
+      "g": 166,
+      "wr": 0.7168674698795181
     },
     {
       "id": "vulkar",
       "name": "Vulkar",
       "rarity": 5,
-      "g": 141,
-      "wr": 0.6666666666666666
+      "g": 166,
+      "wr": 0.6686746987951807
     },
     {
       "id": "drakon",
       "name": "Drakon",
       "rarity": 5,
-      "g": 125,
-      "wr": 0.664
+      "g": 158,
+      "wr": 0.6645569620253164
     },
     {
       "id": "ticktock",
       "name": "Tick & Tock",
       "rarity": 5,
-      "g": 138,
-      "wr": 0.6594202898550725
-    },
-    {
-      "id": "orion",
-      "name": "Orion Vex",
-      "rarity": 5,
-      "g": 151,
-      "wr": 0.6423841059602649
+      "g": 167,
+      "wr": 0.6526946107784432
     },
     {
       "id": "brannoc",
       "name": "Brannoc",
       "rarity": 4,
-      "g": 131,
-      "wr": 0.6412213740458015
+      "g": 163,
+      "wr": 0.6503067484662577
     },
     {
-      "id": "borea",
-      "name": "Borea",
+      "id": "orion",
+      "name": "Orion Vex",
       "rarity": 5,
-      "g": 130,
-      "wr": 0.6307692307692307
+      "g": 175,
+      "wr": 0.6457142857142857
     },
     {
       "id": "sable",
       "name": "Sable",
       "rarity": 5,
-      "g": 119,
-      "wr": 0.6302521008403361
+      "g": 148,
+      "wr": 0.6418918918918919
+    },
+    {
+      "id": "borea",
+      "name": "Borea",
+      "rarity": 5,
+      "g": 150,
+      "wr": 0.6266666666666667
     },
     {
       "id": "ragna",
       "name": "Ragna",
       "rarity": 5,
-      "g": 129,
-      "wr": 0.6124031007751938
-    },
-    {
-      "id": "wren",
-      "name": "Wren",
-      "rarity": 3,
-      "g": 131,
-      "wr": 0.6106870229007634
+      "g": 152,
+      "wr": 0.625
     },
     {
       "id": "altair",
       "name": "Professor Altair",
       "rarity": 5,
-      "g": 135,
-      "wr": 0.6
+      "g": 165,
+      "wr": 0.6060606060606061
+    },
+    {
+      "id": "wren",
+      "name": "Wren",
+      "rarity": 3,
+      "g": 164,
+      "wr": 0.5975609756097561
     },
     {
       "id": "kaz",
       "name": "Kaz",
       "rarity": 4,
-      "g": 139,
-      "wr": 0.5683453237410072
-    },
-    {
-      "id": "chronarch",
-      "name": "Chronarch Ves",
-      "rarity": 5,
-      "g": 136,
-      "wr": 0.5661764705882353
-    },
-    {
-      "id": "theodric",
-      "name": "Theodric",
-      "rarity": 4,
-      "g": 130,
-      "wr": 0.5615384615384615
+      "g": 176,
+      "wr": 0.5909090909090909
     },
     {
       "id": "aurel",
       "name": "Aurel",
       "rarity": 5,
-      "g": 145,
-      "wr": 0.5586206896551724
+      "g": 169,
+      "wr": 0.5680473372781065
+    },
+    {
+      "id": "chronarch",
+      "name": "Chronarch Ves",
+      "rarity": 5,
+      "g": 162,
+      "wr": 0.5679012345679012
     },
     {
       "id": "nix",
       "name": "Nix",
       "rarity": 4,
-      "g": 137,
-      "wr": 0.5547445255474452
-    },
-    {
-      "id": "fenra",
-      "name": "Fenra",
-      "rarity": 5,
-      "g": 123,
-      "wr": 0.5528455284552846
-    },
-    {
-      "id": "myco",
-      "name": "Myco",
-      "rarity": 4,
-      "g": 134,
-      "wr": 0.5447761194029851
+      "g": 163,
+      "wr": 0.5644171779141104
     },
     {
       "id": "thalia",
       "name": "Thalia",
       "rarity": 5,
-      "g": 141,
-      "wr": 0.5319148936170213
+      "g": 162,
+      "wr": 0.5617283950617284
+    },
+    {
+      "id": "theodric",
+      "name": "Theodric",
+      "rarity": 4,
+      "g": 152,
+      "wr": 0.5526315789473685
+    },
+    {
+      "id": "fenra",
+      "name": "Fenra",
+      "rarity": 5,
+      "g": 150,
+      "wr": 0.54
     },
     {
       "id": "isolde",
       "name": "Isolde",
       "rarity": 5,
-      "g": 144,
-      "wr": 0.5277777777777778
+      "g": 176,
+      "wr": 0.5340909090909091
     },
     {
-      "id": "elsbeth",
-      "name": "Elsbeth",
-      "rarity": 3,
-      "g": 126,
-      "wr": 0.5158730158730159
-    },
-    {
-      "id": "silvana",
-      "name": "Silvana",
+      "id": "myco",
+      "name": "Myco",
       "rarity": 4,
-      "g": 101,
-      "wr": 0.5148514851485149
+      "g": 157,
+      "wr": 0.5286624203821656
     },
     {
       "id": "hesk",
       "name": "Bramblewitch Hesk",
       "rarity": 5,
-      "g": 139,
-      "wr": 0.5035971223021583
+      "g": 160,
+      "wr": 0.51875
     },
     {
       "id": "ilyana",
       "name": "Ilyana",
       "rarity": 5,
-      "g": 126,
-      "wr": 0.49206349206349204
+      "g": 143,
+      "wr": 0.5034965034965035
     },
     {
       "id": "caelum",
       "name": "Caelum",
       "rarity": 4,
-      "g": 131,
-      "wr": 0.48854961832061067
-    },
-    {
-      "id": "lilith",
-      "name": "Lilith",
-      "rarity": 4,
-      "g": 139,
-      "wr": 0.48201438848920863
-    },
-    {
-      "id": "ceres",
-      "name": "Ceres",
-      "rarity": 4,
       "g": 162,
-      "wr": 0.48148148148148145
+      "wr": 0.5
     },
     {
-      "id": "mordessa",
-      "name": "Mordessa",
-      "rarity": 5,
-      "g": 132,
-      "wr": 0.4772727272727273
-    },
-    {
-      "id": "rexa",
-      "name": "Rexa",
+      "id": "silvana",
+      "name": "Silvana",
       "rarity": 4,
-      "g": 141,
-      "wr": 0.475177304964539
+      "g": 129,
+      "wr": 0.4883720930232558
     },
     {
-      "id": "grom",
-      "name": "Grom",
-      "rarity": 4,
-      "g": 130,
-      "wr": 0.46923076923076923
-    },
-    {
-      "id": "solenne",
-      "name": "Solenne",
-      "rarity": 5,
-      "g": 137,
-      "wr": 0.46715328467153283
+      "id": "elsbeth",
+      "name": "Elsbeth",
+      "rarity": 3,
+      "g": 160,
+      "wr": 0.4875
     },
     {
       "id": "kael",
       "name": "Kael",
       "rarity": 4,
-      "g": 129,
-      "wr": 0.46511627906976744
+      "g": 154,
+      "wr": 0.487012987012987
     },
     {
-      "id": "gideon",
-      "name": "Gideon",
-      "rarity": 3,
-      "g": 158,
-      "wr": 0.4620253164556962
+      "id": "mordessa",
+      "name": "Mordessa",
+      "rarity": 5,
+      "g": 155,
+      "wr": 0.4838709677419355
+    },
+    {
+      "id": "lilith",
+      "name": "Lilith",
+      "rarity": 4,
+      "g": 159,
+      "wr": 0.4779874213836478
+    },
+    {
+      "id": "solenne",
+      "name": "Solenne",
+      "rarity": 5,
+      "g": 159,
+      "wr": 0.4779874213836478
+    },
+    {
+      "id": "rexa",
+      "name": "Rexa",
+      "rarity": 4,
+      "g": 168,
+      "wr": 0.47023809523809523
+    },
+    {
+      "id": "grom",
+      "name": "Grom",
+      "rarity": 4,
+      "g": 160,
+      "wr": 0.46875
+    },
+    {
+      "id": "ceres",
+      "name": "Ceres",
+      "rarity": 4,
+      "g": 187,
+      "wr": 0.45989304812834225
     },
     {
       "id": "lyra",
       "name": "Lyra",
       "rarity": 4,
-      "g": 128,
-      "wr": 0.4453125
+      "g": 156,
+      "wr": 0.4551282051282051
     },
     {
-      "id": "halvard",
-      "name": "Halvard",
+      "id": "gideon",
+      "name": "Gideon",
       "rarity": 3,
-      "g": 115,
-      "wr": 0.43478260869565216
-    },
-    {
-      "id": "vesper",
-      "name": "Vesper",
-      "rarity": 3,
-      "g": 125,
-      "wr": 0.432
-    },
-    {
-      "id": "brakka",
-      "name": "Brakka",
-      "rarity": 4,
-      "g": 127,
-      "wr": 0.4251968503937008
-    },
-    {
-      "id": "orlov",
-      "name": "Count Orlov",
-      "rarity": 4,
-      "g": 125,
-      "wr": 0.424
-    },
-    {
-      "id": "mirelle",
-      "name": "Mirelle",
-      "rarity": 3,
-      "g": 142,
-      "wr": 0.4225352112676056
-    },
-    {
-      "id": "osric",
-      "name": "Sir Osric",
-      "rarity": 4,
-      "g": 142,
-      "wr": 0.4225352112676056
-    },
-    {
-      "id": "vega",
-      "name": "Vega",
-      "rarity": 4,
-      "g": 150,
-      "wr": 0.41333333333333333
-    },
-    {
-      "id": "zeph",
-      "name": "Anachron Zeph",
-      "rarity": 4,
-      "g": 143,
-      "wr": 0.4125874125874126
-    },
-    {
-      "id": "odda",
-      "name": "Hearth-Mother Odda",
-      "rarity": 3,
-      "g": 142,
-      "wr": 0.4084507042253521
-    },
-    {
-      "id": "mira",
-      "name": "Horologist Mira",
-      "rarity": 4,
-      "g": 130,
-      "wr": 0.4076923076923077
+      "g": 179,
+      "wr": 0.44692737430167595
     },
     {
       "id": "verity",
       "name": "Verity",
       "rarity": 5,
-      "g": 109,
-      "wr": 0.4036697247706422
+      "g": 144,
+      "wr": 0.4444444444444444
     },
     {
-      "id": "oakhart",
-      "name": "Oakhart",
+      "id": "vesper",
+      "name": "Vesper",
       "rarity": 3,
-      "g": 139,
-      "wr": 0.39568345323741005
+      "g": 156,
+      "wr": 0.4423076923076923
     },
     {
-      "id": "selene",
-      "name": "Selene",
+      "id": "orlov",
+      "name": "Count Orlov",
       "rarity": 4,
-      "g": 115,
-      "wr": 0.3826086956521739
+      "g": 144,
+      "wr": 0.4236111111111111
     },
     {
-      "id": "ilse",
-      "name": "Ilse",
+      "id": "osric",
+      "name": "Sir Osric",
+      "rarity": 4,
+      "g": 173,
+      "wr": 0.4161849710982659
+    },
+    {
+      "id": "halvard",
+      "name": "Halvard",
       "rarity": 3,
-      "g": 112,
-      "wr": 0.375
+      "g": 145,
+      "wr": 0.41379310344827586
+    },
+    {
+      "id": "brakka",
+      "name": "Brakka",
+      "rarity": 4,
+      "g": 154,
+      "wr": 0.4090909090909091
     },
     {
       "id": "pip",
       "name": "Pip",
       "rarity": 3,
-      "g": 126,
-      "wr": 0.373015873015873
+      "g": 154,
+      "wr": 0.4090909090909091
     },
     {
-      "id": "yrsa",
-      "name": "Yrsa",
+      "id": "zeph",
+      "name": "Anachron Zeph",
       "rarity": 4,
-      "g": 127,
-      "wr": 0.3700787401574803
+      "g": 180,
+      "wr": 0.40555555555555556
     },
     {
-      "id": "sentinel",
-      "name": "Sentinel Mk.II",
-      "rarity": 3,
-      "g": 137,
-      "wr": 0.36496350364963503
+      "id": "vega",
+      "name": "Vega",
+      "rarity": 4,
+      "g": 178,
+      "wr": 0.4044943820224719
     },
     {
-      "id": "grimmald",
-      "name": "Grimmald",
+      "id": "odda",
+      "name": "Hearth-Mother Odda",
       "rarity": 3,
-      "g": 113,
-      "wr": 0.36283185840707965
+      "g": 165,
+      "wr": 0.4
     },
     {
-      "id": "tobin",
-      "name": "Tobin",
+      "id": "mirelle",
+      "name": "Mirelle",
       "rarity": 3,
-      "g": 141,
-      "wr": 0.3546099290780142
+      "g": 158,
+      "wr": 0.3987341772151899
     },
     {
-      "id": "nova",
-      "name": "Nova",
-      "rarity": 3,
-      "g": 127,
-      "wr": 0.33858267716535434
-    },
-    {
-      "id": "frida",
-      "name": "Frida",
-      "rarity": 3,
-      "g": 128,
-      "wr": 0.3359375
+      "id": "mira",
+      "name": "Horologist Mira",
+      "rarity": 4,
+      "g": 160,
+      "wr": 0.3875
     },
     {
       "id": "juno",
       "name": "Juno",
       "rarity": 3,
-      "g": 129,
-      "wr": 0.3333333333333333
+      "g": 158,
+      "wr": 0.3860759493670886
+    },
+    {
+      "id": "oakhart",
+      "name": "Oakhart",
+      "rarity": 3,
+      "g": 169,
+      "wr": 0.38461538461538464
+    },
+    {
+      "id": "grimmald",
+      "name": "Grimmald",
+      "rarity": 3,
+      "g": 142,
+      "wr": 0.38028169014084506
+    },
+    {
+      "id": "selene",
+      "name": "Selene",
+      "rarity": 4,
+      "g": 137,
+      "wr": 0.3795620437956204
+    },
+    {
+      "id": "ilse",
+      "name": "Ilse",
+      "rarity": 3,
+      "g": 136,
+      "wr": 0.36764705882352944
+    },
+    {
+      "id": "sentinel",
+      "name": "Sentinel Mk.II",
+      "rarity": 3,
+      "g": 158,
+      "wr": 0.3670886075949367
+    },
+    {
+      "id": "tobin",
+      "name": "Tobin",
+      "rarity": 3,
+      "g": 164,
+      "wr": 0.36585365853658536
+    },
+    {
+      "id": "nova",
+      "name": "Nova",
+      "rarity": 3,
+      "g": 147,
+      "wr": 0.35374149659863946
+    },
+    {
+      "id": "yrsa",
+      "name": "Yrsa",
+      "rarity": 4,
+      "g": 151,
+      "wr": 0.33774834437086093
     },
     {
       "id": "lenny",
       "name": "Lenny",
       "rarity": 3,
-      "g": 150,
-      "wr": 0.30666666666666664
+      "g": 182,
+      "wr": 0.32967032967032966
+    },
+    {
+      "id": "frida",
+      "name": "Frida",
+      "rarity": 3,
+      "g": 169,
+      "wr": 0.28994082840236685
     }
   ],
   "archetypes": {

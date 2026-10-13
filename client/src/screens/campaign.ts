@@ -92,6 +92,7 @@ async function startStage(s: StageDef) {
   let t: { battleId: string; config: any; ai: any };
   try { t = await api.action('startCampaign', { stage: s.id, team }); } catch (e) { toast((e as Error).message, 'err'); return; }
   await playDialogue(s.story);
+  const before = s.id in store.profile!.campaign.cleared;
   hideMenuStage();
   await runBattle({
     config: t.config, ai: t.ai, theme: s.scene, title: `${s.id} · ${s.name}`, music: s.boss ? 'boss' : 'battle',
@@ -101,7 +102,7 @@ async function startStage(s: StageDef) {
     },
     onExit: async () => {
       await store.refresh();
-      const won = s.id in store.profile!.campaign.cleared;
+      const won = !before && s.id in store.profile!.campaign.cleared;
       if (won && s.after) await playDialogue(s.after);
       void go('campaign');
     },

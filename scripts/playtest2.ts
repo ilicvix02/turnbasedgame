@@ -1,0 +1,71 @@
+// Screen tour with screenshots: npx tsx scripts/playtest2.ts <baseUrl> <outDir>
+import '../shared/data/index';
+import { Battle } from '../shared/engine/battle';
+import { chooseAction } from '../shared/engine/ai';
+import { chromium } from 'playwright-core';
+import { mkdirSync } from 'node:fs';
+const [base = 'http://localhost:8790', out = 'shots'] = process.argv.slice(2);
+mkdirSync(out, { recursive: true });
+const name = 'tour' + Math.floor(Math.random() * 1e5);
+const reg = await (await fetch(base + '/api/register', { method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify({ username: name, password: 'password123' }) })).json();
+const token = reg.token as string;
+const act = async (op: string, a: any = {}) => { const r = await fetch(base + '/api/action', { method: 'POST', headers: { 'content-type': 'application/json', authorization: 'Bearer ' + token }, body: JSON.stringify({ op, ...a }) }); return r.json(); };
+const t = (await act('startTutorial')).result;
+const b = new Battle(t.config); b.start(); while (b.winner < 0) b.act(chooseAction(b, 'normal'));
+await act('finishBattle', { battleId: t.battleId, inputs: b.inputs.filter((x) => b.unit(x.actor).team === 0) });
+await act('summon', { count: 10 }); await act('summon', { count: 10 });
+const prof = (await act('daily')).profile;
+await act('setDefense', { team: prof.heroes.slice(0, 4).map((h: any) => h.uid) });
+const browser = await chromium.launch({ executablePath: '/opt/pw-browsers/chromium', args: ['--use-gl=angle', '--use-angle=swiftshader', '--enable-unsafe-swiftshader'] });
+const page = await browser.newPage({ viewport: { width: 1600, height: 900 } });
+const logs: string[] = [];
+page.on('pageerror', (e) => logs.push('[pageerror] ' + e.message));
+page.on('console', (m) => { if (m.type() === 'error') logs.push('[error] ' + m.text().slice(0, 200)); });
+await page.addInitScript((tk) => localStorage.setItem('aethra.token', tk), token);
+const shot = async (n: string) => { await page.screenshot({ path: `${out}/${n}.png` }); console.log('shot', n); };
+const w = (ms: number) => page.waitForTimeout(ms);
+const menu = async (label: string) => { await page.click(`.menu-item:has-text("${label}")`); await w(5000); };
+const back = async () => { await page.click('.topbar .back'); await w(3000); };
+await page.goto(base); await w(10000);
+await menu('Heroes'); await w(4000); await shot('10-heroes');
+await page.click('.grid .hcard >> nth=0'); await w(6000); await shot('11-hero-skills');
+await page.click('.tab:has-text("Gear")'); await w(800); await shot('12-hero-gear');
+await page.click('.tab:has-text("Upgrade")'); await w(800); await shot('13-hero-upgrade');
+await back(); await back();
+await menu('Summon'); await shot('14-summon');
+await page.click('.btn:has-text("×10")'); await w(9000); await shot('15-summon-result');
+await back();
+await menu('Campaign'); await page.click('.skipbtn').catch(() => {}); await w(1500); await shot('16-campaign');
+await page.click('.stage >> nth=0'); await w(1000); await shot('17-stage');
+await page.click('.modal .btn.big'); await w(2500); await shot('18-team');
+await page.click('.modal .btn.big:has-text("Start Battle")'); await w(2000); await page.click('.skipbtn').catch(() => {}); await w(10000); await shot('19-campaign-battle');
+await page.keyboard.press('Enter'); await w(1500); await shot('19b-battle-action');
+await w(2500); await shot('19c-battle-action');
+await page.click('.hud-btn:has-text("AUTO")').catch(() => {}); await page.click('.hud-btn:has-text("1×")').catch(() => {}); await page.click('.hud-btn:has-text("2×")').catch(() => {});
+for (let i = 0; i < 60; i++) { await w(3000); if (i === 2) await shot('20-campaign-battle-mid'); if (await page.$('.result')) break; }
+await shot('21-campaign-result');
+await page.click('.result .btn').catch(() => {}); await w(3000); await page.click('.skipbtn').catch(() => {}); await w(3000);
+await back();
+await menu('Arena'); await w(3000); await shot('22-arena');
+await back();
+await menu('World Arena'); await w(2000); await shot('23-rta');
+await page.click('.btn:has-text("Mock Draft")'); await w(6000); await shot('24-draft-preban');
+// preban: pick 2 cards then confirm
+await page.click('.draft-pool .hcard >> nth=0'); await page.click('.draft-pool .hcard >> nth=1'); await page.click('.btn:has-text("Confirm pre-ban")'); await w(4000); await shot('25-draft-pick');
+for (let i = 0; i < 12; i++) {
+  const lock = await page.$('.btn:has-text("Lock in")');
+  if (lock) { const cards = await page.$$('.draft-pool .hcard:not(.dis):not(.sel)'); const need = await page.evaluate(() => Number((document.querySelector('.btn:has-text') as any)?.textContent?.match(/\/(\d)/)?.[1] || 0)).catch(() => 0); void need; for (let k = 0; k < 2 && k < cards.length; k++) await cards[k * 3].click().catch(() => {}); await w(300); await page.click('.btn:has-text("Lock in")').catch(() => {}); }
+  await w(3000);
+  if (await page.$('.pickslot') && (await page.textContent('.phase'))?.includes('POST-BAN')) break;
+}
+await shot('26-draft-postban');
+const opp = await page.$$('.draft-side.opp .pickslot');
+await opp[0]?.click().catch(() => {}); await w(8000); await shot('27-rta-battle');
+await page.click('.hud-btn:has-text("AUTO")').catch(() => {});
+await w(15000); await shot('28-rta-battle-mid');
+await page.goto(base); await w(9000);
+await menu('Codex'); await shot('29-codex-meta');
+await page.click('.tab:has-text("Tier List")'); await w(4000); await shot('30-codex-tiers');
+await page.click('.tab:has-text("Rules")'); await w(800); await shot('31-codex-rules');
+console.log(logs.slice(0, 30).join('\n'));
+await browser.close();

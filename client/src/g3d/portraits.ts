@@ -74,8 +74,8 @@ export function portrait(heroId: string, full = false): Promise<string> {
       camera.position.set(0.5, h.height * 0.6, 5.2 * (h.height / 1.8));
       camera.lookAt(0, h.height * 0.5, 0);
     } else {
-      camera.position.set(head.x + 0.35, head.y + 0.05, head.z + 1.55);
-      camera.lookAt(head.x, head.y - 0.18, head.z);
+      camera.position.set(head.x + 0.4, head.y + 0.1, head.z + 1.75);
+      camera.lookAt(head.x, head.y - 0.06, head.z);
     }
     h.aura.visible = false;
     renderer!.render(scene, camera);
@@ -95,11 +95,13 @@ export function portraitImg(heroId: string, cls = 'port', full = false): HTMLIma
   img.className = cls;
   img.alt = '';
   img.draggable = false;
+  img.decoding = 'async';
   const c = cache.get(heroId + (full ? ':f' : ''));
   if (c) img.src = c;
   else {
-    img.src = 'data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="3" height="4"><rect width="3" height="4" fill="%23181428"/></svg>';
-    void portrait(heroId, full).then((u) => { img.src = u; });
+    // pre-rendered at build time (scripts/build-portraits.ts); fall back to rendering live
+    img.src = `/portraits/${heroId}${full ? '_full' : ''}.webp`;
+    img.onerror = () => { img.onerror = null; void portrait(heroId, full).then((u) => { img.src = u; }); };
   }
   return img;
 }

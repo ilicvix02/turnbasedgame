@@ -468,9 +468,14 @@ export function buildBack(kind: Look['back'], c: PropColors): { obj: THREE.Objec
       return { obj: g, animated: anim };
     }
     case 'scarf': {
-      const pts = [v3(0, 0.22, 0.05), v3(0.08, 0.2, -0.12), v3(0.15, 0.12, -0.32), v3(0.3, 0.05, -0.5)];
-      g.add(mesh(taperTube(pts, 0.05, 0.03, 20, 8), gearMat.cloth(c.accent)));
-      return { obj: g };
+      const col = new THREE.Color(c.accent).multiplyScalar(0.6).getHex();
+      const ring = mesh(new THREE.TorusGeometry(0.085, 0.03, 8, 20), gearMat.cloth(col));
+      ring.rotation.x = Math.PI / 2;
+      ring.position.set(0, 0.22, 0.01);
+      const pts = [v3(0.02, 0.21, -0.07), v3(0.06, 0.12, -0.16), v3(0.1, 0.0, -0.22), v3(0.14, -0.14, -0.26)];
+      const tail = mesh(taperTube(pts, 0.035, 0.02, 16, 8), gearMat.cloth(col));
+      g.add(ring, tail);
+      return { obj: g, animated: (t) => { tail.rotation.x = Math.sin(t * 2.4) * 0.12; } };
     }
     case 'wings':
     case 'angel':

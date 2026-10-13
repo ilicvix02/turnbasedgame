@@ -17,11 +17,11 @@
     "typecheck": "tsc --noEmit -p tsconfig.json",
     "sim": "tsx scripts/sim.ts",
     "assets": "node scripts/build-assets.mjs",
-    "docs:heroes": "tsx scripts/gen-hero-docs.ts"
+    "docs:heroes": "tsx scripts/gen-hero-docs.ts",
+    "tiers": "tsx scripts/gen-tiers.ts",
+    "portraits": "tsx scripts/build-portraits.ts"
   },
   "dependencies": {
-    "pixi-filters": "^6.1.5",
-    "pixi.js": "^8.22.0",
     "three": "^0.180.0",
     "ws": "^8.22.0"
   },

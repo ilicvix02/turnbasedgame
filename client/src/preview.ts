@@ -41,3 +41,15 @@ st.tick((dt, t) => { for (const h of heroes) h.update(dt, t); });
 
 const then = q.get('then');
 if (then) setTimeout(() => { for (const hh of heroes) hh.play(then as AnimName); }, 2500);
+
+if (q.get('portraits')) {
+  (async () => {
+    const { portrait } = await import('./g3d/portraits');
+    const out: Record<string, string> = {};
+    for (const d of Object.values(HEROES)) {
+      out[d.id] = await portrait(d.id);
+      out[d.id + '_full'] = await portrait(d.id, true);
+    }
+    (window as any).__portraits = out;
+  })();
+}

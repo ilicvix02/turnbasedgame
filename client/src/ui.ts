@@ -3,7 +3,7 @@ import { getHero } from '@shared/engine/registry';
 import { CLASS_NAMES, ELEMENT_COLORS, ELEMENT_NAMES, PLAYABLE, THRONE_NAMES } from '@shared/data/index';
 import type { Line } from '@shared/data/campaign';
 import type { HeroInstance } from '@shared/meta/progression';
-import { HERO_TIER_LETTER } from '@shared/meta/tiers';
+import { HERO_TIER, HERO_TIER_LETTER } from '@shared/meta/tiers';
 import { $ui, clear, fmt, h, icon, modal, toast } from './core/dom';
 import { store } from './core/api';
 import { sfx } from './core/audio';
@@ -200,4 +200,4 @@ export function pickTeam(opts: { title: string; max?: number; min?: number; init
   });
 }
 
-const HERO_ORDER: Record<string, number> = Object.fromEntries(PLAYABLE().map((h) => [h.id, h.rarity * 100]));
+const HERO_ORDER: Record<string, number> = Object.fromEntries(PLAYABLE().map((h) => [h.id, HERO_TIER[h.id] ?? h.rarity * 10]));

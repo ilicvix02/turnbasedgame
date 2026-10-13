@@ -11,7 +11,7 @@ import {
 import { $ui, confirmDialog, fmt, h, icon, modal, richText, toast } from '../core/dom';
 import { api, store } from '../core/api';
 import { music, sfx } from '../core/audio';
-import { CLASS_ICON, ELEMENT_ICON, go, heroCard, heroMeta, register, tierBadge, topbar } from '../ui';
+import { CLASS_ICON, ELEMENT_ICON, go, heroCard, heroMeta, onLeave, register, tierBadge, topbar } from '../ui';
 import { rotateShowcase, setSpin, showHeroes, showcaseHero } from '../menu3d';
 import { skillIcon } from '../battle/session';
 
@@ -253,16 +253,17 @@ register('hero', async (uid: string) => {
     ),
   ));
   // drag to rotate the 3D model
-  const canvas = document.querySelector('#stage canvas') as HTMLCanvasElement;
   let dragging = false;
   let lastX = 0;
   const down = (e: PointerEvent) => { dragging = true; lastX = e.clientX; };
   const move = (e: PointerEvent) => { if (dragging) { rotateShowcase((e.clientX - lastX) * 0.01); lastX = e.clientX; } };
   const up = () => { dragging = false; };
-  document.getElementById('ui')!.addEventListener('pointerdown', (e) => { if ((e.target as HTMLElement).closest('.mainpane')) down(e); });
+  const ui = document.getElementById('ui')!;
+  const onDown = (e: PointerEvent) => { if ((e.target as HTMLElement).closest('.mainpane')) down(e); };
+  ui.addEventListener('pointerdown', onDown);
   window.addEventListener('pointermove', move);
   window.addEventListener('pointerup', up);
-  void canvas;
+  onLeave(() => { ui.removeEventListener('pointerdown', onDown); window.removeEventListener('pointermove', move); window.removeEventListener('pointerup', up); });
   renderHeader();
   renderTabs();
   renderBody();
