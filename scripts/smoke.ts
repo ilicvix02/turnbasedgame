@@ -1,0 +1,14 @@
+import '../shared/data/index';
+import { Battle } from '../shared/engine/battle';
+import { autoRun } from '../shared/engine/ai';
+import { npcSetup } from '../shared/meta/progression';
+const A = ['seraphine', 'aurel', 'brannoc', 'caelum'];
+const B = ['verity', 'theodric', 'gideon', 'ilse'];
+const t0 = Date.now();
+const b = new Battle({ seed: 42, mode: 'sim', teams: [{ name: 'A', units: A.map((h) => npcSetup(h, 60)) }, { name: 'B', units: B.map((h) => npcSetup(h, 60)) }] });
+const w = autoRun(b, 'normal');
+console.log('winner', w, 'actions', b.actions, 'events', b.events.length, 'ms', Date.now() - t0);
+const counts: Record<string, number> = {};
+for (const e of b.events) counts[e.t] = (counts[e.t] || 0) + 1;
+console.log(counts);
+console.log(b.events.filter((e) => e.t === 'text').slice(0, 30).map((e: any) => e.s).join(', '));

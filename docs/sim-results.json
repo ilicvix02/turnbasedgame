@@ -1,0 +1,497 @@
+{
+  "generated": "2026-10-13T20:37:03.225Z",
+  "battles": 1000,
+  "ai": "normal",
+  "heroes": [
+    {
+      "id": "seraphine",
+      "name": "Seraphine",
+      "rarity": 5,
+      "g": 140,
+      "wr": 0.7571428571428571
+    },
+    {
+      "id": "penumbra",
+      "name": "Arcanist Penumbra",
+      "rarity": 5,
+      "g": 133,
+      "wr": 0.7293233082706767
+    },
+    {
+      "id": "nocturne",
+      "name": "Nocturne Vael",
+      "rarity": 5,
+      "g": 146,
+      "wr": 0.726027397260274
+    },
+    {
+      "id": "ignara",
+      "name": "Ignara",
+      "rarity": 5,
+      "g": 149,
+      "wr": 0.7114093959731543
+    },
+    {
+      "id": "vulkar",
+      "name": "Vulkar",
+      "rarity": 5,
+      "g": 141,
+      "wr": 0.6666666666666666
+    },
+    {
+      "id": "drakon",
+      "name": "Drakon",
+      "rarity": 5,
+      "g": 125,
+      "wr": 0.664
+    },
+    {
+      "id": "ticktock",
+      "name": "Tick & Tock",
+      "rarity": 5,
+      "g": 138,
+      "wr": 0.6594202898550725
+    },
+    {
+      "id": "orion",
+      "name": "Orion Vex",
+      "rarity": 5,
+      "g": 151,
+      "wr": 0.6423841059602649
+    },
+    {
+      "id": "brannoc",
+      "name": "Brannoc",
+      "rarity": 4,
+      "g": 131,
+      "wr": 0.6412213740458015
+    },
+    {
+      "id": "borea",
+      "name": "Borea",
+      "rarity": 5,
+      "g": 130,
+      "wr": 0.6307692307692307
+    },
+    {
+      "id": "sable",
+      "name": "Sable",
+      "rarity": 5,
+      "g": 119,
+      "wr": 0.6302521008403361
+    },
+    {
+      "id": "ragna",
+      "name": "Ragna",
+      "rarity": 5,
+      "g": 129,
+      "wr": 0.6124031007751938
+    },
+    {
+      "id": "wren",
+      "name": "Wren",
+      "rarity": 3,
+      "g": 131,
+      "wr": 0.6106870229007634
+    },
+    {
+      "id": "altair",
+      "name": "Professor Altair",
+      "rarity": 5,
+      "g": 135,
+      "wr": 0.6
+    },
+    {
+      "id": "kaz",
+      "name": "Kaz",
+      "rarity": 4,
+      "g": 139,
+      "wr": 0.5683453237410072
+    },
+    {
+      "id": "chronarch",
+      "name": "Chronarch Ves",
+      "rarity": 5,
+      "g": 136,
+      "wr": 0.5661764705882353
+    },
+    {
+      "id": "theodric",
+      "name": "Theodric",
+      "rarity": 4,
+      "g": 130,
+      "wr": 0.5615384615384615
+    },
+    {
+      "id": "aurel",
+      "name": "Aurel",
+      "rarity": 5,
+      "g": 145,
+      "wr": 0.5586206896551724
+    },
+    {
+      "id": "nix",
+      "name": "Nix",
+      "rarity": 4,
+      "g": 137,
+      "wr": 0.5547445255474452
+    },
+    {
+      "id": "fenra",
+      "name": "Fenra",
+      "rarity": 5,
+      "g": 123,
+      "wr": 0.5528455284552846
+    },
+    {
+      "id": "myco",
+      "name": "Myco",
+      "rarity": 4,
+      "g": 134,
+      "wr": 0.5447761194029851
+    },
+    {
+      "id": "thalia",
+      "name": "Thalia",
+      "rarity": 5,
+      "g": 141,
+      "wr": 0.5319148936170213
+    },
+    {
+      "id": "isolde",
+      "name": "Isolde",
+      "rarity": 5,
+      "g": 144,
+      "wr": 0.5277777777777778
+    },
+    {
+      "id": "elsbeth",
+      "name": "Elsbeth",
+      "rarity": 3,
+      "g": 126,
+      "wr": 0.5158730158730159
+    },
+    {
+      "id": "silvana",
+      "name": "Silvana",
+      "rarity": 4,
+      "g": 101,
+      "wr": 0.5148514851485149
+    },
+    {
+      "id": "hesk",
+      "name": "Bramblewitch Hesk",
+      "rarity": 5,
+      "g": 139,
+      "wr": 0.5035971223021583
+    },
+    {
+      "id": "ilyana",
+      "name": "Ilyana",
+      "rarity": 5,
+      "g": 126,
+      "wr": 0.49206349206349204
+    },
+    {
+      "id": "caelum",
+      "name": "Caelum",
+      "rarity": 4,
+      "g": 131,
+      "wr": 0.48854961832061067
+    },
+    {
+      "id": "lilith",
+      "name": "Lilith",
+      "rarity": 4,
+      "g": 139,
+      "wr": 0.48201438848920863
+    },
+    {
+      "id": "ceres",
+      "name": "Ceres",
+      "rarity": 4,
+      "g": 162,
+      "wr": 0.48148148148148145
+    },
+    {
+      "id": "mordessa",
+      "name": "Mordessa",
+      "rarity": 5,
+      "g": 132,
+      "wr": 0.4772727272727273
+    },
+    {
+      "id": "rexa",
+      "name": "Rexa",
+      "rarity": 4,
+      "g": 141,
+      "wr": 0.475177304964539
+    },
+    {
+      "id": "grom",
+      "name": "Grom",
+      "rarity": 4,
+      "g": 130,
+      "wr": 0.46923076923076923
+    },
+    {
+      "id": "solenne",
+      "name": "Solenne",
+      "rarity": 5,
+      "g": 137,
+      "wr": 0.46715328467153283
+    },
+    {
+      "id": "kael",
+      "name": "Kael",
+      "rarity": 4,
+      "g": 129,
+      "wr": 0.46511627906976744
+    },
+    {
+      "id": "gideon",
+      "name": "Gideon",
+      "rarity": 3,
+      "g": 158,
+      "wr": 0.4620253164556962
+    },
+    {
+      "id": "lyra",
+      "name": "Lyra",
+      "rarity": 4,
+      "g": 128,
+      "wr": 0.4453125
+    },
+    {
+      "id": "halvard",
+      "name": "Halvard",
+      "rarity": 3,
+      "g": 115,
+      "wr": 0.43478260869565216
+    },
+    {
+      "id": "vesper",
+      "name": "Vesper",
+      "rarity": 3,
+      "g": 125,
+      "wr": 0.432
+    },
+    {
+      "id": "brakka",
+      "name": "Brakka",
+      "rarity": 4,
+      "g": 127,
+      "wr": 0.4251968503937008
+    },
+    {
+      "id": "orlov",
+      "name": "Count Orlov",
+      "rarity": 4,
+      "g": 125,
+      "wr": 0.424
+    },
+    {
+      "id": "mirelle",
+      "name": "Mirelle",
+      "rarity": 3,
+      "g": 142,
+      "wr": 0.4225352112676056
+    },
+    {
+      "id": "osric",
+      "name": "Sir Osric",
+      "rarity": 4,
+      "g": 142,
+      "wr": 0.4225352112676056
+    },
+    {
+      "id": "vega",
+      "name": "Vega",
+      "rarity": 4,
+      "g": 150,
+      "wr": 0.41333333333333333
+    },
+    {
+      "id": "zeph",
+      "name": "Anachron Zeph",
+      "rarity": 4,
+      "g": 143,
+      "wr": 0.4125874125874126
+    },
+    {
+      "id": "odda",
+      "name": "Hearth-Mother Odda",
+      "rarity": 3,
+      "g": 142,
+      "wr": 0.4084507042253521
+    },
+    {
+      "id": "mira",
+      "name": "Horologist Mira",
+      "rarity": 4,
+      "g": 130,
+      "wr": 0.4076923076923077
+    },
+    {
+      "id": "verity",
+      "name": "Verity",
+      "rarity": 5,
+      "g": 109,
+      "wr": 0.4036697247706422
+    },
+    {
+      "id": "oakhart",
+      "name": "Oakhart",
+      "rarity": 3,
+      "g": 139,
+      "wr": 0.39568345323741005
+    },
+    {
+      "id": "selene",
+      "name": "Selene",
+      "rarity": 4,
+      "g": 115,
+      "wr": 0.3826086956521739
+    },
+    {
+      "id": "ilse",
+      "name": "Ilse",
+      "rarity": 3,
+      "g": 112,
+      "wr": 0.375
+    },
+    {
+      "id": "pip",
+      "name": "Pip",
+      "rarity": 3,
+      "g": 126,
+      "wr": 0.373015873015873
+    },
+    {
+      "id": "yrsa",
+      "name": "Yrsa",
+      "rarity": 4,
+      "g": 127,
+      "wr": 0.3700787401574803
+    },
+    {
+      "id": "sentinel",
+      "name": "Sentinel Mk.II",
+      "rarity": 3,
+      "g": 137,
+      "wr": 0.36496350364963503
+    },
+    {
+      "id": "grimmald",
+      "name": "Grimmald",
+      "rarity": 3,
+      "g": 113,
+      "wr": 0.36283185840707965
+    },
+    {
+      "id": "tobin",
+      "name": "Tobin",
+      "rarity": 3,
+      "g": 141,
+      "wr": 0.3546099290780142
+    },
+    {
+      "id": "nova",
+      "name": "Nova",
+      "rarity": 3,
+      "g": 127,
+      "wr": 0.33858267716535434
+    },
+    {
+      "id": "frida",
+      "name": "Frida",
+      "rarity": 3,
+      "g": 128,
+      "wr": 0.3359375
+    },
+    {
+      "id": "juno",
+      "name": "Juno",
+      "rarity": 3,
+      "g": 129,
+      "wr": 0.3333333333333333
+    },
+    {
+      "id": "lenny",
+      "name": "Lenny",
+      "rarity": 3,
+      "g": 150,
+      "wr": 0.30666666666666664
+    }
+  ],
+  "archetypes": {
+    "Cleave": {
+      "Revive Sustain": 0.3125,
+      "DoT Rot": 1,
+      "Bruiser Counter": 0.375,
+      "Dominion Control": 0.9375,
+      "Soul Engine": 1
+    },
+    "Revive Sustain": {
+      "Cleave": 0.75,
+      "DoT Rot": 0.1875,
+      "Bruiser Counter": 1,
+      "Dominion Control": 0.875,
+      "Soul Engine": 0.625
+    },
+    "DoT Rot": {
+      "Cleave": 0.0625,
+      "Revive Sustain": 0.8125,
+      "Bruiser Counter": 0.3125,
+      "Dominion Control": 0.0625,
+      "Soul Engine": 0.375
+    },
+    "Bruiser Counter": {
+      "Cleave": 0.6875,
+      "Revive Sustain": 0,
+      "DoT Rot": 0.625,
+      "Dominion Control": 0.125,
+      "Soul Engine": 0.5625
+    },
+    "Dominion Control": {
+      "Cleave": 0.125,
+      "Revive Sustain": 0.25,
+      "DoT Rot": 1,
+      "Bruiser Counter": 0.6875,
+      "Soul Engine": 0.6875
+    },
+    "Soul Engine": {
+      "Cleave": 0.0625,
+      "Revive Sustain": 0.375,
+      "DoT Rot": 0.75,
+      "Bruiser Counter": 0.1875,
+      "Dominion Control": 0.1875
+    }
+  },
+  "overall": [
+    {
+      "x": "Cleave",
+      "wr": 0.725
+    },
+    {
+      "x": "Revive Sustain",
+      "wr": 0.6875
+    },
+    {
+      "x": "DoT Rot",
+      "wr": 0.325
+    },
+    {
+      "x": "Bruiser Counter",
+      "wr": 0.4
+    },
+    {
+      "x": "Dominion Control",
+      "wr": 0.55
+    },
+    {
+      "x": "Soul Engine",
+      "wr": 0.3125
+    }
+  ]
+}
