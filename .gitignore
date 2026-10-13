@@ -4,4 +4,3 @@ data/*.db
 data/*.db-*
 *.log
 .DS_Store
-client/public/models/
