@@ -8,7 +8,7 @@ import { recolor, gearMat, type RecolorMode } from './materials';
 import { buildBack, buildHeadwear, buildPlate, buildSkirt, buildWeapon, type PropColors } from './props';
 import { hashStr } from '../core/anim';
 
-export type AnimName = 'idle' | 'attack' | 'attack2' | 'cast' | 'castLoop' | 'shoot' | 'hit' | 'death' | 'buff' | 'roll' | 'victory' | 'punch';
+export type AnimName = 'idle' | 'attack' | 'attack2' | 'cast' | 'castLoop' | 'shoot' | 'hit' | 'death' | 'buff' | 'roll' | 'victory' | 'punch' | 'run';
 
 const CLIP_FOR: Record<AnimName, string[]> = {
   idle: ['Idle_Loop'],
@@ -23,6 +23,7 @@ const CLIP_FOR: Record<AnimName, string[]> = {
   buff: ['Spell_Simple_Enter'],
   roll: ['Roll'],
   victory: ['Dance_Loop'],
+  run: ['Jog_Fwd_Loop'],
 };
 
 /** Grip rotation (x,y,z) + offset (x,y,z) in hand_r bone space for each weapon. */
@@ -199,7 +200,7 @@ export class Hero3D {
       const clip = clips.find((c) => names.includes(c.name));
       if (!clip) continue;
       const a = this.mixer.clipAction(clip);
-      if (k !== 'idle' && k !== 'castLoop' && k !== 'victory') { a.setLoop(THREE.LoopOnce, 1); a.clampWhenFinished = true; }
+      if (k !== 'idle' && k !== 'castLoop' && k !== 'victory' && k !== 'run') { a.setLoop(THREE.LoopOnce, 1); a.clampWhenFinished = true; }
       this.actions.set(k, a);
     }
     // idle variant per weapon type
@@ -321,7 +322,7 @@ export class Hero3D {
   play(name: AnimName, fade = 0.18, timeScale = 1): number {
     const a = this.actions.get(name) || this.actions.get('idle');
     if (!a) return 0;
-    if (this.current === a && (name === 'idle' || name === 'castLoop')) return a.getClip().duration;
+    if (this.current === a && (name === 'idle' || name === 'castLoop' || name === 'run')) return a.getClip().duration;
     a.reset();
     a.timeScale = timeScale;
     a.enabled = true;

@@ -358,3 +358,55 @@ h2.title { font-size: 22px; }
   .cur { font-size: 11px; padding: 3px 8px 3px 4px; }
   .cur .ico { width: 16px; height: 16px; }
 }
+
+/* ── 3D battle overlays ── */
+.b3-overlay { position: absolute; inset: 0; pointer-events: none; overflow: hidden; z-index: 1; }
+.uplate { position: absolute; left: 0; top: 0; width: 132px; display: flex; flex-direction: column; gap: 3px; filter: drop-shadow(0 2px 4px rgba(0,0,0,.9)); }
+.uplate.boss { width: 220px; }
+.uname { font-size: 11px; font-weight: 700; color: #fff; display: flex; align-items: center; gap: 4px; white-space: nowrap; overflow: hidden; text-shadow: 0 1px 2px #000; }
+.uname .lvl { font-size: 9px; color: var(--gold2); background: rgba(0,0,0,.6); padding: 0 4px; border-radius: 4px; }
+.uel { display: inline-flex; width: 14px; height: 14px; }
+.uel .ico { width: 14px; height: 14px; }
+.hpbar { position: relative; height: 8px; border-radius: 5px; background: rgba(10,8,20,.85); border: 1px solid rgba(255,255,255,.25); overflow: hidden; }
+.uplate.boss .hpbar { height: 12px; }
+.hpbar i { position: absolute; left: 0; top: 0; bottom: 0; }
+.hpbar .hplag { background: #ffe8b0; width: 100%; transition: width .6s ease-out; }
+.hpbar .hpfill { width: 100%; transition: width .2s; }
+.uplate.t0 .hpfill { background: linear-gradient(90deg, #3ad88a, #8affc0); }
+.uplate.t1 .hpfill { background: linear-gradient(90deg, #ff4a5a, #ff9a8a); }
+.hpbar .hpbar-barrier { left: auto; right: 0; width: 0; background: repeating-linear-gradient(45deg, rgba(255,255,255,.9) 0 3px, rgba(200,230,255,.7) 3px 6px); transition: width .3s; }
+.sticons { display: flex; flex-wrap: wrap; gap: 2px; min-height: 18px; }
+.sti { position: relative; width: 18px; height: 18px; border-radius: 4px; background: rgba(0,0,0,.65); display: grid; place-items: center; border: 1px solid rgba(255,255,255,.15); }
+.sti.buff { border-color: rgba(122,216,255,.6); } .sti.debuff { border-color: rgba(255,106,122,.6); } .sti.state { border-color: rgba(255,216,106,.7); }
+.sti .ico { width: 13px; height: 13px; }
+.sti b { position: absolute; right: -3px; bottom: -4px; font-size: 9px; color: #fff; text-shadow: 0 0 3px #000, 0 0 3px #000; }
+.ftext { position: absolute; transform: translate(-50%, 0); font-family: var(--title); font-weight: 700; font-size: 26px; color: #fff; white-space: nowrap; text-shadow: 0 2px 0 #000, 0 0 10px rgba(0,0,0,.8); animation: floatUp 1.4s ease-out forwards; display: flex; flex-direction: column; align-items: center; line-height: 1; }
+.ftext small { font-size: 12px; letter-spacing: .15em; }
+.ftext.crit { color: #ffcf5a; font-size: 38px; text-shadow: 0 2px 0 #6a2a00, 0 0 18px rgba(255,160,40,.8); animation: critPop 1.4s ease-out forwards; }
+.ftext.crush { color: #ffe0b0; font-size: 30px; }
+.ftext.miss { color: #a8a8c0; font-size: 20px; }
+.ftext.heal { color: #6affb0; }
+.ftext.burn { color: #ff9a4a; font-size: 20px; } .ftext.poison { color: #9aff6a; font-size: 20px; } .ftext.bleed { color: #ff5a6a; font-size: 20px; } .ftext.dot { color: #d0a0ff; font-size: 20px; }
+.ftext.buff { color: #8ad8ff; font-size: 14px; font-family: var(--sans); } .ftext.debuff { color: #ff8a9a; font-size: 14px; font-family: var(--sans); }
+.ftext.resist { color: #c8c8e8; font-size: 15px; font-family: var(--sans); }
+.ftext.label { color: #fff3c0; font-size: 15px; font-family: var(--serif); letter-spacing: .05em; }
+@keyframes floatUp { 0% { opacity: 0; transform: translate(-50%, 10px) scale(.7); } 12% { opacity: 1; transform: translate(-50%, -6px) scale(1.1); } 25% { transform: translate(-50%, -12px) scale(1); } 100% { opacity: 0; transform: translate(-50%, -70px); } }
+@keyframes critPop { 0% { opacity: 0; transform: translate(-50%, 10px) scale(.5); } 10% { opacity: 1; transform: translate(-50%, -10px) scale(1.45); } 22% { transform: translate(-50%, -14px) scale(1); } 100% { opacity: 0; transform: translate(-50%, -80px); } }
+.fbanner { position: absolute; left: 50%; top: 22%; transform: translateX(-50%); font-family: var(--title); font-size: clamp(28px, 4vw, 44px); letter-spacing: .2em; color: #fff; text-shadow: 0 0 24px var(--c), 0 2px 0 #000; animation: bannerIn 1.8s ease-out forwards; white-space: nowrap; }
+@keyframes bannerIn { 0% { opacity: 0; letter-spacing: .6em; } 20% { opacity: 1; letter-spacing: .2em; } 80% { opacity: 1; } 100% { opacity: 0; } }
+.sname-pop { position: absolute; transform: translate(-50%, -100%); padding: 4px 12px; border-radius: 999px; background: rgba(10,8,20,.8); border: 1px solid rgba(255,255,255,.2); font-family: var(--serif); font-size: 14px; white-space: nowrap; animation: fadeIn .2s; }
+.sname-pop.t0 { border-color: rgba(111,183,255,.6); } .sname-pop.t1 { border-color: rgba(255,90,106,.6); }
+.sname-pop.sb { border-color: #6ab8ff; color: #cfe8ff; box-shadow: 0 0 18px rgba(106,184,255,.6); }
+.cutin { position: absolute; inset: 0; pointer-events: none; animation: cutIn .35s ease-out; }
+.cutin.out { animation: cutOut .4s ease-in forwards; }
+.cut-band { position: absolute; left: -10%; right: -10%; top: 30%; height: 38%; transform: skewY(-6deg); background: linear-gradient(90deg, transparent, color-mix(in srgb, var(--c) 55%, #000) 20%, color-mix(in srgb, var(--c) 35%, #000) 80%, transparent); box-shadow: 0 0 60px var(--c); opacity: .92; }
+.cut-art { position: absolute; top: 18%; height: 64%; aspect-ratio: 3 / 4; overflow: hidden; }
+.cutin.t0 .cut-art { left: 6%; } .cutin.t1 .cut-art { right: 6%; }
+.cut-art img { width: 100%; height: 100%; object-fit: cover; -webkit-mask-image: linear-gradient(90deg, transparent, #000 20%, #000 80%, transparent); mask-image: linear-gradient(90deg, transparent, #000 20%, #000 80%, transparent); }
+.cut-text { position: absolute; top: 40%; display: flex; flex-direction: column; gap: 6px; }
+.cutin.t0 .cut-text { left: 36%; } .cutin.t1 .cut-text { right: 36%; text-align: right; }
+.cut-hero { font-family: var(--title); font-size: clamp(28px, 4.4vw, 56px); color: #fff; text-shadow: 0 0 20px var(--c), 0 3px 0 #000; letter-spacing: .08em; }
+.cut-skill { font-family: var(--serif); font-size: clamp(16px, 2vw, 26px); color: #fff8dc; letter-spacing: .25em; text-transform: uppercase; }
+@keyframes cutIn { from { opacity: 0; transform: translateX(-40px); } }
+@keyframes cutOut { to { opacity: 0; transform: translateX(40px); } }
+.battle-root { position: absolute; inset: 0; }

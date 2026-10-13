@@ -587,7 +587,7 @@ export function buildSkirt(style: Look['outfit']['style'], c: PropColors, femini
     geo.computeVertexNormals();
   }
   const base = (geo.attributes.position.array as Float32Array).slice();
-  const clothCol = new THREE.Color(style === 'coat' ? c.primary : c.secondary).multiplyScalar(0.78);
+  const clothCol = new THREE.Color(style === 'coat' ? c.primary : c.secondary).multiplyScalar(0.62);
   const m = mesh(geo, gearMat.cloth(clothCol.getHex()));
   const g = new THREE.Group();
   g.add(m);

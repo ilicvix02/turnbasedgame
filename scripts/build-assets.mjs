@@ -59,6 +59,15 @@ for (const f of ['shared/engine/statuses.ts', 'shared/engine/sets.ts', 'shared/e
   const src = readFileSync(f, 'utf8');
   for (const m of src.matchAll(/icon: '([a-z0-9-]+)'/g)) wanted.add(m[1]);
 }
+// …and every icon('name') / iconSvg('name') / skillIcon return used by the client
+import { readdirSync as rd, statSync } from 'node:fs';
+const walk = (d) => rd(d).flatMap((f) => { const p = join(d, f); return statSync(p).isDirectory() ? walk(p) : p.endsWith('.ts') ? [p] : []; });
+for (const f of walk('client/src')) {
+  const src = readFileSync(f, 'utf8');
+  for (const m of src.matchAll(/(?:icon|iconSvg|iconTex)\('([a-z0-9-]+)'/g)) wanted.add(m[1]);
+  for (const m of src.matchAll(/return '([a-z0-9-]+)';/g)) wanted.add(m[1]);
+  for (const m of src.matchAll(/: '([a-z0-9]+(?:-[a-z0-9]+)+)'/g)) wanted.add(m[1]);
+}
 const out = {};
 for (const name of wanted) {
   const ic = set.icons[name] || (set.aliases?.[name] && set.icons[set.aliases[name].parent]);

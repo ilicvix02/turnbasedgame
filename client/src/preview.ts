@@ -38,3 +38,6 @@ const heroes: Hero3D[] = [];
   (window as any).__ready = true;
 })();
 st.tick((dt, t) => { for (const h of heroes) h.update(dt, t); });
+
+const then = q.get('then');
+if (then) setTimeout(() => { for (const hh of heroes) hh.play(then as AnimName); }, 2500);

@@ -89,7 +89,7 @@ export function recolor(src: THREE.Material, mode: RecolorMode, pal: Palette, em
 export const gearMat = {
   metal: (c: string | number, rough = 0.28) => new THREE.MeshStandardMaterial({ color: new THREE.Color(c), metalness: 0.92, roughness: rough, envMapIntensity: 1.2 }),
   gold: () => new THREE.MeshStandardMaterial({ color: 0xffcf6a, metalness: 1, roughness: 0.22, envMapIntensity: 1.4 }),
-  cloth: (c: string | number) => new THREE.MeshStandardMaterial({ color: new THREE.Color(c), metalness: 0, roughness: 0.85, side: THREE.DoubleSide }),
+  cloth: (c: string | number) => new THREE.MeshStandardMaterial({ color: new THREE.Color(c), metalness: 0, roughness: 0.95, side: THREE.DoubleSide, envMapIntensity: 0.5 }),
   leather: (c: string | number) => new THREE.MeshStandardMaterial({ color: new THREE.Color(c), metalness: 0.05, roughness: 0.6 }),
   wood: () => new THREE.MeshStandardMaterial({ color: 0x6a4424, metalness: 0, roughness: 0.7 }),
   glow: (c: string | number, intensity = 3) => new THREE.MeshStandardMaterial({ color: new THREE.Color(c), emissive: new THREE.Color(c), emissiveIntensity: intensity, roughness: 0.3, toneMapped: false }),
