@@ -12,5 +12,5 @@ export default defineConfig({
       '/ws': { target: 'ws://localhost:8787', ws: true },
     },
   },
-  build: { outDir: '../dist/client', emptyOutDir: true, chunkSizeWarningLimit: 2000 },
+  build: { outDir: '../dist/client', emptyOutDir: true, chunkSizeWarningLimit: 2000, rollupOptions: { input: { main: 'client/index.html', preview: 'client/preview.html' } } },
 });
