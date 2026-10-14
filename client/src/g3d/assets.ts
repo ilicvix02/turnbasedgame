@@ -14,13 +14,13 @@ export function loadGltf(url: string): Promise<GLTF> {
   return p;
 }
 
-export const BASE = { f: '/models/base/Superhero_Female_FullBody.gltf', m: '/models/base/Superhero_Male_FullBody.gltf' };
+export const BASE = { f: 'models/base/Superhero_Female_FullBody.gltf', m: 'models/base/Superhero_Male_FullBody.gltf' };
 export const HAIR = {
-  long: '/models/hair/Hair_Long.gltf', buns: '/models/hair/Hair_Buns.gltf', parted: '/models/hair/Hair_SimpleParted.gltf',
-  buzzed: '/models/hair/Hair_Buzzed.gltf', buzzedF: '/models/hair/Hair_BuzzedFemale.gltf', beard: '/models/hair/Hair_Beard.gltf',
-  browF: '/models/hair/Eyebrows_Female.gltf', browM: '/models/hair/Eyebrows_Regular.gltf',
+  long: 'models/hair/Hair_Long.gltf', buns: 'models/hair/Hair_Buns.gltf', parted: 'models/hair/Hair_SimpleParted.gltf',
+  buzzed: 'models/hair/Hair_Buzzed.gltf', buzzedF: 'models/hair/Hair_BuzzedFemale.gltf', beard: 'models/hair/Hair_Beard.gltf',
+  browF: 'models/hair/Eyebrows_Female.gltf', browM: 'models/hair/Eyebrows_Regular.gltf',
 };
-const P = '/models/parts/';
+const P = 'models/parts/';
 export const PARTS = {
   f: {
     rangerBody: P + 'Female_Ranger_Body.gltf', rangerArms: P + 'Female_Ranger_Arms.gltf', rangerLegs: P + 'Female_Ranger_Legs.gltf', rangerFeet: P + 'Female_Ranger_Feet.gltf',
@@ -34,8 +34,8 @@ export const PARTS = {
   },
 };
 export type PartKey = keyof typeof PARTS.f;
-export const MONSTERS = { imp: '/models/monsters/Imp.glb', puglin: '/models/monsters/Puglin.glb' };
-export const ANIMS = '/models/anim/ual.glb';
+export const MONSTERS = { imp: 'models/monsters/Imp.glb', puglin: 'models/monsters/Puglin.glb' };
+export const ANIMS = 'models/anim/ual.glb';
 
 let clips: THREE.AnimationClip[] | null = null;
 export async function animClips(): Promise<THREE.AnimationClip[]> {

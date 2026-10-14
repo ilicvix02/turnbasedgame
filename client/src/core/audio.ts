@@ -61,7 +61,7 @@ export async function music(name: string) {
   wanted = name;
   if (!ctx) return;
   if (current?.name === name) return;
-  const buf = await load(`/assets/music/${name}.mp3`);
+  const buf = await load(`assets/music/${name}.mp3`);
   if (!buf || wanted !== name) return;
   const old = current;
   const src = ctx.createBufferSource();
@@ -87,7 +87,7 @@ export function sfx(name: string, opts: { vol?: number; rate?: number; delay?: n
   const now = performance.now();
   if ((lastPlayed.get(name) || 0) > now - 40) return; // de-dupe bursts
   lastPlayed.set(name, now);
-  void load(`/assets/sfx/${name}.mp3`).then((buf) => {
+  void load(`assets/sfx/${name}.mp3`).then((buf) => {
     if (!buf || !ctx) return;
     const src = ctx.createBufferSource();
     src.buffer = buf;
@@ -101,5 +101,5 @@ export function sfx(name: string, opts: { vol?: number; rate?: number; delay?: n
 
 export function preloadSfx(names: string[]) {
   if (!ctx) return;
-  for (const n of names) void load(`/assets/sfx/${n}.mp3`);
+  for (const n of names) void load(`assets/sfx/${n}.mp3`);
 }

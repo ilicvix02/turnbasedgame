@@ -16,7 +16,14 @@ export class ApiError extends Error {
   constructor(public status: number, msg: string) { super(msg); }
 }
 
+/** Standalone build: the game server runs inside the page (client/src/offline/local.ts). */
+export const OFFLINE = import.meta.env.MODE === 'offline';
+
 async function req<T>(method: string, path: string, body?: unknown): Promise<T> {
+  if (OFFLINE) {
+    const local = await import('../offline/local');
+    try { return (await local.handle(method, path, body ?? {}, token)) as T; } catch (e) { throw new ApiError((e as any).status ?? 500, (e as Error).message); }
+  }
   const headers: Record<string, string> = { 'content-type': 'application/json' };
   if (token) headers.authorization = `Bearer ${token}`;
   let r: Response;

@@ -100,7 +100,7 @@ export function portraitImg(heroId: string, cls = 'port', full = false): HTMLIma
   if (c) img.src = c;
   else {
     // pre-rendered at build time (scripts/build-portraits.ts); fall back to rendering live
-    img.src = `/portraits/${heroId}${full ? '_full' : ''}.webp`;
+    img.src = `portraits/${heroId}${full ? '_full' : ''}.webp`;
     img.onerror = () => { img.onerror = null; void portrait(heroId, full).then((u) => { img.src = u; }); };
   }
   return img;

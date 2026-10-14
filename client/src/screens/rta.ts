@@ -5,7 +5,7 @@ import { rtaTier } from '@shared/meta/profile';
 import { HERO_TIER_LETTER } from '@shared/meta/tiers';
 import { PREBAN_COUNT, PROTECTED_PICK, type DraftState } from '@shared/meta/draft';
 import { $ui, clear, h, icon, toast } from '../core/dom';
-import { api, store, token } from '../core/api';
+import { api, OFFLINE, store, token } from '../core/api';
 import { music, sfx } from '../core/audio';
 import { go, onLeave, register, tierBadge, topbar, ELEMENT_ICON } from '../ui';
 import { hideMenuStage, showHeroes } from '../menu3d';
@@ -15,11 +15,13 @@ import { leaderboard } from './arena';
 
 let ws: WebSocket | null = null;
 const listeners = new Set<(m: any) => void>();
-function connect(): Promise<WebSocket> {
+let local: typeof import('../offline/local') | null = null;
+async function connect(): Promise<WebSocket> {
+  if (OFFLINE) local ??= await import('../offline/local');
   if (ws && ws.readyState === WebSocket.OPEN) return Promise.resolve(ws);
   return new Promise((resolve, reject) => {
     const proto = location.protocol === 'https:' ? 'wss' : 'ws';
-    const s = new WebSocket(`${proto}://${location.host}/ws?token=${token}`);
+    const s = OFFLINE ? local!.openSocket(token) : new WebSocket(`${proto}://${location.host}/ws?token=${token}`);
     s.onopen = () => { ws = s; resolve(s); };
     s.onerror = () => reject(new Error('Could not connect to the World Arena server.'));
     s.onclose = () => { if (ws === s) ws = null; for (const l of listeners) l({ t: 'closed' }); };

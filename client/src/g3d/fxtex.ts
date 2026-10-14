@@ -5,7 +5,7 @@ const cache = new Map<string, THREE.Texture>();
 export function fxTexture(name: string): THREE.Texture {
   let t = cache.get(name);
   if (!t) {
-    t = loader.load(`/assets/fx/${name}.png`);
+    t = loader.load(`assets/fx/${name}.png`);
     t.colorSpace = THREE.SRGBColorSpace;
     cache.set(name, t);
   }

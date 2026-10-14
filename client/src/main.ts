@@ -23,6 +23,9 @@ import './screens/arena';
 import './screens/rta';
 import './screens/codex';
 
+// resolved against the page so the build works from any base path
+document.documentElement.style.setProperty('--frame-img', `url("${new URL('assets/ui/frame.png', document.baseURI).href}")`);
+
 // ───────────────────────── boot ─────────────────────────
 const loading = h('div', { class: 'loading' }, h('div', { class: 'col center' }, h('div', { class: 'logo', style: 'font-size:42px' }, 'AETHRA'), h('div', { class: 'spin' }), h('div', { class: 'tiny dim', id: 'loadmsg' }, 'Summoning the Seven Thrones…')));
 document.body.appendChild(loading);
