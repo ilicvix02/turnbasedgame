@@ -19,7 +19,8 @@
     "assets": "node scripts/build-assets.mjs",
     "docs:heroes": "tsx scripts/gen-hero-docs.ts",
     "tiers": "tsx scripts/gen-tiers.ts",
-    "portraits": "tsx scripts/build-portraits.ts"
+    "portraits": "tsx scripts/build-portraits.ts",
+    "standalone": "node scripts/build-standalone.mjs"
   },
   "dependencies": {
     "three": "^0.180.0",
