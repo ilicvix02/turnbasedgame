@@ -59,8 +59,8 @@ export class RtaService {
   sockets = new Map<number, WebSocket>();
 
   constructor(private db: DB) {
-    setInterval(() => this.matchmake(), 1000).unref();
-    setInterval(() => this.tickTimers(), 500).unref();
+    (setInterval(() => this.matchmake(), 1000) as { unref?: () => void }).unref?.();
+    (setInterval(() => this.tickTimers(), 500) as { unref?: () => void }).unref?.();
   }
 
   send(ws: WebSocket | undefined, msg: unknown) {

@@ -385,10 +385,11 @@ interface PendingBattle {
   created: number;
 }
 const pending = new Map<string, PendingBattle>();
-setInterval(() => {
+// unref() exists only in Node; the standalone build runs this module in the browser
+(setInterval(() => {
   const cutoff = Date.now() - 3 * 3600 * 1000;
   for (const [k, v] of pending) if (v.created < cutoff) pending.delete(k);
-}, 60_000).unref();
+}, 60_000) as { unref?: () => void }).unref?.();
 
 function newBattle(pb: Omit<PendingBattle, 'id' | 'created'>) {
   for (const [k, v] of pending) if (v.userId === pb.userId) pending.delete(k);
