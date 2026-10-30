@@ -82,7 +82,7 @@ def demo_block(p):
 </table>"""
 
 
-def render(slug, to_override=None, note=None, img_base=None):
+def render(slug, to_override=None, note=None, img_base=None, html_only=False):
     d = ROOT / "business/webdev/previews" / slug
     p = json.loads((ROOT / "business/webdev/prospects" / f"{slug}.json").read_text())
     company = p["company"]
@@ -93,6 +93,15 @@ def render(slug, to_override=None, note=None, img_base=None):
     attach = ""
     noun = TRADE[p["trade"]]["noun"]
     subject = f"I built {company} a new website (preview inside)"
+    if html_only:
+        visual = f'<tr><td style="padding:14px 22px;">{demo_block(p)}</td></tr>\n<tr><td style="padding:10px 28px 0;color:#8fb5c2;font-size:13px;text-align:center;">This is your homepage. The full site also has Services, About and Contact pages, ready to go.</td></tr>\n'
+    else:
+        visual = f'''<tr><td style="padding:14px 24px 4px;"><a href="{e(yes)}"><img src="{img}/email.jpg" width="552" alt="{e(company)} new website on a laptop and a phone" style="display:block;width:100%;max-width:552px;height:auto;border:0;border-radius:12px;"></a></td></tr>
+<tr><td style="padding:22px 28px 8px;color:#e6f7fb;font-size:16px;line-height:24px;"><b style="color:{CYAN};">&#9660; Your full homepage, top to bottom</b></td></tr>
+<tr><td style="padding:4px 24px;"><a href="{e(yes)}"><img src="{img}/fullpage.jpg" width="552" alt="{e(company)} full homepage concept" style="display:block;width:100%;max-width:552px;height:auto;border:0;border-radius:10px;"></a></td></tr>
+<tr><td style="padding:22px 28px 8px;color:#e6f7fb;font-size:16px;line-height:24px;"><b style="color:{CYAN};">&#10010; Plus Services, About and Contact pages</b></td></tr>
+<tr><td style="padding:4px 24px 6px;"><a href="{e(yes)}"><img src="{img}/pages.jpg" width="552" alt="{e(company)} services, about and contact pages" style="display:block;width:100%;max-width:552px;height:auto;border:0;border-radius:10px;"></a></td></tr>
+'''
     banner = f'<tr><td style="background:#0b3a46;color:#bff3ff;font-size:13px;padding:10px 24px;">{e(note)}</td></tr>' if note else ""
     body = f"""<div style="display:none;max-height:0;overflow:hidden;">Your new homepage is in this email. Take a look, it takes 10 seconds.</div>
 <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background:{BLACK};padding:20px 0;"><tr><td align="center">
@@ -102,14 +111,10 @@ def render(slug, to_override=None, note=None, img_base=None):
 <tr><td style="padding:26px 28px 6px;color:#e6f7fb;font-size:16px;line-height:25px;">
 <p style="margin:0 0 14px;">Hi {e(greeting)},</p>
 <p style="margin:0 0 14px;">{e(p["personalization"])}</p>
-<p style="margin:0 0 6px;">So instead of a sales pitch, I built <b style="color:{CYAN};">{e(company)}</b> a complete new website: home, services, about and contact pages. Here it is:</p>
+{f'<p style="margin:0 0 14px;padding:12px 14px;border-left:3px solid #ffb547;background:#1a1408;color:#ffe2b0;">{e(p["site_note"])}</p>' if p.get("site_note") else ""}
+<p style="margin:0 0 6px;">So instead of a sales pitch, I built <b style="color:{CYAN};">{e(company)}</b> a complete new website. Here's the homepage:</p>
 </td></tr>
-<tr><td style="padding:14px 24px 4px;"><a href="{e(yes)}"><img src="{img}/email.jpg" width="552" alt="{e(company)} new website on a laptop and a phone" style="display:block;width:100%;max-width:552px;height:auto;border:0;border-radius:12px;"></a></td></tr>
-<tr><td style="padding:22px 28px 8px;color:#e6f7fb;font-size:16px;line-height:24px;"><b style="color:{CYAN};">&#9660; Your full homepage, top to bottom</b></td></tr>
-<tr><td style="padding:4px 24px;"><a href="{e(yes)}"><img src="{img}/fullpage.jpg" width="552" alt="{e(company)} full homepage concept" style="display:block;width:100%;max-width:552px;height:auto;border:0;border-radius:10px;"></a></td></tr>
-<tr><td style="padding:22px 28px 8px;color:#e6f7fb;font-size:16px;line-height:24px;"><b style="color:{CYAN};">&#10010; Plus Services, About and Contact pages</b></td></tr>
-<tr><td style="padding:4px 24px 6px;"><a href="{e(yes)}"><img src="{img}/pages.jpg" width="552" alt="{e(company)} services, about and contact pages" style="display:block;width:100%;max-width:552px;height:auto;border:0;border-radius:10px;"></a></td></tr>
-<tr><td style="padding:22px 28px 6px;color:#e6f7fb;font-size:15px;line-height:24px;">
+{visual}<tr><td style="padding:22px 28px 6px;color:#e6f7fb;font-size:15px;line-height:24px;">
 <table role="presentation" width="100%" cellpadding="0" cellspacing="0">
 <tr><td style="padding:5px 0;color:#e6f7fb;font-size:15px;line-height:24px;font-family:Arial,Helvetica,sans-serif;"><span style="color:{CYAN};">&#9654;</span>&nbsp; A call button pinned to every phone screen</td></tr>
 <tr><td style="padding:5px 0;color:#e6f7fb;font-size:15px;line-height:24px;font-family:Arial,Helvetica,sans-serif;"><span style="color:{CYAN};">&#9654;</span>&nbsp; A quote form that lands straight in your inbox</td></tr>
@@ -136,7 +141,7 @@ def render(slug, to_override=None, note=None, img_base=None):
 
 {p["personalization"]}
 
-So instead of a sales pitch, I built {company} a complete new website (home, services, about and contact pages). Open this email in HTML view (most email apps do this automatically) to see it.
+{(p["site_note"] + chr(10) + chr(10)) if p.get("site_note") else ""}So instead of a sales pitch, I built {company} a complete new website (home, services, about and contact pages). Open this email in HTML view (most email apps do this automatically) to see it.
 
 What's in it:
 - A call button pinned to every phone screen
@@ -165,6 +170,7 @@ if __name__ == "__main__":
     ap.add_argument("slug")
     ap.add_argument("--to")
     ap.add_argument("--note")
+    ap.add_argument("--html-only", action="store_true", help="no per-prospect images: homepage demo built from HTML inside the email")
     ap.add_argument("--img-base", help="public URL folder that holds <slug>/email.jpg, fullpage.jpg, pages.jpg")
     a = ap.parse_args()
-    render(a.slug, a.to, a.note, a.img_base)
+    render(a.slug, a.to, a.note, a.img_base, a.html_only)
