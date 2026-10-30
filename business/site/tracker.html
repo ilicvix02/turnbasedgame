@@ -4,25 +4,34 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Anton&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,700&family=JetBrains+Mono:wght@500;700&display=swap">
 <style>
-/* Layout: the PRO workbook as a live app. Sticky header with company KPIs, tab bar (Dashboard · Jobs · Costs · Payments · Cash Flow · Settings), one dense data table per tab. Brand: white ground, black type, green = money, actions and inputs. Single light theme by choice. */
+/* Layout: the PRO workbook as a live app. Sticky header with company KPIs, tab bar (Dashboard · Jobs · Costs · Payments · Cash Flow · Settings), one dense data table per tab. Brand: white page, black neon cards glowing turquoise; turquoise = money, actions and inputs. Single theme by choice. */
 :root {
   --void: #ffffff;
   --night: #ffffff;
-  --panel: #f7f9f7;
-  --panel-2: #eef3ef;
-  --line: #d7e0d9;
-  --text: #0a0f0b;
-  --muted: #56645a;
-  --gold: #0f9d4a;
-  --silver: #0a0f0b;
-  --cyan: #0b7a39;
-  --good: #0f8a43;
-  --warn: #a86400;
-  --bad: #d1243f;
+  --panel: #050809;
+  --panel-2: #0b1416;
+  --line: #d9e3e4;
+  --text: #071012;
+  --muted: #4f6266;
+  --gold: #00e5d4;
+  --silver: #071012;
+  --cyan: #2ff5e6;
+  --good: #2ff5e6;
+  --warn: #ffb547;
+  --bad: #ff4d6d;
   --display: "Anton", "Impact", "Arial Narrow", sans-serif;
   --body: "DM Sans", "Segoe UI", system-ui, sans-serif;
   --mono: "JetBrains Mono", ui-monospace, Menlo, monospace;
   color-scheme: light;
+}
+/* Inside the black cards the text flips to light. */
+.kpi, .scroll, .chart, .field {
+  --text: #e8fffd;
+  --muted: #8fb5b3;
+  --line: #123a3a;
+  color: var(--text);
+  color-scheme: dark;
+  box-shadow: 0 0 0 1px rgba(0, 229, 212, .45), 0 0 22px rgba(0, 229, 212, .28), 0 10px 30px rgba(7, 16, 18, .18);
 }
 * { box-sizing: border-box; }
 body { background: var(--void); color: var(--text); font: 400 .95rem/1.5 var(--body); }
@@ -34,13 +43,13 @@ header.top { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 5; b
 .top .wrap { display: grid; gap: 12px; padding-block: 14px 0; }
 .brandrow { display: flex; flex-wrap: wrap; gap: 8px 20px; align-items: baseline; justify-content: space-between; }
 .logo { font: 400 1.4rem/1 var(--display); letter-spacing: .04em; text-transform: uppercase; color: var(--silver); }
-.logo span { color: var(--gold); }
+.logo span { color: #00b8aa; }
 .company { font: 700 .8rem/1 var(--mono); color: var(--muted); letter-spacing: .1em; text-transform: uppercase; }
-.example { font: 700 .66rem/1 var(--mono); color: var(--cyan); border: 1px solid var(--cyan); border-radius: 999px; padding: 4px 8px; letter-spacing: .1em; }
+.example { font: 700 .66rem/1 var(--mono); color: #00897f; border: 1px solid #00b8aa; border-radius: 999px; padding: 4px 8px; letter-spacing: .1em; }
 .kpis { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 10px; }
 .kpi { background: var(--panel); border: 1px solid var(--line); border-radius: 10px; padding: 10px 12px; min-width: 0; }
 .kpi small { display: block; font: 500 .62rem/1.3 var(--mono); color: var(--muted); letter-spacing: .08em; text-transform: uppercase; }
-.kpi strong { font: 700 1.15rem/1.3 var(--mono); font-variant-numeric: tabular-nums; color: var(--text); }
+.kpi strong { font: 700 1.15rem/1.3 var(--mono); font-variant-numeric: tabular-nums; color: var(--gold); text-shadow: 0 0 10px rgba(0, 229, 212, .7); }
 .kpi strong.bad { color: var(--bad); }
 .kpi strong.good { color: var(--good); }
 nav.tabs { display: flex; gap: 4px; overflow-x: auto; scrollbar-width: none; }
@@ -48,7 +57,7 @@ nav.tabs button {
   font: 700 .82rem/1 var(--body); color: var(--muted); background: transparent; border: 0; cursor: pointer;
   padding: 12px 14px; border-bottom: 2px solid transparent; white-space: nowrap;
 }
-nav.tabs button[aria-selected="true"] { color: var(--text); border-bottom-color: var(--gold); border-bottom-width: 3px; }
+nav.tabs button[aria-selected="true"] { color: var(--text); border-bottom-color: var(--gold); border-bottom-width: 3px; box-shadow: 0 6px 12px -8px rgba(0, 229, 212, .9); }
 nav.tabs button:hover { color: var(--text); }
 
 main { padding-block: 22px 48px; }
@@ -57,35 +66,35 @@ main { padding-block: 22px 48px; }
 .panel-head h2 { font: 400 1.6rem/1 var(--display); text-transform: uppercase; letter-spacing: .02em; margin: 0; }
 .panel-head p { margin: 4px 0 0; color: var(--muted); max-width: 70ch; }
 .btn { font: 700 .82rem/1 var(--body); border-radius: 999px; padding: 10px 16px; cursor: pointer; border: 0; }
-.btn-gold { background: var(--gold); color: #ffffff; }
-.btn-gold:hover { background: #0b7a39; }
+.btn-gold { background: #050809; color: var(--cyan); box-shadow: 0 0 0 1px rgba(0, 229, 212, .7), 0 0 18px rgba(0, 229, 212, .45); text-shadow: 0 0 8px rgba(0, 229, 212, .8); }
+.btn-gold:hover { box-shadow: 0 0 0 1px var(--cyan), 0 0 28px rgba(0, 229, 212, .7); }
 .btn-ghost { background: transparent; color: var(--silver); box-shadow: inset 0 0 0 1px var(--line); }
 .btn-ghost:hover { box-shadow: inset 0 0 0 1px var(--cyan); }
 
 .scroll { overflow-x: auto; border: 1px solid var(--line); border-radius: 12px; background: var(--panel); }
 table { width: 100%; border-collapse: collapse; font: 500 .82rem/1.3 var(--mono); font-variant-numeric: tabular-nums; }
 th { position: sticky; top: 0; background: var(--panel-2); text-align: left; color: var(--muted); font-weight: 500; font-size: .66rem; letter-spacing: .08em; text-transform: uppercase; padding: 10px 8px; border-bottom: 1px solid var(--line); white-space: nowrap; }
-td { padding: 6px 8px; border-bottom: 1px solid #e6ece7; white-space: nowrap; }
+td { padding: 6px 8px; border-bottom: 1px solid #122426; white-space: nowrap; }
 tr:last-child td { border-bottom: 0; }
 td.num, th.num { text-align: right; }
 td.calc { color: var(--silver); }
-tfoot td { font-weight: 700; color: var(--text); background: var(--panel-2); border-top: 1px solid var(--line); }
+tfoot td { font-weight: 700; color: var(--gold); background: var(--panel-2); border-top: 1px solid var(--line); }
 input, select {
   font: 500 .82rem/1.2 var(--mono); color: var(--cyan); background: transparent; border: 1px solid transparent; border-radius: 6px;
   padding: 5px 6px; width: 100%; min-width: 70px;
 }
 input:hover, select:hover { border-color: var(--line); }
-input:focus, select:focus { border-color: var(--cyan); background: rgba(15, 157, 74, .06); outline: none; }
+input:focus, select:focus { border-color: var(--cyan); background: rgba(0, 229, 212, .08); outline: none; box-shadow: 0 0 10px rgba(0, 229, 212, .35); }
 input[type="number"] { text-align: right; }
 select option { background: var(--panel); color: var(--text); }
 .del { background: transparent; border: 0; color: var(--muted); cursor: pointer; font-size: 1rem; padding: 2px 6px; border-radius: 6px; }
 .del:hover { color: var(--bad); }
 .flag { font: 700 .64rem/1 var(--mono); padding: 5px 8px; border-radius: 6px; letter-spacing: .06em; }
-.flag.ok { color: var(--good); background: rgba(15, 138, 67, .08); box-shadow: inset 0 0 0 1px rgba(15, 138, 67, .45); }
-.flag.low { color: var(--warn); background: rgba(168, 100, 0, .08); box-shadow: inset 0 0 0 1px rgba(168, 100, 0, .45); }
-.flag.over { color: var(--bad); background: rgba(209, 36, 63, .08); box-shadow: inset 0 0 0 1px rgba(209, 36, 63, .5); }
+.flag.ok { color: var(--good); background: rgba(47, 245, 230, .1); box-shadow: inset 0 0 0 1px rgba(47, 245, 230, .5); }
+.flag.low { color: var(--warn); background: rgba(255, 181, 71, .1); box-shadow: inset 0 0 0 1px rgba(255, 181, 71, .5); }
+.flag.over { color: var(--bad); background: rgba(255, 77, 109, .12); box-shadow: inset 0 0 0 1px rgba(255, 77, 109, .55); }
 .neg { color: var(--bad); }
-.bar { height: 6px; border-radius: 3px; background: #e3e9e4; overflow: hidden; min-width: 70px; }
+.bar { height: 6px; border-radius: 3px; background: #16292b; overflow: hidden; min-width: 70px; }
 .bar i { display: block; height: 100%; background: var(--cyan); }
 .bar i.over { background: var(--bad); }
 
@@ -98,6 +107,7 @@ select option { background: var(--panel); color: var(--text); }
 .field { display: grid; gap: 6px; background: var(--panel); border: 1px solid var(--line); border-radius: 12px; padding: 14px; }
 .field label { font: 700 .72rem/1 var(--mono); color: var(--muted); letter-spacing: .08em; text-transform: uppercase; }
 .field input { font-size: 1rem; border-color: var(--line); }
+.field label { color: var(--muted); }
 .field small { color: var(--muted); font-size: .8rem; }
 .note { color: var(--muted); font-size: .85rem; }
 
@@ -303,20 +313,20 @@ function cashflow(c) {
   const area = `${x(0)},${y(lo)} ${pts} ${x(11)},${y(lo)}`;
   const ticks = [lo, (lo + hi) / 2, hi];
   const svg = `<svg viewBox="0 0 ${W} ${H}" role="img" aria-label="Ending cash balance by month">
-    ${ticks.map(t => `<line x1="${P}" x2="${W - 16}" y1="${y(t)}" y2="${y(t)}" stroke="#d7e0d9" stroke-width="1"/>
-      <text x="${P - 6}" y="${y(t) + 4}" text-anchor="end" fill="#56645a" font-size="11" font-family="JetBrains Mono, monospace">${usd(t)}</text>`).join("")}
-    ${lo < 0 ? `<line x1="${P}" x2="${W - 16}" y1="${y(0)}" y2="${y(0)}" stroke="#d1243f" stroke-dasharray="4 4"/>` : ""}
-    <polygon points="${area}" fill="rgba(15,157,74,.12)"/>
-    <polyline points="${pts}" fill="none" stroke="#0f9d4a" stroke-width="2.5"/>
-    ${vals.map((v, i) => `<circle cx="${x(i)}" cy="${y(v)}" r="${i === 11 ? 5 : 3}" fill="${v < 0 ? "#d1243f" : (i === 11 ? "#0a0f0b" : "#0f9d4a")}"/>
-      <text x="${x(i)}" y="${H - 8}" text-anchor="middle" fill="#56645a" font-size="10" font-family="JetBrains Mono, monospace">${c.months[i].label.split(" ")[0]}</text>`).join("")}
+    ${ticks.map(t => `<line x1="${P}" x2="${W - 16}" y1="${y(t)}" y2="${y(t)}" stroke="#123a3a" stroke-width="1"/>
+      <text x="${P - 6}" y="${y(t) + 4}" text-anchor="end" fill="#8fb5b3" font-size="11" font-family="JetBrains Mono, monospace">${usd(t)}</text>`).join("")}
+    ${lo < 0 ? `<line x1="${P}" x2="${W - 16}" y1="${y(0)}" y2="${y(0)}" stroke="#ff4d6d" stroke-dasharray="4 4"/>` : ""}
+    <polygon points="${area}" fill="rgba(0,229,212,.16)"/>
+    <polyline points="${pts}" fill="none" stroke="#2ff5e6" stroke-width="2.5" style="filter:drop-shadow(0 0 6px rgba(0,229,212,.9))"/>
+    ${vals.map((v, i) => `<circle cx="${x(i)}" cy="${y(v)}" r="${i === 11 ? 5 : 3}" fill="${v < 0 ? "#ff4d6d" : (i === 11 ? "#ffffff" : "#2ff5e6")}"/>
+      <text x="${x(i)}" y="${H - 8}" text-anchor="middle" fill="#8fb5b3" font-size="10" font-family="JetBrains Mono, monospace">${c.months[i].label.split(" ")[0]}</text>`).join("")}
   </svg>`;
   const body = c.months.map(m => `<tr><td>${m.label}</td><td class="num">${usd(m.inn)}</td><td class="num">${usd(m.out)}</td><td class="num calc">${usd(m.ovh)}</td>
     <td class="num ${m.net < 0 ? "neg" : ""}">${usd(m.net)}</td><td class="num ${m.bal < 0 ? "neg" : ""}">${usd(m.bal)}</td>
     <td>${m.warn ? `<span class="flag ${m.bal < 0 ? "over" : "low"}">${m.warn}</span>` : ""}</td></tr>`).join("");
   return `<section class="panel">
     <div class="panel-head"><div><h2>12-Month Cash Flow</h2><p>Client payments in, job costs and overhead out, month by month from your opening balance. Red marks a month where the bank would go negative.</p></div></div>
-    <div class="chart">${svg}<div class="legend"><span><i style="background:#0f9d4a"></i>Ending cash balance</span><span><i style="background:#d1243f"></i>Below zero</span></div></div>
+    <div class="chart">${svg}<div class="legend"><span><i style="background:#2ff5e6"></i>Ending cash balance</span><span><i style="background:#ff4d6d"></i>Below zero</span></div></div>
     <div class="scroll"><table><thead><tr><th>Month</th><th class="num">Cash in</th><th class="num">Job costs</th><th class="num">Overhead</th><th class="num">Net</th><th class="num">Ending balance</th><th>Warning</th></tr></thead>
     <tbody>${body}</tbody></table></div></section>`;
 }
