@@ -4,20 +4,21 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Anton&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,700&family=JetBrains+Mono:wght@500;700&display=swap">
 <style>
-/* Layout: cinematic dark sales page; neon gold = money/actions, neon purple = atmosphere/structure. Single deliberate dark theme. */
+/* Layout: cinematic dark sales page; neon gold = money/actions, dark royal cyan = atmosphere/structure, brushed silver = premium detail. Single deliberate dark theme. */
 :root {
-  --void: #0b0614;
-  --night: #140a24;
-  --panel: #1b0f30;
-  --line: #3a2160;
-  --text: #f3ecff;
-  --muted: #b6a6d4;
-  --gold: #ffd23f;
-  --gold-hot: #ffe57a;
-  --purple: #b026ff;
-  --purple-soft: #7d3cff;
+  --void: #030a12;
+  --night: #061624;
+  --panel: #0a1e2e;
+  --line: #16405a;
+  --text: #eef6fb;
+  --muted: #9fb6c6;
+  --gold: #ffcf4a;
+  --gold-hot: #ffe48a;
+  --silver: #d6e0e8;
+  --cyan: #00c8e8;
+  --cyan-deep: #007a9e;
   --good: #3ef0a0;
-  --bad: #ff4d8d;
+  --bad: #ff5a7a;
   --display: "Anton", "Impact", "Arial Narrow", sans-serif;
   --body: "DM Sans", "Segoe UI", system-ui, sans-serif;
   --mono: "JetBrains Mono", ui-monospace, "SFMono-Regular", Menlo, monospace;
@@ -56,11 +57,16 @@ h2 { font-size: clamp(2.2rem, 5.4vw, 3.8rem); line-height: 1; }
 h3 { font-size: 1.45rem; line-height: 1.1; }
 .neon-gold {
   color: var(--gold);
-  text-shadow: 0 0 6px rgba(255, 210, 63, .85), 0 0 22px rgba(255, 210, 63, .55), 0 0 48px rgba(255, 170, 0, .35);
+  text-shadow: 0 0 6px rgba(255, 210, 63, .85), 0 0 22px rgba(255, 210, 63, .55), 0 0 48px rgba(255, 176, 20, .35);
 }
-.neon-purple {
-  color: #e2b8ff;
-  text-shadow: 0 0 6px rgba(176, 38, 255, .9), 0 0 24px rgba(176, 38, 255, .65), 0 0 56px rgba(125, 60, 255, .45);
+.neon-silver {
+  background: linear-gradient(180deg, #ffffff 0%, #d6e0e8 45%, #8a9aa8 55%, #e9f0f5 100%);
+  -webkit-background-clip: text; background-clip: text; color: transparent;
+  filter: drop-shadow(0 0 10px rgba(214, 224, 232, .35));
+}
+.neon-cyan {
+  color: #b9f6ff;
+  text-shadow: 0 0 6px rgba(0, 200, 232, .9), 0 0 24px rgba(0, 200, 232, .65), 0 0 56px rgba(0, 122, 158, .45);
 }
 p { margin: 0; }
 .lede { color: var(--muted); font-size: clamp(1.05rem, 1.8vw, 1.25rem); max-width: 58ch; }
@@ -73,18 +79,20 @@ p { margin: 0; }
   transition: transform .15s ease, box-shadow .15s ease;
 }
 .btn-gold {
-  background: var(--gold); color: #1a0b00;
-  box-shadow: 0 0 0 1px var(--gold-hot), 0 0 24px rgba(255, 210, 63, .55), 0 0 64px rgba(255, 170, 0, .3);
+  background: var(--gold); color: #1a1000;
+  box-shadow: 0 0 0 1px var(--gold-hot), 0 0 24px rgba(255, 210, 63, .55), 0 0 64px rgba(255, 176, 20, .3);
 }
-.btn-gold:hover { transform: translateY(-2px); box-shadow: 0 0 0 1px var(--gold-hot), 0 0 32px rgba(255, 210, 63, .8), 0 0 90px rgba(255, 170, 0, .45); }
-.btn-ghost { background: transparent; color: var(--text); box-shadow: inset 0 0 0 1.5px var(--purple); }
-.btn-ghost:hover { box-shadow: inset 0 0 0 1.5px var(--purple), 0 0 24px rgba(176, 38, 255, .5); }
+.btn-gold:hover { transform: translateY(-2px); box-shadow: 0 0 0 1px var(--gold-hot), 0 0 32px rgba(255, 210, 63, .8), 0 0 90px rgba(255, 176, 20, .45); }
+.btn-ghost { background: transparent; color: var(--text); box-shadow: inset 0 0 0 1.5px var(--cyan); }
+.btn-ghost:hover { box-shadow: inset 0 0 0 1.5px var(--cyan), 0 0 24px rgba(0, 200, 232, .5); }
 
 /* nav */
-.nav { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 5; background: rgba(11, 6, 20, .82); backdrop-filter: blur(10px); border-bottom: 1px solid rgba(176, 38, 255, .25); }
+.nav { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 5; background: rgba(3, 10, 18, .84); backdrop-filter: blur(10px); border-bottom: 1px solid rgba(0, 200, 232, .25); }
 .nav .wrap { display: flex; align-items: center; justify-content: space-between; gap: 16px; padding-block: 14px; }
 .logo { font: 400 1.5rem/1 var(--display); letter-spacing: .04em; text-transform: uppercase; text-decoration: none; }
 .logo span { color: var(--gold); }
+.logo { background: linear-gradient(180deg, #ffffff, #b8c6d2 60%, #eef4f8); -webkit-background-clip: text; background-clip: text; color: transparent; }
+.logo span { -webkit-text-fill-color: var(--gold); }
 .nav .btn { padding: .75em 1.2em; font-size: .9rem; }
 
 /* hero */
@@ -92,7 +100,7 @@ p { margin: 0; }
 .hero::before, .hero::after {
   content: ""; position: absolute; border-radius: 50%; filter: blur(80px); pointer-events: none; z-index: 0;
 }
-.hero::before { width: 620px; height: 620px; background: rgba(176, 38, 255, .45); top: -220px; right: -180px; }
+.hero::before { width: 620px; height: 620px; background: rgba(0, 200, 232, .45); top: -220px; right: -180px; }
 .hero::after { width: 420px; height: 420px; background: rgba(255, 190, 40, .2); bottom: -200px; left: -160px; }
 .hero .wrap { position: relative; z-index: 1; display: grid; grid-template-columns: 1.05fr .95fr; gap: clamp(32px, 5vw, 64px); align-items: center; }
 .hero-copy { display: grid; gap: 24px; min-width: 0; }
@@ -102,31 +110,31 @@ p { margin: 0; }
 
 /* dashboard mock */
 .screen {
-  min-width: 0; background: linear-gradient(180deg, #1d1033, #120a22); border-radius: 18px; padding: 18px;
-  box-shadow: 0 0 0 1px rgba(176, 38, 255, .55), 0 0 40px rgba(176, 38, 255, .35), 0 30px 80px rgba(0, 0, 0, .6);
+  min-width: 0; background: linear-gradient(180deg, #0b2234, #061420); border-radius: 18px; padding: 18px;
+  box-shadow: 0 0 0 1px rgba(0, 200, 232, .55), 0 0 40px rgba(0, 200, 232, .35), 0 30px 80px rgba(0, 0, 0, .6);
   transform: perspective(1400px) rotateY(-6deg) rotateX(2deg);
 }
 .screen-top { display: flex; justify-content: space-between; align-items: center; gap: 8px; margin-bottom: 12px; }
 .dots { display: flex; gap: 6px; }
 .dots i { width: 9px; height: 9px; border-radius: 50%; background: var(--line); display: block; }
 .screen-title { font: 700 .72rem/1 var(--mono); color: var(--muted); letter-spacing: .12em; text-transform: uppercase; }
-.example-tag { font: 700 .66rem/1 var(--mono); color: var(--purple); border: 1px solid var(--purple); border-radius: 999px; padding: 4px 8px; letter-spacing: .1em; }
+.example-tag { font: 700 .66rem/1 var(--mono); color: var(--cyan); border: 1px solid var(--cyan); border-radius: 999px; padding: 4px 8px; letter-spacing: .1em; }
 .table-scroll { overflow-x: auto; }
 table { width: 100%; border-collapse: collapse; font: 500 .82rem/1.3 var(--mono); font-variant-numeric: tabular-nums; min-width: 420px; }
 th { text-align: left; color: var(--muted); font-weight: 500; font-size: .68rem; letter-spacing: .08em; text-transform: uppercase; padding: 8px 8px; border-bottom: 1px solid var(--line); }
-td { padding: 10px 8px; border-bottom: 1px solid rgba(58, 33, 96, .6); }
+td { padding: 10px 8px; border-bottom: 1px solid rgba(22, 64, 90, .6); }
 td.num, th.num { text-align: right; }
 .flag { font: 700 .66rem/1 var(--mono); padding: 5px 8px; border-radius: 6px; letter-spacing: .06em; white-space: nowrap; }
 .flag.ok { color: var(--good); background: rgba(62, 240, 160, .1); box-shadow: inset 0 0 0 1px rgba(62, 240, 160, .4); }
 .flag.over { color: var(--bad); background: rgba(255, 77, 141, .12); box-shadow: inset 0 0 0 1px rgba(255, 77, 141, .5); }
 .screen-foot { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; margin-top: 14px; }
-.kpi { background: rgba(176, 38, 255, .08); border: 1px solid var(--line); border-radius: 10px; padding: 10px 12px; }
+.kpi { background: rgba(0, 200, 232, .08); border: 1px solid var(--line); border-radius: 10px; padding: 10px 12px; }
 .kpi small { display: block; font: 500 .62rem/1.2 var(--mono); color: var(--muted); letter-spacing: .08em; text-transform: uppercase; }
 .kpi strong { font: 700 1.05rem/1.3 var(--mono); color: var(--gold); }
 .kpi strong.bad { color: var(--bad); }
 
 /* marquee strip */
-.strip { border-block: 1px solid rgba(176, 38, 255, .35); background: var(--night); overflow: hidden; }
+.strip { border-block: 1px solid rgba(0, 200, 232, .35); background: var(--night); overflow: hidden; }
 .strip-track { display: flex; gap: 40px; padding-block: 16px; white-space: nowrap; animation: slide 38s linear infinite; width: max-content; }
 .strip-track span { font: 400 1.35rem/1 var(--display); text-transform: uppercase; letter-spacing: .04em; color: var(--muted); }
 .strip-track span b { color: var(--gold); font-weight: 400; }
@@ -136,36 +144,58 @@ td.num, th.num { text-align: right; }
 .section-head { display: grid; gap: 16px; margin-bottom: clamp(32px, 5vw, 56px); max-width: 760px; }
 .leaks { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 20px; }
 .leak { background: var(--panel); border: 1px solid var(--line); border-radius: 16px; padding: 26px; display: grid; gap: 12px; align-content: start; min-width: 0; }
-.leak .trade { font: 700 .7rem/1 var(--mono); color: var(--purple); letter-spacing: .14em; text-transform: uppercase; }
+.leak .trade { font: 700 .7rem/1 var(--mono); color: var(--cyan); letter-spacing: .14em; text-transform: uppercase; }
 .leak p { color: var(--muted); }
 
 /* system */
-.system { background: radial-gradient(900px 500px at 85% 10%, rgba(176, 38, 255, .22), transparent 70%), var(--night); }
+.system { background: radial-gradient(900px 500px at 85% 10%, rgba(0, 200, 232, .22), transparent 70%), var(--night); }
 .modules { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0; border-top: 1px solid var(--line); }
 .module { display: grid; grid-template-columns: auto 1fr; gap: 20px; padding: 28px 8px; border-bottom: 1px solid var(--line); min-width: 0; }
 .module:nth-child(odd) { border-right: 1px solid var(--line); padding-right: 28px; }
 .module:nth-child(even) { padding-left: 28px; }
-.module .tab { font: 700 .72rem/1 var(--mono); color: var(--gold); letter-spacing: .12em; text-transform: uppercase; writing-mode: vertical-rl; transform: rotate(180deg); }
+.module .tab { font: 700 .72rem/1 var(--mono); color: var(--silver); letter-spacing: .12em; text-transform: uppercase; writing-mode: vertical-rl; transform: rotate(180deg); }
 .module div { display: grid; gap: 8px; min-width: 0; }
 .module p { color: var(--muted); }
 
 /* process */
 .steps { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 16px; counter-reset: step; }
 .step { position: relative; padding: 26px 22px; border-radius: 16px; background: var(--panel); border: 1px solid var(--line); display: grid; gap: 10px; align-content: start; min-width: 0; }
-.step::before { counter-increment: step; content: "0" counter(step); font: 400 2.6rem/1 var(--display); color: transparent; -webkit-text-stroke: 1.5px var(--purple); filter: drop-shadow(0 0 8px rgba(176, 38, 255, .7)); }
+.step::before { counter-increment: step; content: "0" counter(step); font: 400 2.6rem/1 var(--display); color: transparent; -webkit-text-stroke: 1.5px var(--cyan); filter: drop-shadow(0 0 8px rgba(0, 200, 232, .7)); }
 .step p { color: var(--muted); font-size: .97rem; }
 .no-calls { margin-top: 28px; display: flex; flex-wrap: wrap; gap: 10px 28px; font: 700 .85rem/1.4 var(--mono); color: var(--gold); letter-spacing: .06em; text-transform: uppercase; }
+
+/* trial pack */
+.assets { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 20px; }
+.asset {
+  position: relative; border-radius: 18px; padding: 28px 24px; display: grid; gap: 12px; align-content: start; min-width: 0;
+  background: linear-gradient(160deg, rgba(214, 224, 232, .10), rgba(0, 200, 232, .06) 40%, var(--panel) 75%);
+  border: 1px solid rgba(214, 224, 232, .35);
+  box-shadow: 0 0 28px rgba(0, 200, 232, .18);
+}
+.asset .file { font: 700 .7rem/1 var(--mono); letter-spacing: .12em; text-transform: uppercase; color: var(--cyan); }
+.asset p { color: var(--muted); }
+.asset .value { font: 700 .8rem/1 var(--mono); color: var(--gold); letter-spacing: .06em; }
+
+/* poll */
+.poll { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; width: 100%; max-width: 760px; }
+.choice { border-radius: 18px; padding: 24px; display: grid; gap: 10px; text-align: left; background: var(--panel); border: 1px solid var(--line); min-width: 0; }
+.choice.yes { border-color: var(--gold); box-shadow: 0 0 30px rgba(255, 207, 74, .25); }
+.choice b { font: 400 1.6rem/1 var(--display); text-transform: uppercase; letter-spacing: .02em; }
+.choice.yes b { color: var(--gold); }
+.choice.no b { color: var(--silver); }
+.choice p { color: var(--muted); font-size: .95rem; }
+.choice code { font: 700 .95rem/1.4 var(--mono); color: var(--text); }
 
 /* pricing */
 .plans { display: grid; grid-template-columns: 1.15fr 1fr 1fr; gap: 20px; align-items: stretch; }
 .plan { background: var(--panel); border: 1px solid var(--line); border-radius: 20px; padding: 30px 26px; display: grid; gap: 16px; align-content: start; min-width: 0; }
 .plan.feature {
-  background: linear-gradient(180deg, #2a1150, #170a2c);
+  background: linear-gradient(180deg, #0d2a3c, #061624);
   border-color: var(--gold);
-  box-shadow: 0 0 0 1px rgba(255, 210, 63, .5), 0 0 36px rgba(255, 210, 63, .25), 0 0 80px rgba(176, 38, 255, .35);
+  box-shadow: 0 0 0 1px rgba(255, 210, 63, .5), 0 0 36px rgba(255, 210, 63, .25), 0 0 80px rgba(0, 200, 232, .35);
 }
-.plan .tag { justify-self: start; font: 700 .68rem/1 var(--mono); letter-spacing: .12em; text-transform: uppercase; padding: 6px 10px; border-radius: 999px; color: #1a0b00; background: var(--gold); }
-.plan .tag.alt { background: transparent; color: var(--purple); box-shadow: inset 0 0 0 1px var(--purple); }
+.plan .tag { justify-self: start; font: 700 .68rem/1 var(--mono); letter-spacing: .12em; text-transform: uppercase; padding: 6px 10px; border-radius: 999px; color: #1a1000; background: var(--gold); }
+.plan .tag.alt { background: transparent; color: var(--cyan); box-shadow: inset 0 0 0 1px var(--cyan); }
 .price { display: flex; align-items: baseline; gap: 10px; flex-wrap: wrap; }
 .price strong { font: 400 3.6rem/1 var(--display); }
 .price s { color: var(--muted); font: 500 1.1rem/1 var(--mono); }
@@ -179,7 +209,7 @@ td.num, th.num { text-align: right; }
 /* faq */
 .faq { display: grid; gap: 12px; max-width: 820px; }
 details { background: var(--panel); border: 1px solid var(--line); border-radius: 14px; padding: 4px 22px; }
-details[open] { border-color: var(--purple-soft); box-shadow: 0 0 24px rgba(176, 38, 255, .2); }
+details[open] { border-color: var(--cyan-deep); box-shadow: 0 0 24px rgba(0, 200, 232, .2); }
 summary { cursor: pointer; list-style: none; display: flex; justify-content: space-between; gap: 16px; align-items: center; padding-block: 18px; font-weight: 700; }
 summary::-webkit-details-marker { display: none; }
 summary::after { content: "+"; font: 400 1.6rem/1 var(--display); color: var(--gold); flex: none; }
@@ -188,7 +218,7 @@ details p { color: var(--muted); padding-bottom: 20px; max-width: 65ch; }
 
 /* final */
 .final { text-align: center; overflow: hidden; }
-.final::before { content: ""; position: absolute; inset: 10% 20%; background: rgba(176, 38, 255, .35); filter: blur(100px); border-radius: 50%; pointer-events: none; }
+.final::before { content: ""; position: absolute; inset: 10% 20%; background: rgba(0, 200, 232, .35); filter: blur(100px); border-radius: 50%; pointer-events: none; }
 .final .wrap { position: relative; display: grid; gap: 24px; justify-items: center; }
 .mailbox { display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: 12px; background: var(--panel); border: 1px solid var(--gold); border-radius: 999px; padding: 8px 8px 8px 24px; box-shadow: 0 0 30px rgba(255, 210, 63, .25); max-width: 100%; }
 .mailbox code { font: 700 1.05rem/1.4 var(--mono); color: var(--gold-hot); user-select: all; overflow-wrap: anywhere; }
@@ -198,6 +228,7 @@ footer { border-top: 1px solid var(--line); padding-block: 32px; color: var(--mu
 footer .wrap { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 12px; }
 
 @media (max-width: 900px) {
+  .assets { grid-template-columns: 1fr; }
   .hero .wrap { grid-template-columns: 1fr; }
   .screen { transform: none; }
   .leaks { grid-template-columns: 1fr; }
@@ -208,6 +239,7 @@ footer .wrap { display: flex; flex-wrap: wrap; justify-content: space-between; g
   .module:nth-child(even) { padding-left: 8px; }
 }
 @media (max-width: 520px) {
+  .poll { grid-template-columns: 1fr; }
   .steps { grid-template-columns: 1fr; }
   .screen-foot { grid-template-columns: 1fr; }
   .nav .btn { display: none; }
@@ -235,7 +267,7 @@ footer .wrap { display: flex; flex-wrap: wrap; justify-content: space-between; g
         <p class="lede">We build your job-costing and cash-flow system in 48 hours. Every receipt, every labor hour and every truck-stock part is tied to a job, so the leaks show up this week, not at tax time.</p>
         <div class="cta-row">
           <a class="btn btn-gold" href="#start">Get my system built →</a>
-          <a class="btn btn-ghost" href="#system">See what's inside</a>
+          <a class="btn btn-ghost" href="#trial">Get 3 free tools</a>
         </div>
         <div class="trust">
           <span><b>48-hour</b> delivery</span>
@@ -284,7 +316,7 @@ footer .wrap { display: flex; flex-wrap: wrap; justify-content: space-between; g
     <div class="wrap">
       <div class="section-head">
         <p class="eyebrow">The problem</p>
-        <h2>Busy all month. <span class="neon-purple">Not sure where the money went.</span></h2>
+        <h2>Busy all month. <span class="neon-cyan">Not sure where the money went.</span></h2>
         <p class="lede">Most small shops judge a job by the bank balance. By the time the numbers show a loss, the job is closed and the money is gone. These are the three leaks we see most:</p>
       </div>
       <div class="leaks">
@@ -341,11 +373,41 @@ footer .wrap { display: flex; flex-wrap: wrap; justify-content: space-between; g
     </div>
   </section>
 
+  <section class="band" id="trial">
+    <div class="wrap">
+      <div class="section-head">
+        <p class="eyebrow">Free trial pack</p>
+        <h2>Three premium tools. <span class="neon-silver">Yours free.</span></h2>
+        <p class="lede">Reply "I want it" and these three spreadsheets arrive in your inbox, ready to use. Keep them whether or not you buy the full setup.</p>
+      </div>
+      <div class="assets">
+        <article class="asset">
+          <span class="file">Tool 1 · .xlsx</span>
+          <h3>Job Profit Snapshot</h3>
+          <p>Enter a job's price, hours, labor rate, materials and overhead. You see your true profit and margin before you send the bid, and again when the job closes.</p>
+          <span class="value">Answers: was this job worth it?</span>
+        </article>
+        <article class="asset">
+          <span class="file">Tool 2 · .xlsx</span>
+          <h3>90-Day Cash Flow Forecaster</h3>
+          <p>Thirteen weeks of money in and money out, with a warning in red on any week your bank balance would go negative.</p>
+          <span class="value">Answers: will I make payroll?</span>
+        </article>
+        <article class="asset">
+          <span class="file">Tool 3 · .xlsx</span>
+          <h3>Truck Stock &amp; Unbilled Parts Tracker</h3>
+          <p>Log parts and materials pulled from each truck, tied to a job. Anything not on an invoice gets flagged, with the dollar total.</p>
+          <span class="value">Answers: what did I forget to bill?</span>
+        </article>
+      </div>
+    </div>
+  </section>
+
   <section class="band system" id="pricing">
     <div class="wrap">
       <div class="section-head">
         <p class="eyebrow">Pricing</p>
-        <h2>Pick your <span class="neon-purple">level.</span></h2>
+        <h2>Pick your <span class="neon-cyan">level.</span></h2>
       </div>
       <div class="plans">
         <article class="plan feature">
@@ -391,7 +453,7 @@ footer .wrap { display: flex; flex-wrap: wrap; justify-content: space-between; g
     <div class="wrap">
       <div class="section-head">
         <p class="eyebrow">Questions</p>
-        <h2>Straight answers.</h2>
+        <h2 class="neon-silver">Straight answers.</h2>
       </div>
       <div class="faq">
         <details>
@@ -420,9 +482,19 @@ footer .wrap { display: flex; flex-wrap: wrap; justify-content: space-between; g
 
   <section class="band final" id="start">
     <div class="wrap">
-      <p class="eyebrow">Get started</p>
-      <h2>Email one word: <span class="neon-gold">YES</span></h2>
-      <p class="lede">Send it to the address below. You'll get a free sample built for your trade, usually within one US business day.</p>
+      <p class="eyebrow">Your answer</p>
+      <h2>Want the <span class="neon-gold">free trial pack?</span></h2>
+      <p class="lede">Email one word to the address below. Every answer is read, and a "no" is respected right away.</p>
+      <div class="poll">
+        <div class="choice yes">
+          <b>I want it</b>
+          <p>Email the subject <code>YES</code>. You get the three tools and a sample built for your trade, usually within one US business day.</p>
+        </div>
+        <div class="choice no">
+          <b>Not interested</b>
+          <p>Email the subject <code>NO</code>. You'll be removed and never contacted again.</p>
+        </div>
+      </div>
       <div class="mailbox">
         <code id="email">ilicvix@gmail.com</code>
         <button class="btn btn-gold" id="copy" type="button">Copy address</button>
