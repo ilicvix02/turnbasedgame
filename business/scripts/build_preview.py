@@ -142,6 +142,25 @@ footer {{ background: #0a0d12; color: #9aa6b6; font-size: .86rem; padding-block:
 </body></html>"""
 
 
+def watermark(im, size):
+    """Tile a diagonal CONCEPT PREVIEW mark across a screenshot so it can't be reused as a finished design."""
+    from PIL import Image, ImageDraw, ImageFont
+    try:
+        font = ImageFont.truetype(str(FONTS / "Anton-Regular.ttf"), size)
+    except OSError:
+        font = ImageFont.load_default()
+    w, h = im.size
+    layer = Image.new("RGBA", (w * 2, h * 2), (0, 0, 0, 0))
+    d = ImageDraw.Draw(layer)
+    text = "CONCEPT PREVIEW  ·  TRADESHEETS"
+    step_y = int(size * 3.2)
+    for row, y in enumerate(range(0, h * 2, step_y)):
+        d.text(((row % 2) * size * 4 - size * 6, y), (text + "     ") * 6, font=font, fill=(24, 214, 255, 70))
+    layer = layer.rotate(28, resample=Image.BICUBIC)
+    layer = layer.crop((w // 2, h // 2, w // 2 + w, h // 2 + h))
+    return Image.alpha_composite(im.convert("RGBA"), layer).convert("RGB")
+
+
 def neon_mockup(desk, mob, out):
     from PIL import Image, ImageDraw, ImageFilter
     W, H = 1200, 720
@@ -155,11 +174,11 @@ def neon_mockup(desk, mob, out):
     bg = Image.blend(bg, glow.filter(ImageFilter.GaussianBlur(22)), 0.85)
     d = ImageDraw.Draw(bg)
     d.rounded_rectangle([lx, ly, lx + lw, ly + lh], 20, fill=(8, 14, 18), outline=(120, 236, 255), width=2)
-    scr = Image.open(desk).convert("RGB").resize((lw - 28, lh - 28))
+    scr = watermark(Image.open(desk).convert("RGB").resize((lw - 28, lh - 28)), 34)
     bg.paste(scr, (lx + 14, ly + 14))
     d.rounded_rectangle([lx - 40, ly + lh + 4, lx + lw + 40, ly + lh + 22], 8, fill=(14, 22, 28), outline=(60, 200, 230), width=1)
     d.rounded_rectangle([px, py, px + pw, py + ph], 34, fill=(8, 14, 18), outline=(120, 236, 255), width=2)
-    m = Image.open(mob).convert("RGB").resize((pw - 20, ph - 20))
+    m = watermark(Image.open(mob).convert("RGB").resize((pw - 20, ph - 20)), 18)
     mask = Image.new("L", m.size, 0)
     ImageDraw.Draw(mask).rounded_rectangle([0, 0, m.size[0], m.size[1]], 26, fill=255)
     bg.paste(m, (px + 10, py + 10), mask)
@@ -179,8 +198,6 @@ const {{ chromium }} = require('playwright');
   const d = await b.newPage({{ viewport: {{ width: 1280, height: 800 }} }});
   await d.goto(url, {{ waitUntil: 'networkidle', timeout: 60000 }}).catch(() => {{}}); await d.waitForTimeout(800);
   await d.screenshot({{ path: '{out}/desktop.jpg', type: 'jpeg', quality: 80 }});
-  await d.emulateMedia({{ media: 'screen' }});
-  await d.pdf({{ path: '{out}/concept.pdf', width: '1280px', height: '2400px', printBackground: true, pageRanges: '1' }});
   const m = await b.newPage({{ viewport: {{ width: 390, height: 780 }}, deviceScaleFactor: 2 }});
   await m.goto(url, {{ waitUntil: 'networkidle', timeout: 60000 }}).catch(() => {{}}); await m.waitForTimeout(800);
   await m.screenshot({{ path: '{out}/mobile.jpg', type: 'jpeg', quality: 80 }});

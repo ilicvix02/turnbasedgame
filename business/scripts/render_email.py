@@ -89,7 +89,7 @@ def render(slug, to_override=None, note=None):
     greeting = p.get("owner_first") or f"{company} team"
     yes = mailto(f"YES - make my site live ({company})")
     no = mailto(f"NO - not interested ({company})")
-    attach = next(x.name for x in d.glob("*-homepage-concept.jpg"))
+    attach = ""
     noun = TRADE[p["trade"]]["noun"]
     subject = f"I built {company} a new website (preview inside)"
     banner = f'<tr><td style="background:#0b3a46;color:#bff3ff;font-size:13px;padding:10px 24px;">{e(note)}</td></tr>' if note else ""
@@ -106,12 +106,11 @@ def render(slug, to_override=None, note=None):
 <tr><td style="padding:14px 22px;">{demo_block(p)}</td></tr>
 <tr><td style="padding:6px 22px 4px;color:#8fb5c2;font-size:13px;text-align:center;">&#128247; And here's how it looks on a laptop and a phone:</td></tr>
 <tr><td style="padding:6px 22px 8px;"><a href="{e(yes)}"><img src="{RAW}/webdev/previews/{slug}/email.jpg" width="556" alt="{e(company)} new website on laptop and phone" style="display:block;width:100%;max-width:556px;height:auto;border:0;border-radius:12px;"></a></td></tr>
-<tr><td style="padding:4px 28px 0;color:#8fb5c2;font-size:13px;text-align:center;">&#128206; The full page is attached: <span style="color:{CYAN};">{e(attach)}</span></td></tr>
 <tr><td style="padding:22px 28px 6px;color:#e6f7fb;font-size:15px;line-height:24px;">
 <table role="presentation" width="100%" cellpadding="0" cellspacing="0">
-<tr><td style="padding:5px 0;"><span style="color:{CYAN};">&#9654;</span>&nbsp; A call button pinned to every phone screen</td></tr>
-<tr><td style="padding:5px 0;"><span style="color:{CYAN};">&#9654;</span>&nbsp; A quote form that lands straight in your inbox</td></tr>
-<tr><td style="padding:5px 0;"><span style="color:{CYAN};">&#9654;</span>&nbsp; Set up for local Google searches like "{noun} near me" in {e(p["city"])}</td></tr>
+<tr><td style="padding:5px 0;color:#e6f7fb;font-size:15px;line-height:24px;font-family:Arial,Helvetica,sans-serif;"><span style="color:{CYAN};">&#9654;</span>&nbsp; A call button pinned to every phone screen</td></tr>
+<tr><td style="padding:5px 0;color:#e6f7fb;font-size:15px;line-height:24px;font-family:Arial,Helvetica,sans-serif;"><span style="color:{CYAN};">&#9654;</span>&nbsp; A quote form that lands straight in your inbox</td></tr>
+<tr><td style="padding:5px 0;color:#e6f7fb;font-size:15px;line-height:24px;font-family:Arial,Helvetica,sans-serif;"><span style="color:{CYAN};">&#9654;</span>&nbsp; Set up for local Google searches like "{noun} near me" in {e(p["city"])}</td></tr>
 </table></td></tr>
 <tr><td style="padding:16px 22px;">
 <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background:#03171d;border:1px solid {CYAN};border-radius:14px;">
@@ -126,7 +125,7 @@ def render(slug, to_override=None, note=None):
 </td></tr></table></td></tr>
 <tr><td style="padding:10px 28px 24px;color:#e6f7fb;font-size:15px;line-height:24px;">
 <p style="margin:0 0 12px;">Viktor Ilic<br><span style="color:{CYAN};">TradeSheets</span> &middot; websites for the trades</p>
-<p style="margin:0;font-size:14px;color:#9fc3cd;"><b style="color:#e6f7fb;">P.S.</b> The design is yours to keep either way. If someone else handles your website, feel free to forward this to them.</p>
+<p style="margin:0;font-size:14px;color:#9fc3cd;"><b style="color:#e6f7fb;">P.S.</b> I only take 5 founding clients at $299. Reply YES today and one of them is yours.</p>
 </td></tr>
 <tr><td style="padding:14px 28px;background:#05090b;color:#5f7d86;font-size:12px;line-height:18px;">TradeSheets &middot; {POSTAL}<br>You're getting this because {e(company)} lists this address on its website. Tap "No thanks" or reply "no" and you'll never hear from me again.</td></tr>
 </table></td></tr></table>"""
@@ -134,7 +133,7 @@ def render(slug, to_override=None, note=None):
 
 {p["personalization"]}
 
-So instead of a sales pitch, I built {company} a new homepage. The full page is attached ({attach}).
+So instead of a sales pitch, I built {company} a new homepage. Open this email in HTML view (most email apps do this automatically) to see it.
 
 What's in it:
 - A call button pinned to every phone screen
@@ -148,13 +147,13 @@ Reply YES and I'll make it live. Reply NO and I won't email again.
 Viktor Ilic
 TradeSheets, websites for the trades
 
-P.S. The design is yours to keep either way.
+P.S. I only take 5 founding clients at $299. Reply YES today and one of them is yours.
 
 TradeSheets, {POSTAL}
 You're getting this because {company} lists this address on its website."""
     (d / "email.html").write_text(body)
     (d / "email.txt").write_text(text)
-    (d / "email.json").write_text(json.dumps({"to": to_override or p["email"], "subject": subject, "attachment": attach}, indent=1))
+    (d / "email.json").write_text(json.dumps({"to": to_override or p["email"], "subject": subject}, indent=1))
     print(slug, "->", to_override or p["email"], "|", subject, "|", len(body), "chars")
 
 

@@ -10,3 +10,10 @@ business/products/clients/
 __pycache__/
 business/private/
 business/webdev/clients/
+business/webdev/previews/*/index.html
+business/webdev/previews/*/desktop.jpg
+business/webdev/previews/*/mobile.jpg
+business/webdev/previews/*/*-homepage-concept.jpg
+business/webdev/previews/*/*.pdf
+business/webdev/previews/*/email.html
+business/webdev/previews/*/email.txt
