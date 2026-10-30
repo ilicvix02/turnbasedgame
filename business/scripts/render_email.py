@@ -13,6 +13,8 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[2]
 RAW = "https://raw.githubusercontent.com/ilicvix02/turnbasedgame/claude/bold-tesla-qg7syv/business"
+PREVIEW_RAW = "https://raw.githubusercontent.com/ilicvix02/tradesheets-previews/main"
+SITE = "https://ilicvix02.github.io/tradesheets-previews"
 POSTAL = "Kajmakcalanska 21/1, 11420 Smederevska Palanka, Serbia"
 FROM = "ilicvix@gmail.com"
 CYAN, CYAN_DEEP, BLACK, CARD = "#18d6ff", "#0096c7", "#000000", "#070b0d"
@@ -99,21 +101,23 @@ def render(slug, to_override=None, note=None, img_base=None, html_only=False):
     d = ROOT / "business/webdev/previews" / slug
     p = json.loads((ROOT / "business/webdev/prospects" / f"{slug}.json").read_text())
     company = p["company"]
-    img = (img_base or f"{RAW}/webdev/previews") + f"/{slug}"
+    img = (img_base or PREVIEW_RAW) + f"/{slug}"
+    site = f"{SITE}/{slug}/"
     greeting = p.get("owner_first") or f"{company} team"
     yes = mailto(f"YES - make my site live ({company})")
     no = mailto(f"NO - not interested ({company})")
     attach = ""
     noun = TRADE[p["trade"]]["noun"]
     subject = f"I built {company} a new website (preview inside)"
+    site_btn = f'<tr><td align="center" style="padding:20px 24px 4px;">{pill(site, "&#9654;&nbsp; See your full website &rarr;", CYAN, "#001218")}<div style="font-size:12px;color:#6f8f99;padding-top:8px;">All 4 pages, live in your browser. Try it on your phone.</div></td></tr>\n'
     if html_only:
         visual = f'<tr><td style="padding:14px 22px;">{demo_block(p)}</td></tr>\n<tr><td style="padding:10px 28px 0;color:#8fb5c2;font-size:13px;text-align:center;">This is your homepage. The full site also has Services, About and Contact pages, ready to go.</td></tr>\n'
     else:
-        visual = f'''<tr><td style="padding:14px 24px 4px;"><a href="{e(yes)}"><img src="{img}/email.jpg" width="552" alt="{e(company)} new website on a laptop and a phone" style="display:block;width:100%;max-width:552px;height:auto;border:0;border-radius:12px;"></a></td></tr>
+        visual = f'''<tr><td style="padding:14px 24px 4px;"><a href="{e(site)}"><img src="{img}/email.jpg" width="552" alt="{e(company)} new website on a laptop and a phone" style="display:block;width:100%;max-width:552px;height:auto;border:0;border-radius:12px;"></a></td></tr>
 <tr><td style="padding:22px 28px 8px;color:#e6f7fb;font-size:16px;line-height:24px;"><b style="color:{CYAN};">&#9660; Your full homepage, top to bottom</b></td></tr>
-<tr><td style="padding:4px 24px;"><a href="{e(yes)}"><img src="{img}/fullpage.jpg" width="552" alt="{e(company)} full homepage concept" style="display:block;width:100%;max-width:552px;height:auto;border:0;border-radius:10px;"></a></td></tr>
+<tr><td style="padding:4px 24px;"><a href="{e(site)}"><img src="{img}/fullpage.jpg" width="552" alt="{e(company)} full homepage concept" style="display:block;width:100%;max-width:552px;height:auto;border:0;border-radius:10px;"></a></td></tr>
 <tr><td style="padding:22px 28px 8px;color:#e6f7fb;font-size:16px;line-height:24px;"><b style="color:{CYAN};">&#10010; Plus Services, About and Contact pages</b></td></tr>
-<tr><td style="padding:4px 24px 6px;"><a href="{e(yes)}"><img src="{img}/pages.jpg" width="552" alt="{e(company)} services, about and contact pages" style="display:block;width:100%;max-width:552px;height:auto;border:0;border-radius:10px;"></a></td></tr>
+<tr><td style="padding:4px 24px 6px;"><a href="{e(site)}"><img src="{img}/pages.jpg" width="552" alt="{e(company)} services, about and contact pages" style="display:block;width:100%;max-width:552px;height:auto;border:0;border-radius:10px;"></a></td></tr>
 '''
     banner = f'<tr><td style="background:#0b3a46;color:#bff3ff;font-size:13px;padding:10px 24px;">{e(note)}</td></tr>' if note else ""
     body = f"""<div style="display:none;max-height:0;overflow:hidden;">Your new homepage is in this email. Take a look, it takes 10 seconds.</div>
@@ -128,7 +132,7 @@ def render(slug, to_override=None, note=None, img_base=None, html_only=False):
 {compare_block(p) and "<p style=\"margin:0 0 8px;\">I ran a quick check of your current website. Here's what I found, and what the new one fixes:</p>" + compare_block(p)}
 <p style="margin:0 0 6px;">So instead of a sales pitch, I built <b style="color:{CYAN};">{e(company)}</b> a complete new website. Here's the homepage:</p>
 </td></tr>
-{visual}<tr><td style="padding:22px 28px 6px;color:#e6f7fb;font-size:15px;line-height:24px;">
+{visual}{site_btn}<tr><td style="padding:22px 28px 6px;color:#e6f7fb;font-size:15px;line-height:24px;">
 <table role="presentation" width="100%" cellpadding="0" cellspacing="0">
 <tr><td style="padding:5px 0;color:#e6f7fb;font-size:15px;line-height:24px;font-family:Arial,Helvetica,sans-serif;"><span style="color:{CYAN};">&#9654;</span>&nbsp; A call button pinned to every phone screen</td></tr>
 <tr><td style="padding:5px 0;color:#e6f7fb;font-size:15px;line-height:24px;font-family:Arial,Helvetica,sans-serif;"><span style="color:{CYAN};">&#9654;</span>&nbsp; A quote form that lands straight in your inbox</td></tr>
@@ -155,7 +159,7 @@ def render(slug, to_override=None, note=None, img_base=None, html_only=False):
 
 {p["personalization"]}
 
-{(p["site_note"] + chr(10) + chr(10)) if p.get("site_note") else ""}{("I ran a quick check of your current website and found: " + "; ".join(p.get("audit",{}).get("issues",[])[:4]) + ". The new one fixes all of that." + chr(10)+chr(10)) if p.get("audit",{}).get("issues") else ""}So instead of a sales pitch, I built {company} a complete new website (home, services, about and contact pages). Open this email in HTML view (most email apps do this automatically) to see it.
+{(p["site_note"] + chr(10) + chr(10)) if p.get("site_note") else ""}{("I ran a quick check of your current website and found: " + "; ".join(p.get("audit",{}).get("issues",[])[:4]) + ". The new one fixes all of that." + chr(10)+chr(10)) if p.get("audit",{}).get("issues") else ""}So instead of a sales pitch, I built {company} a complete new website (home, services, about and contact pages). See it here: {SITE}/{slug}/ Open this email in HTML view (most email apps do this automatically) to see it.
 
 What's in it:
 - A call button pinned to every phone screen
