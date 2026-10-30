@@ -1,0 +1,293 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>TradeSheets | Websites for Plumbers & Electricians</title>
+<meta name="description" content="Custom websites for US plumbers and electricians. See your new website before you spend a cent. Live in 5 business days, everything by email.">
+<meta property="og:title" content="TradeSheets | Websites built for the trades">
+<meta property="og:description" content="See your new website before you spend a cent. Live in 5 business days.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Anton&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,700&family=JetBrains+Mono:wght@500;700&display=swap">
+<style>
+/* Black ground, royal cyan neon for actions and accents, white type. One theme by design. */
+:root {
+  --bg: #030608; --card: #070d10; --card-2: #0b161b; --line: #12313a;
+  --ink: #eafaff; --soft: #93b3bd; --cyan: #18d6ff; --cyan-deep: #0096c7; --red: #ff6b81;
+  --display: "Anton", Impact, "Arial Narrow", sans-serif;
+  --body: "DM Sans", "Segoe UI", system-ui, sans-serif;
+  --mono: "JetBrains Mono", ui-monospace, Menlo, monospace;
+  --glow: 0 0 0 1px rgba(24, 214, 255, .45), 0 0 28px rgba(24, 214, 255, .22);
+  color-scheme: dark;
+}
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body { margin: 0; background: var(--bg); color: var(--ink); font: 400 1.06rem/1.6 var(--body); overflow-x: hidden; }
+a { color: inherit; }
+:focus-visible { outline: 2px solid var(--cyan); outline-offset: 3px; }
+.wrap { max-width: 1160px; margin: 0 auto; padding-left: max(18px, env(safe-area-inset-left)); padding-right: max(18px, env(safe-area-inset-right)); }
+.band { padding-block: clamp(60px, 9vw, 112px); }
+h1, h2, h3 { margin: 0; font-family: var(--display); font-weight: 400; text-transform: uppercase; letter-spacing: .01em; line-height: .98; text-wrap: balance; }
+h1 { font-size: clamp(3rem, 8.4vw, 6.6rem); }
+h2 { font-size: clamp(2.2rem, 5vw, 3.8rem); }
+h3 { font-size: 1.45rem; line-height: 1.1; }
+p { margin: 0; }
+.eyebrow { font: 700 .76rem/1 var(--mono); letter-spacing: .18em; text-transform: uppercase; color: var(--cyan); }
+.lede { color: var(--soft); font-size: clamp(1.06rem, 1.8vw, 1.25rem); max-width: 60ch; }
+.neon { color: var(--cyan); text-shadow: 0 0 6px rgba(24, 214, 255, .7), 0 0 24px rgba(24, 214, 255, .35); }
+.btn { display: inline-flex; align-items: center; gap: .55em; font: 700 1rem/1 var(--body); text-decoration: none; padding: 1em 1.5em; border-radius: 999px; transition: transform .15s, box-shadow .15s; }
+.btn-cyan { background: var(--cyan); color: #00131a; box-shadow: 0 0 0 1px #8af0ff, 0 0 24px rgba(24, 214, 255, .5); }
+.btn-cyan:hover { transform: translateY(-2px); box-shadow: 0 0 0 1px #8af0ff, 0 0 38px rgba(24, 214, 255, .75); }
+.btn-line { color: var(--ink); box-shadow: inset 0 0 0 1.5px var(--cyan-deep); }
+.btn-line:hover { box-shadow: inset 0 0 0 1.5px var(--cyan); }
+.card { background: var(--card); border-radius: 18px; box-shadow: var(--glow); }
+
+.nav { position: sticky; top: 0; z-index: 10; background: rgba(3, 6, 8, .86); backdrop-filter: blur(10px); border-bottom: 1px solid var(--line); }
+.nav .wrap { display: flex; align-items: center; justify-content: space-between; gap: 16px; padding-block: 14px; }
+.logo { font: 400 1.55rem/1 var(--display); letter-spacing: .05em; text-decoration: none; text-transform: uppercase; }
+.logo span { color: var(--cyan); text-shadow: 0 0 10px rgba(24, 214, 255, .6); }
+.nav-links { display: flex; align-items: center; gap: 24px; font-weight: 700; font-size: .93rem; }
+.nav-links a:not(.btn) { text-decoration: none; color: var(--soft); }
+.nav-links a:not(.btn):hover { color: var(--ink); }
+.nav .btn { padding: .7em 1.15em; font-size: .9rem; }
+
+.hero { position: relative; overflow: hidden; padding-block: clamp(48px, 7vw, 92px) clamp(56px, 8vw, 100px); }
+.hero::before { content: ""; position: absolute; width: 900px; height: 900px; right: -320px; top: -420px; border-radius: 50%; background: radial-gradient(circle, rgba(24, 214, 255, .22), transparent 62%); pointer-events: none; }
+.hero .wrap { position: relative; display: grid; grid-template-columns: 1.05fr .95fr; gap: clamp(28px, 4vw, 56px); align-items: center; }
+.hero-copy { display: grid; gap: 22px; min-width: 0; }
+.cta-row { display: flex; flex-wrap: wrap; gap: 12px; }
+.trust { display: flex; flex-wrap: wrap; gap: 6px 20px; color: var(--soft); font-size: .93rem; }
+.trust b { color: var(--ink); }
+.hero-shot { min-width: 0; border-radius: 16px; overflow: hidden; box-shadow: var(--glow), 0 30px 80px rgba(0, 0, 0, .6); }
+.hero-shot img { display: block; width: 100%; height: auto; }
+
+.section-head { display: grid; gap: 14px; margin-bottom: clamp(28px, 4vw, 48px); max-width: 780px; }
+.steps { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 18px; counter-reset: s; }
+.step { padding: 26px 22px; display: grid; gap: 10px; align-content: start; min-width: 0; }
+.step::before { counter-increment: s; content: "0" counter(s); font: 400 2.5rem/1 var(--display); color: transparent; -webkit-text-stroke: 1.5px var(--cyan); filter: drop-shadow(0 0 8px rgba(24, 214, 255, .6)); }
+.step p { color: var(--soft); font-size: .97rem; }
+
+.gallery { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 22px; }
+.design { overflow: hidden; display: grid; min-width: 0; }
+.design img { display: block; width: 100%; height: auto; aspect-ratio: 16 / 10; object-fit: cover; object-position: top; border-bottom: 1px solid var(--line); }
+.design div { padding: 16px 18px 18px; display: grid; gap: 4px; }
+.design b { font: 400 1.25rem/1 var(--display); text-transform: uppercase; letter-spacing: .03em; }
+.design span { color: var(--soft); font-size: .92rem; }
+.note { margin-top: 18px; color: var(--soft); font-size: .9rem; }
+
+.fixes { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0; border-radius: 18px; overflow: hidden; box-shadow: var(--glow); }
+.fixes div { padding: 18px 22px; border-bottom: 1px solid var(--line); display: flex; gap: 12px; align-items: baseline; background: var(--card); }
+.fixes div:nth-child(odd) { border-right: 1px solid var(--line); }
+.fixes .x { color: var(--red); font-weight: 700; }
+.fixes .v { color: var(--cyan); font-weight: 700; }
+.fixes .head { background: var(--card-2); font: 700 .78rem/1 var(--mono); letter-spacing: .14em; text-transform: uppercase; color: var(--soft); }
+
+.included { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; }
+.included div { padding: 22px; display: grid; gap: 6px; }
+.included p { color: var(--soft); font-size: .96rem; }
+
+.plans { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 20px; align-items: stretch; }
+.plan { padding: 28px 24px; display: grid; gap: 14px; align-content: start; min-width: 0; }
+.plan.featured { box-shadow: 0 0 0 1.5px var(--cyan), 0 0 46px rgba(24, 214, 255, .35); background: linear-gradient(180deg, #08202a, var(--card)); }
+.pill { justify-self: start; font: 700 .66rem/1 var(--mono); letter-spacing: .12em; text-transform: uppercase; padding: 6px 10px; border-radius: 999px; color: var(--cyan); box-shadow: inset 0 0 0 1px var(--cyan-deep); }
+.featured .pill { background: var(--cyan); color: #00131a; box-shadow: none; }
+.price { display: flex; flex-wrap: wrap; align-items: baseline; gap: 8px; }
+.price strong { font: 400 3.3rem/1 var(--display); }
+.price s, .price small { color: var(--soft); font: 500 .9rem/1 var(--mono); }
+.plan ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 9px; }
+.plan li { position: relative; padding-left: 24px; color: var(--soft); font-size: .97rem; }
+.plan li::before { content: ""; position: absolute; left: 0; top: .5em; width: 11px; height: 6px; border-left: 2px solid var(--cyan); border-bottom: 2px solid var(--cyan); transform: rotate(-45deg); }
+.plan .btn { justify-content: center; margin-top: 4px; }
+
+.faq { display: grid; gap: 10px; max-width: 840px; }
+details { border-radius: 14px; background: var(--card); box-shadow: inset 0 0 0 1px var(--line); padding: 2px 20px; }
+details[open] { box-shadow: var(--glow); }
+summary { cursor: pointer; list-style: none; display: flex; justify-content: space-between; gap: 16px; padding-block: 16px; font-weight: 700; }
+summary::-webkit-details-marker { display: none; }
+summary::after { content: "+"; font: 400 1.5rem/1 var(--display); color: var(--cyan); }
+details[open] summary::after { content: "–"; }
+details p { color: var(--soft); padding-bottom: 18px; max-width: 66ch; }
+
+.founder { display: grid; grid-template-columns: auto 1fr; gap: 28px; align-items: center; padding: 28px; }
+.founder img { width: 200px; height: auto; border-radius: 50%; }
+.founder p { color: var(--soft); max-width: 60ch; }
+
+.final { text-align: center; }
+.final .card { padding: clamp(32px, 6vw, 64px); display: grid; gap: 20px; justify-items: center; background: radial-gradient(ellipse at top, rgba(24, 214, 255, .16), transparent 60%), var(--card); }
+.mail { font: 700 1.1rem/1.4 var(--mono); color: var(--cyan); user-select: all; }
+
+footer { border-top: 1px solid var(--line); padding-block: 30px; color: var(--soft); font-size: .86rem; }
+footer .wrap { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 12px; }
+
+@media (max-width: 960px) { .gallery, .included { grid-template-columns: repeat(2, minmax(0, 1fr)); } .steps { grid-template-columns: repeat(2, minmax(0, 1fr)); } .plans { grid-template-columns: 1fr; } }
+@media (max-width: 760px) {
+  .hero .wrap, .fixes, .founder { grid-template-columns: 1fr; }
+  .fixes div:nth-child(odd) { border-right: 0; }
+  .nav-links a:not(.btn) { display: none; }
+  .founder img { width: 140px; }
+}
+@media (max-width: 520px) { .gallery, .included, .steps { grid-template-columns: 1fr; } }
+@media (prefers-reduced-motion: reduce) { .btn, .btn:hover { transition: none; transform: none; } html { scroll-behavior: auto; } }
+</style>
+</head>
+<body>
+<header class="nav">
+  <div class="wrap">
+    <a class="logo" href="#top">Trade<span>Sheets</span></a>
+    <nav class="nav-links">
+      <a href="#designs">Designs</a><a href="#how">How it works</a><a href="#pricing">Pricing</a>
+      <a class="btn btn-cyan" href="#start">Get my free preview</a>
+    </nav>
+  </div>
+</header>
+
+<main id="top">
+  <section class="hero">
+    <div class="wrap">
+      <div class="hero-copy">
+        <p class="eyebrow">Websites for US plumbers &amp; electricians</p>
+        <h1>See your new website <span class="neon">before you spend a cent.</span></h1>
+        <p class="lede">We build a complete preview of your new website first: home, services, about and contact pages, with your name, your services and your phone number. You see it before you pay anything. Like it? It's live on your domain in 5 business days.</p>
+        <div class="cta-row">
+          <a class="btn btn-cyan" href="#start">Get my free preview &rarr;</a>
+          <a class="btn btn-line" href="#designs">See the designs</a>
+        </div>
+        <div class="trust"><span><b>Free</b> preview</span><span><b>5-day</b> launch</span><span><b>No calls</b>, all by email</span><span><b>You own</b> the site</span></div>
+      </div>
+      <div class="hero-shot"><img src="gallery/voltage.jpg" alt="Example TradeSheets website for an electrician, shown on a laptop and a phone" width="1104" height="662"></div>
+    </div>
+  </section>
+
+  <section class="band" id="how">
+    <div class="wrap">
+      <div class="section-head"><p class="eyebrow">How it works</p><h2>Four steps. <span class="neon">All by email.</span></h2></div>
+      <div class="steps">
+        <div class="card step"><h3>We check your site</h3><p>Speed, phones, Google, quote forms. You get a plain list of what's costing you calls.</p></div>
+        <div class="card step"><h3>We build your preview</h3><p>A full 4-page website with your real services, phone number and service area.</p></div>
+        <div class="card step"><h3>You say yes</h3><p>Answer a short questionnaire by email. Pay a 50% deposit by PayPal.</p></div>
+        <div class="card step"><h3>You go live</h3><p>Your site goes live on your own domain within 5 business days. You own every file.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="band" id="designs">
+    <div class="wrap">
+      <div class="section-head"><p class="eyebrow">Six designs</p><h2>Not a template. <span class="neon">Your look.</span></h2>
+        <p class="lede">Every business gets one of six distinct designs, then it's made yours: your colors, your services and your words.</p></div>
+      <div class="gallery">
+        <div class="card design"><img src="gallery/ironworks.jpg" alt="Ironworks design: bold, industrial, dark" loading="lazy" width="1104" height="690"><div><b>Ironworks</b><span>Bold, industrial, built to be noticed</span></div></div>
+        <div class="card design"><img src="gallery/clean.jpg" alt="Clean design: bright, airy, modern" loading="lazy" width="1104" height="690"><div><b>Clean</b><span>Bright and modern, easy to trust</span></div></div>
+        <div class="card design"><img src="gallery/heritage.jpg" alt="Heritage design: classic serif, family business" loading="lazy" width="1104" height="690"><div><b>Heritage</b><span>Classic, for established family shops</span></div></div>
+        <div class="card design"><img src="gallery/bright.jpg" alt="Bright design: punchy color blocks" loading="lazy" width="1104" height="690"><div><b>Bright</b><span>Punchy and local, impossible to miss</span></div></div>
+        <div class="card design"><img src="gallery/voltage.jpg" alt="Voltage design: dark, glowing, technical" loading="lazy" width="1104" height="662"><div><b>Voltage</b><span>Dark and electric, made for sparkies</span></div></div>
+        <div class="card design"><img src="gallery/editorial.jpg" alt="Editorial design: big magazine type" loading="lazy" width="1104" height="690"><div><b>Editorial</b><span>Big type, magazine confidence</span></div></div>
+      </div>
+      <p class="note">Shown with fictional sample businesses. Your preview uses your real details.</p>
+    </div>
+  </section>
+
+  <section class="band">
+    <div class="wrap">
+      <div class="section-head"><p class="eyebrow">What we fix</p><h2>Most trade websites <span class="neon">leak calls.</span></h2>
+        <p class="lede">These are the problems we find most often when we check plumbing and electrical websites. Every TradeSheets site fixes all of them.</p></div>
+      <div class="fixes">
+        <div class="head">Typical site today</div><div class="head">Your new site</div>
+        <div><span class="x">&#10007;</span> No quote form, so visitors leave</div><div><span class="v">&#10004;</span> Quote form that lands in your inbox</div>
+        <div><span class="x">&#10007;</span> Phone number you can't tap to call</div><div><span class="v">&#10004;</span> Call button pinned to every phone screen</div>
+        <div><span class="x">&#10007;</span> Invisible to Google's local results</div><div><span class="v">&#10004;</span> Local-business data and search descriptions built in</div>
+        <div><span class="x">&#10007;</span> Pinch-to-zoom disabled, tiny text on phones</div><div><span class="v">&#10004;</span> Designed for phones first</div>
+        <div><span class="x">&#10007;</span> Old footer, dated look, leftover template text</div><div><span class="v">&#10004;</span> Fresh, distinct design that looks current</div>
+      </div>
+    </div>
+  </section>
+
+  <section class="band">
+    <div class="wrap">
+      <div class="section-head"><p class="eyebrow">Included</p><h2>Everything a trade site needs.</h2></div>
+      <div class="included">
+        <div class="card"><h3>4 pages</h3><p>Home, services, about and contact, written from your real business.</p></div>
+        <div class="card"><h3>Call &amp; quote</h3><p>Tap-to-call everywhere and a quote form that emails you.</p></div>
+        <div class="card"><h3>Local Google setup</h3><p>Titles, descriptions and local-business data for "plumber near me" and "electrician near me" searches.</p></div>
+        <div class="card"><h3>Fast and secure</h3><p>Lightweight static pages, HTTPS, nothing to hack or update.</p></div>
+        <div class="card"><h3>You own it</h3><p>Your domain, your hosting account, your files. Nothing held hostage.</p></div>
+        <div class="card"><h3>Revisions</h3><p>Two rounds of changes on Starter, three on Pro, all by email.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="band" id="pricing">
+    <div class="wrap">
+      <div class="section-head"><p class="eyebrow">Pricing</p><h2>One price. <span class="neon">No monthly trap.</span></h2></div>
+      <div class="plans">
+        <article class="card plan featured">
+          <span class="pill">Founding client · first 5</span>
+          <h3>Starter</h3>
+          <div class="price"><strong class="neon">$299</strong><s>$399</s><small>one-time</small></div>
+          <ul><li>Complete website, your design</li><li>Call button, quote form, Google setup</li><li>Live in 5 business days</li><li>2 revision rounds</li></ul>
+          <a class="btn btn-cyan" href="#start">Get my free preview</a>
+        </article>
+        <article class="card plan">
+          <span class="pill">Growing shops</span>
+          <h3>Pro</h3>
+          <div class="price"><strong>$699</strong><s>$899</s><small>one-time</small></div>
+          <ul><li>Up to 6 pages</li><li>A page for each main city you serve</li><li>Quote form with job type and photos</li><li>3 revision rounds, 10 business days</li></ul>
+          <a class="btn btn-line" href="#start">Ask about Pro</a>
+        </article>
+        <article class="card plan">
+          <span class="pill">Optional</span>
+          <h3>Care plan</h3>
+          <div class="price"><strong>$39</strong><small>/ month</small></div>
+          <ul><li>Small edits every month</li><li>Monthly uptime check</li><li>Yearly design refresh</li><li>Cancel any time</li></ul>
+          <a class="btn btn-line" href="#start">Ask about care</a>
+        </article>
+      </div>
+      <p class="note">50% to start, 50% at launch, by PayPal. Founding prices end after 5 paid clients.</p>
+    </div>
+  </section>
+
+  <section class="band">
+    <div class="wrap">
+      <div class="section-head"><p class="eyebrow">Questions</p><h2>Straight answers.</h2></div>
+      <div class="faq">
+        <details><summary>Is the preview really free?</summary><p>Yes. We build your preview before you pay anything. You only pay if you want it live.</p></details>
+        <details><summary>Do I need to get on a call?</summary><p>No. Everything happens by email: the questionnaire, the draft, revisions and launch.</p></details>
+        <details><summary>Who owns the website?</summary><p>You do. It goes on your domain and your own free hosting account, and you get all the files.</p></details>
+        <details><summary>What if I already have a website?</summary><p>We check it first and show you exactly what's holding it back. The new site replaces it on the same domain.</p></details>
+        <details><summary>How long does it take?</summary><p>5 business days for Starter and 10 for Pro, counted from when your questionnaire is answered and your deposit is in.</p></details>
+        <details><summary>Where are you based?</summary><p>TradeSheets is run by Viktor Ilic from Serbia and works with trade businesses across the US, entirely by email.</p></details>
+      </div>
+    </div>
+  </section>
+
+  <section class="band">
+    <div class="wrap">
+      <div class="card founder">
+        <img src="assets/founder-card-avatar.jpg" alt="Viktor Ilic, founder of TradeSheets" width="240" height="240">
+        <div style="display:grid;gap:10px;min-width:0">
+          <p class="eyebrow">Who's behind this</p>
+          <h3>Viktor Ilic, founder</h3>
+          <p>I started TradeSheets because good tradespeople lose calls to bad websites. Every site is built for one business, checked against what actually brings in calls, and handed over to you to own.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="band final" id="start">
+    <div class="wrap">
+      <div class="card">
+        <p class="eyebrow">Get started</p>
+        <h2>Want your <span class="neon">free preview?</span></h2>
+        <p class="lede">Email your business name and website (if you have one). We'll check your current site and send your full preview, usually within one business day.</p>
+        <a class="btn btn-cyan" href="mailto:ilicvix@gmail.com?subject=YES%20-%20free%20website%20preview&amp;body=Business%20name%3A%0AWebsite%20(if%20any)%3A%0ACity%3A%0ATrade%3A%20plumbing%20%2F%20electrical">Email me my free preview &rarr;</a>
+        <p class="mail">ilicvix@gmail.com</p>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap"><span>© 2026 TradeSheets · Viktor Ilic</span><span>Kajmakcalanska 21/1, 11420 Smederevska Palanka, Serbia</span></div>
+</footer>
+</body>
+</html>
