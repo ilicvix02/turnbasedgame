@@ -123,8 +123,8 @@ def render(slug, to_override=None, note=None):
 {pill(no, "No thanks", "transparent", "#9fc3cd", "#2a4a54")}
 <div style="font-size:12px;color:#6f8f99;padding-top:12px;">One tap opens a ready-made reply. Just hit send.</div>
 </td></tr></table></td></tr>
-<tr><td style="padding:10px 28px 24px;color:#e6f7fb;font-size:15px;line-height:24px;">
-<p style="margin:0 0 12px;">Viktor Ilic<br><span style="color:{CYAN};">TradeSheets</span> &middot; websites for the trades</p>
+<tr><td style="padding:10px 22px 24px;color:#e6f7fb;font-size:15px;line-height:24px;">
+<img src="{RAW}/email-assets/founder-card.jpg" width="556" alt="Viktor Ilic, Founder, TradeSheets: websites built for the trades" style="display:block;width:100%;max-width:556px;height:auto;border:0;border-radius:14px;margin:0 0 14px;">
 <p style="margin:0;font-size:14px;color:#9fc3cd;"><b style="color:#e6f7fb;">P.S.</b> I only take 5 founding clients at $299. Reply YES today and one of them is yours.</p>
 </td></tr>
 <tr><td style="padding:14px 28px;background:#05090b;color:#5f7d86;font-size:12px;line-height:18px;">TradeSheets &middot; {POSTAL}<br>You're getting this because {e(company)} lists this address on its website. Tap "No thanks" or reply "no" and you'll never hear from me again.</td></tr>
