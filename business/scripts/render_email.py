@@ -82,6 +82,19 @@ def demo_block(p):
 </table>"""
 
 
+def compare_block(p):
+    a = p.get("audit") or {}
+    issues = a.get("issues") or []
+    if not a.get("reachable") or not issues:
+        return ""
+    rows = "".join(
+        f'<tr><td style="padding:7px 10px;border-top:1px solid #1d3a44;color:#ffb3b3;font-size:14px;line-height:20px;">&#10007; {e(i)}</td>'
+        f'<td style="padding:7px 10px;border-top:1px solid #1d3a44;color:#8ff5e9;font-size:14px;line-height:20px;white-space:nowrap;">&#10004; Fixed</td></tr>'
+        for i in issues[:4])
+    return (f'<table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="margin:6px 0 16px;border:1px solid #1d3a44;border-radius:12px;background:#0a1418;">'
+            f'<tr><td style="padding:10px 10px 6px;color:#e6f7fb;font-weight:bold;font-size:14px;">Your site today</td><td style="padding:10px 10px 6px;color:#18d6ff;font-weight:bold;font-size:14px;">Your new site</td></tr>{rows}</table>')
+
+
 def render(slug, to_override=None, note=None, img_base=None, html_only=False):
     d = ROOT / "business/webdev/previews" / slug
     p = json.loads((ROOT / "business/webdev/prospects" / f"{slug}.json").read_text())
@@ -112,6 +125,7 @@ def render(slug, to_override=None, note=None, img_base=None, html_only=False):
 <p style="margin:0 0 14px;">Hi {e(greeting)},</p>
 <p style="margin:0 0 14px;">{e(p["personalization"])}</p>
 {f'<p style="margin:0 0 14px;padding:12px 14px;border-left:3px solid #ffb547;background:#1a1408;color:#ffe2b0;">{e(p["site_note"])}</p>' if p.get("site_note") else ""}
+{compare_block(p) and "<p style=\"margin:0 0 8px;\">I ran a quick check of your current website. Here's what I found, and what the new one fixes:</p>" + compare_block(p)}
 <p style="margin:0 0 6px;">So instead of a sales pitch, I built <b style="color:{CYAN};">{e(company)}</b> a complete new website. Here's the homepage:</p>
 </td></tr>
 {visual}<tr><td style="padding:22px 28px 6px;color:#e6f7fb;font-size:15px;line-height:24px;">
@@ -141,7 +155,7 @@ def render(slug, to_override=None, note=None, img_base=None, html_only=False):
 
 {p["personalization"]}
 
-{(p["site_note"] + chr(10) + chr(10)) if p.get("site_note") else ""}So instead of a sales pitch, I built {company} a complete new website (home, services, about and contact pages). Open this email in HTML view (most email apps do this automatically) to see it.
+{(p["site_note"] + chr(10) + chr(10)) if p.get("site_note") else ""}{("I ran a quick check of your current website and found: " + "; ".join(p.get("audit",{}).get("issues",[])[:4]) + ". The new one fixes all of that." + chr(10)+chr(10)) if p.get("audit",{}).get("issues") else ""}So instead of a sales pitch, I built {company} a complete new website (home, services, about and contact pages). Open this email in HTML view (most email apps do this automatically) to see it.
 
 What's in it:
 - A call button pinned to every phone screen

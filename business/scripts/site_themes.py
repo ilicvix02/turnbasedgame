@@ -200,8 +200,13 @@ def site(p):
     noun = "plumbing" if p["trade"] == "plumbing" else "electrical"
     headline = p.get("headline") or f"{city} {noun}, <em>done right.</em>"
     chips = "".join(f'<span class="chip">{svg(["shield","clock","star"][i % 3], 16)}<b>{e(a)}</b>&nbsp;{e(b)}</span>' for i, (a, b) in enumerate(proof[:3]))
+    schema = html.escape(__import__("json").dumps({"@context": "https://schema.org", "@type": "Plumber" if p["trade"] == "plumbing" else "Electrician",
+                          "name": p["company"], "telephone": phone, "areaServed": areas,
+                          "address": {"@type": "PostalAddress", "addressLocality": p["city"], "addressRegion": p["state"], "addressCountry": "US"}}), quote=False)
     head = (f'<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">'
             f'<meta name="robots" content="noindex,nofollow"><title>{{title}} | {company}</title>'
+            f'<meta name="description" content="{e(p.get("sub",""))[:155]}">'
+            f'<script type="application/ld+json">{schema}</script>'
             f'<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>'
             f'<link rel="stylesheet" href="https://fonts.googleapis.com/css2?{t["fonts"]}"><style>{css(t, pal)}</style></head><body>'
             f'<div class="concept">Concept preview made for {company} by TradeSheets · not live · design "{name}"</div>')
