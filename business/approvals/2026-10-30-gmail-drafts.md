@@ -7,5 +7,5 @@
 - Cost: $0 · Reversible: yes (drafts can be deleted)
 - Run by: plumbing-outreach-writer, electrical-outreach-writer, inbox-triager
 - Expires: 2026-11-06
-- Status: PENDING
-- Signed:
+- Status: APPROVED (in progress)
+- Signed: owner, in chat, 2026-10-30 ("APPROVE <ID>")

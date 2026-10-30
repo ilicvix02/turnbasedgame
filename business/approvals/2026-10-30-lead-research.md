@@ -6,5 +6,5 @@
 - Cost: $0 · Reversible: yes (file can be deleted)
 - Run by: dallas-lead-researcher, phoenix-lead-researcher. Can run in this cloud session.
 - Expires: 2026-11-06
-- Status: PENDING
-- Signed:
+- Status: APPROVED (in progress)
+- Signed: owner, in chat, 2026-10-30 ("APPROVE <ID>")
