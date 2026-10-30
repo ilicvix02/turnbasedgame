@@ -1,0 +1,166 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Lone Star Plumbing Co. | Plumber in Fort Worth, TX (Sample Design)</title>
+<meta name="description" content="Sample website design by TradeSheets: a Fort Worth plumbing company site built to get calls and quote requests.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;700;800;900&family=Inter+Tight:wght@400;500;600&display=swap">
+<style>
+/* Sample client site: navy + safety orange (a typical truck-wrap palette), so it reads as a client's brand, not ours. */
+:root { --navy: #0e2240; --navy-2: #16325c; --orange: #ff7a1a; --cream: #f6f3ee; --ink: #142033; --soft: #5a6678; --line: #e2ddd4; --white: #ffffff; }
+* { box-sizing: border-box; }
+body { margin: 0; font: 400 1.05rem/1.6 "Inter Tight", system-ui, sans-serif; color: var(--ink); background: var(--white); }
+h1, h2, h3 { font-family: "Archivo", system-ui, sans-serif; margin: 0; line-height: 1.05; text-wrap: balance; }
+a { color: inherit; }
+.wrap { max-width: 1120px; margin: 0 auto; padding: 0 20px; }
+.sample { background: #111; color: #fff; text-align: center; font: 600 .78rem/1 "Inter Tight", sans-serif; letter-spacing: .08em; padding: 7px; text-transform: uppercase; }
+header { background: var(--white); border-bottom: 1px solid var(--line); position: sticky; top: 0; z-index: 3; }
+header .wrap { display: flex; align-items: center; justify-content: space-between; gap: 16px; padding-block: 14px; }
+.brand { display: flex; align-items: center; gap: 10px; font: 900 1.25rem/1 "Archivo", sans-serif; color: var(--navy); text-decoration: none; }
+.brand .star { width: 34px; height: 34px; background: var(--orange); clip-path: polygon(50% 0, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%); }
+nav { display: flex; gap: 22px; font-weight: 600; font-size: .95rem; }
+nav a { text-decoration: none; color: var(--soft); }
+.call { background: var(--orange); color: #fff; text-decoration: none; font: 800 1rem/1 "Archivo", sans-serif; padding: 13px 18px; border-radius: 10px; white-space: nowrap; }
+.hero { background: linear-gradient(115deg, rgba(14, 34, 64, .96) 0%, rgba(14, 34, 64, .88) 55%, rgba(14, 34, 64, .55) 100%), repeating-linear-gradient(45deg, #1b3a66 0 14px, #17335c 14px 28px); color: #fff; }
+.hero .wrap { display: grid; grid-template-columns: 1.15fr .85fr; gap: 40px; padding-block: 64px; align-items: center; }
+.badge { display: inline-flex; gap: 8px; align-items: center; background: rgba(255, 122, 26, .16); color: #ffb27a; border: 1px solid rgba(255, 122, 26, .5); border-radius: 999px; padding: 6px 12px; font-weight: 600; font-size: .85rem; }
+.hero h1 { font-size: clamp(2.4rem, 5.4vw, 4rem); font-weight: 900; margin: 16px 0; }
+.hero h1 em { font-style: normal; color: var(--orange); }
+.hero p { color: #c9d4e6; max-width: 52ch; font-size: 1.12rem; }
+.hero-cta { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 26px; }
+.btn2 { border: 2px solid rgba(255, 255, 255, .6); color: #fff; text-decoration: none; font: 800 1rem/1 "Archivo", sans-serif; padding: 12px 18px; border-radius: 10px; }
+.proof { display: flex; flex-wrap: wrap; gap: 10px 24px; margin-top: 26px; color: #c9d4e6; font-size: .92rem; }
+.proof b { color: #fff; }
+.quote { background: var(--white); color: var(--ink); border-radius: 16px; padding: 24px; box-shadow: 0 24px 60px rgba(0, 0, 0, .35); display: grid; gap: 12px; }
+.quote h2 { font-size: 1.5rem; color: var(--navy); }
+.quote label { font-weight: 600; font-size: .85rem; color: var(--soft); display: grid; gap: 5px; }
+.quote input, .quote select, .quote textarea { font: inherit; padding: 11px 12px; border: 1px solid var(--line); border-radius: 10px; background: #fbfaf8; }
+.quote button { background: var(--orange); color: #fff; border: 0; border-radius: 10px; padding: 14px; font: 800 1.05rem/1 "Archivo", sans-serif; cursor: pointer; }
+.quote small { color: var(--soft); }
+section.band { padding-block: 72px; }
+.eyebrow { color: var(--orange); font-weight: 700; letter-spacing: .12em; text-transform: uppercase; font-size: .8rem; }
+.head { display: grid; gap: 10px; margin-bottom: 32px; max-width: 700px; }
+.head h2 { font-size: clamp(1.9rem, 3.6vw, 2.8rem); color: var(--navy); font-weight: 900; }
+.services { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
+.svc { border: 1px solid var(--line); border-radius: 14px; padding: 22px; display: grid; gap: 8px; background: var(--white); }
+.svc .ic { width: 42px; height: 42px; border-radius: 10px; background: var(--navy); color: var(--orange); display: grid; place-items: center; font: 900 1.2rem/1 "Archivo", sans-serif; }
+.svc h3 { font-size: 1.2rem; color: var(--navy); }
+.svc p { color: var(--soft); margin: 0; font-size: .97rem; }
+.cream { background: var(--cream); }
+.why { display: grid; grid-template-columns: repeat(4, 1fr); gap: 18px; }
+.why div { display: grid; gap: 6px; }
+.why strong { font: 900 2.2rem/1 "Archivo", sans-serif; color: var(--orange); }
+.why span { color: var(--soft); }
+.reviews { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
+.rev { background: var(--white); border-radius: 14px; padding: 22px; border: 1px solid var(--line); display: grid; gap: 10px; }
+.stars { color: #f5a623; letter-spacing: 2px; }
+.rev p { margin: 0; }
+.rev small { color: var(--soft); }
+.areas { display: flex; flex-wrap: wrap; gap: 10px; }
+.areas span { border: 1px solid var(--line); border-radius: 999px; padding: 8px 14px; font-weight: 600; color: var(--navy); background: var(--white); }
+.final { background: var(--navy); color: #fff; text-align: center; }
+.final h2 { color: #fff; font-size: clamp(2rem, 4vw, 3rem); font-weight: 900; }
+.final p { color: #c9d4e6; }
+.final .call { display: inline-block; margin-top: 20px; font-size: 1.2rem; padding: 16px 24px; }
+footer { background: #0a1830; color: #9fb0c8; font-size: .88rem; padding-block: 28px; }
+footer .wrap { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 10px; }
+.mobile-call { display: none; }
+@media (max-width: 860px) {
+  nav { display: none; }
+  .hero .wrap, .services, .reviews { grid-template-columns: 1fr; }
+  .why { grid-template-columns: repeat(2, 1fr); }
+  .mobile-call { display: block; position: fixed; left: 12px; right: 12px; bottom: 12px; text-align: center; z-index: 4; box-shadow: 0 10px 30px rgba(0, 0, 0, .3); }
+  body { padding-bottom: 76px; }
+}
+</style>
+</head>
+<body>
+<div class="sample">Sample design by TradeSheets · Fictional business, example content</div>
+<header>
+  <div class="wrap">
+    <a class="brand" href="#"><span class="star"></span>Lone Star Plumbing Co.</a>
+    <nav><a href="#services">Services</a><a href="#reviews">Reviews</a><a href="#areas">Service area</a></nav>
+    <a class="call" href="tel:+15555550123">Call (555) 555-0123</a>
+  </div>
+</header>
+
+<section class="hero">
+  <div class="wrap">
+    <div>
+      <span class="badge">● Open now · 24/7 emergency service</span>
+      <h1>Fort Worth plumbing, <em>fixed right the first time.</em></h1>
+      <p>Licensed master plumbers for leaks, water heaters, repipes and drain emergencies. Upfront written price before any work starts.</p>
+      <div class="hero-cta"><a class="call" href="tel:+15555550123">Call now</a><a class="btn2" href="#quote">Get a free quote</a></div>
+      <div class="proof"><span><b>Licensed</b> M-00000 (sample)</span><span><b>Same-day</b> service</span><span><b>Upfront</b> pricing</span></div>
+    </div>
+    <form class="quote" id="quote" onsubmit="event.preventDefault(); this.querySelector('small').textContent = 'Sample form: in a live site this goes straight to the owner\'s inbox.';">
+      <h2>Free quote in 1 hour</h2>
+      <label>What do you need?<select><option>Water heater</option><option>Leak or burst pipe</option><option>Drain clog</option><option>Repipe</option><option>Something else</option></select></label>
+      <label>Your name<input placeholder="First and last name"></label>
+      <label>Phone<input placeholder="(555) 555-0199" inputmode="tel"></label>
+      <label>Address or ZIP<input placeholder="76107"></label>
+      <button type="submit">Send my request</button>
+      <small>We reply within 1 hour during business hours.</small>
+    </form>
+  </div>
+</section>
+
+<section class="band" id="services">
+  <div class="wrap">
+    <div class="head"><span class="eyebrow">Services</span><h2>Everything from a dripping faucet to a full repipe</h2></div>
+    <div class="services">
+      <div class="svc"><span class="ic">01</span><h3>Water heaters</h3><p>Tank and tankless repair and replacement, usually same day.</p></div>
+      <div class="svc"><span class="ic">02</span><h3>Leak detection</h3><p>Slab leaks and hidden leaks found without tearing up your floors.</p></div>
+      <div class="svc"><span class="ic">03</span><h3>Drain cleaning</h3><p>Kitchen, bath and main-line clogs cleared with camera inspection.</p></div>
+      <div class="svc"><span class="ic">04</span><h3>Repiping</h3><p>PEX and copper repipes for older homes, with drywall patch included.</p></div>
+      <div class="svc"><span class="ic">05</span><h3>Fixtures</h3><p>Toilets, faucets, disposals and shower valves installed right.</p></div>
+      <div class="svc"><span class="ic">06</span><h3>Emergency service</h3><p>Burst pipe at 2 a.m.? A licensed plumber answers, every time.</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="band cream">
+  <div class="wrap">
+    <div class="head"><span class="eyebrow">Why Lone Star</span><h2>The plumber your neighbors already call</h2></div>
+    <div class="why">
+      <div><strong>24/7</strong><span>Emergency line answered by a person</span></div>
+      <div><strong>1 hr</strong><span>Quote reply time during business hours</span></div>
+      <div><strong>$0</strong><span>Trip charge when you book the repair</span></div>
+      <div><strong>1 yr</strong><span>Labor warranty on every job</span></div>
+    </div>
+  </div>
+</section>
+
+<section class="band" id="reviews">
+  <div class="wrap">
+    <div class="head"><span class="eyebrow">Reviews</span><h2>What customers say</h2><p style="color:var(--soft);margin:0">Sample layout. On a live site, these are the client's real Google reviews, used with permission.</p></div>
+    <div class="reviews">
+      <div class="rev"><span class="stars">★★★★★</span><p>"Example review text: water heater replaced the same afternoon, and the price matched the quote."</p><small>Example reviewer · Google</small></div>
+      <div class="rev"><span class="stars">★★★★★</span><p>"Example review text: found our slab leak fast and explained every option."</p><small>Example reviewer · Google</small></div>
+      <div class="rev"><span class="stars">★★★★★</span><p>"Example review text: showed up at midnight for a burst pipe. Lifesavers."</p><small>Example reviewer · Google</small></div>
+    </div>
+  </div>
+</section>
+
+<section class="band cream" id="areas">
+  <div class="wrap">
+    <div class="head"><span class="eyebrow">Service area</span><h2>Serving Fort Worth and nearby cities</h2></div>
+    <div class="areas"><span>Fort Worth</span><span>Arlington</span><span>Benbrook</span><span>Keller</span><span>Haltom City</span><span>Burleson</span><span>Saginaw</span><span>Crowley</span></div>
+  </div>
+</section>
+
+<section class="band final">
+  <div class="wrap">
+    <h2>Water where it shouldn't be?</h2>
+    <p>Call now. A licensed plumber picks up, day or night.</p>
+    <a class="call" href="tel:+15555550123">Call (555) 555-0123</a>
+  </div>
+</section>
+
+<footer><div class="wrap"><span>© Lone Star Plumbing Co. (fictional sample)</span><span>Website by TradeSheets</span></div></footer>
+<a class="call mobile-call" href="tel:+15555550123">📞 Call now</a>
+</body>
+</html>
