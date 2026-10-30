@@ -1,7 +1,9 @@
 # Hourly website outreach run (owner's standing instruction, 2026-10-30: build custom websites and send emails, recurring)
 
 **Owner does no work.** Claude runs everything 24/7. Owner decisions (2026-10-30): keep the 50% deposit (no pay-on-launch), plumbing and electrical only, no marketplaces, no calls.
-- **Payment:** use the owner's PayPal.me link from business/private/owner.md (PAYPAL_ME). If it's missing, send the proposal anyway, say "I'll send the secure payment link shortly", tell the owner in chat ONCE per client, and don't start the build until a deposit is possible.
+- **Payment:** PayPal.me link **https://www.paypal.me/viktor0702**, with the amount in the URL (`/150USD`). Founding Starter $299 = $150 deposit + $149 at launch. Regular Starter $399 = $200 + $199. Pro founding $699 = $350 + $349.
+  - Start the build only after the deposit shows up: a PayPal "You've got money" email in Gmail from service@paypal.com naming the amount. Ask the client to put their company name in the PayPal note.
+  - Release the site files only after the final payment shows up the same way. Tell the owner in chat when each payment arrives.
 - **Drafts:** show clients their draft as screenshots in the email (desktop + phone), never a public link to the files.
 - **Launch:** the client hosts the site themselves. Email them a step-by-step for a free Netlify account and Netlify Drop (drag the site folder in), sent as a .zip only after the final payment, then DNS steps for their registrar. No owner involvement.
 
