@@ -18,10 +18,10 @@ Subject: `Re: <their subject>`
 > **Not included:** {e.g. online booking, blog}
 > **Timeline:** preview within {N} business days of your deposit
 > **Price:** ${price} ({founding/regular}). 50% to start, 50% at launch.
-> Reply **APPROVED** and I'll send the deposit link. Viktor
+> Reply **APPROVED** and pay the deposit here: {PAYPAL_ME}/{half_price}. I start the same day. Viktor
 
 ## W4: Draft ready
-> Your site preview is ready: {preview link}. Look at it on your phone first, since that's where most customers will see it. Reply with changes as a numbered list ("1. Change the headline to…"). This is revision round 1 of {2|3}. Viktor
+> Your site draft is ready. Here's how it looks on a laptop and a phone (screenshots below). Most of your customers will see the phone version. Reply with changes as a numbered list ("1. Change the headline to…"). This is revision round 1 of {2|3}. Viktor
 
 ## W5: Revisions confirmed
 > Got it. Here's what I'm changing: {numbered list echoed back}. New preview by {date}. Viktor
