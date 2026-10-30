@@ -82,10 +82,11 @@ def demo_block(p):
 </table>"""
 
 
-def render(slug, to_override=None, note=None):
+def render(slug, to_override=None, note=None, img_base=None):
     d = ROOT / "business/webdev/previews" / slug
     p = json.loads((ROOT / "business/webdev/prospects" / f"{slug}.json").read_text())
     company = p["company"]
+    img = (img_base or f"{RAW}/webdev/previews") + f"/{slug}"
     greeting = p.get("owner_first") or f"{company} team"
     yes = mailto(f"YES - make my site live ({company})")
     no = mailto(f"NO - not interested ({company})")
@@ -101,11 +102,13 @@ def render(slug, to_override=None, note=None):
 <tr><td style="padding:26px 28px 6px;color:#e6f7fb;font-size:16px;line-height:25px;">
 <p style="margin:0 0 14px;">Hi {e(greeting)},</p>
 <p style="margin:0 0 14px;">{e(p["personalization"])}</p>
-<p style="margin:0 0 6px;">So instead of a sales pitch, I built <b style="color:{CYAN};">{e(company)}</b> a new homepage. It's right here in this email:</p>
+<p style="margin:0 0 6px;">So instead of a sales pitch, I built <b style="color:{CYAN};">{e(company)}</b> a complete new website: home, services, about and contact pages. Here it is:</p>
 </td></tr>
-<tr><td style="padding:14px 22px;">{demo_block(p)}</td></tr>
-<tr><td style="padding:6px 22px 4px;color:#8fb5c2;font-size:13px;text-align:center;">&#128247; And here's how it looks on a laptop and a phone:</td></tr>
-<tr><td style="padding:6px 22px 8px;"><a href="{e(yes)}"><img src="{RAW}/webdev/previews/{slug}/email.jpg" width="556" alt="{e(company)} new website on laptop and phone" style="display:block;width:100%;max-width:556px;height:auto;border:0;border-radius:12px;"></a></td></tr>
+<tr><td style="padding:14px 24px 4px;"><a href="{e(yes)}"><img src="{img}/email.jpg" width="552" alt="{e(company)} new website on a laptop and a phone" style="display:block;width:100%;max-width:552px;height:auto;border:0;border-radius:12px;"></a></td></tr>
+<tr><td style="padding:22px 28px 8px;color:#e6f7fb;font-size:16px;line-height:24px;"><b style="color:{CYAN};">&#9660; Your full homepage, top to bottom</b></td></tr>
+<tr><td style="padding:4px 24px;"><a href="{e(yes)}"><img src="{img}/fullpage.jpg" width="552" alt="{e(company)} full homepage concept" style="display:block;width:100%;max-width:552px;height:auto;border:0;border-radius:10px;"></a></td></tr>
+<tr><td style="padding:22px 28px 8px;color:#e6f7fb;font-size:16px;line-height:24px;"><b style="color:{CYAN};">&#10010; Plus Services, About and Contact pages</b></td></tr>
+<tr><td style="padding:4px 24px 6px;"><a href="{e(yes)}"><img src="{img}/pages.jpg" width="552" alt="{e(company)} services, about and contact pages" style="display:block;width:100%;max-width:552px;height:auto;border:0;border-radius:10px;"></a></td></tr>
 <tr><td style="padding:22px 28px 6px;color:#e6f7fb;font-size:15px;line-height:24px;">
 <table role="presentation" width="100%" cellpadding="0" cellspacing="0">
 <tr><td style="padding:5px 0;color:#e6f7fb;font-size:15px;line-height:24px;font-family:Arial,Helvetica,sans-serif;"><span style="color:{CYAN};">&#9654;</span>&nbsp; A call button pinned to every phone screen</td></tr>
@@ -133,7 +136,7 @@ def render(slug, to_override=None, note=None):
 
 {p["personalization"]}
 
-So instead of a sales pitch, I built {company} a new homepage. Open this email in HTML view (most email apps do this automatically) to see it.
+So instead of a sales pitch, I built {company} a complete new website (home, services, about and contact pages). Open this email in HTML view (most email apps do this automatically) to see it.
 
 What's in it:
 - A call button pinned to every phone screen
@@ -162,5 +165,6 @@ if __name__ == "__main__":
     ap.add_argument("slug")
     ap.add_argument("--to")
     ap.add_argument("--note")
+    ap.add_argument("--img-base", help="public URL folder that holds <slug>/email.jpg, fullpage.jpg, pages.jpg")
     a = ap.parse_args()
-    render(a.slug, a.to, a.note)
+    render(a.slug, a.to, a.note, a.img_base)

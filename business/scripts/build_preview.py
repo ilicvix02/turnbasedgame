@@ -11,6 +11,8 @@ import html
 import json
 import subprocess
 import sys
+
+
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[2]
@@ -142,7 +144,7 @@ footer {{ background: #0a0d12; color: #9aa6b6; font-size: .86rem; padding-block:
 </body></html>"""
 
 
-def watermark(im, size):
+def watermark(im, size, alpha=70, gap=3.2):
     """Tile a diagonal CONCEPT PREVIEW mark across a screenshot so it can't be reused as a finished design."""
     from PIL import Image, ImageDraw, ImageFont
     try:
@@ -153,9 +155,9 @@ def watermark(im, size):
     layer = Image.new("RGBA", (w * 2, h * 2), (0, 0, 0, 0))
     d = ImageDraw.Draw(layer)
     text = "CONCEPT PREVIEW  ·  TRADESHEETS"
-    step_y = int(size * 3.2)
+    step_y = int(size * gap)
     for row, y in enumerate(range(0, h * 2, step_y)):
-        d.text(((row % 2) * size * 4 - size * 6, y), (text + "     ") * 6, font=font, fill=(24, 214, 255, 70))
+        d.text(((row % 2) * size * 4 - size * 6, y), (text + "     ") * 6, font=font, fill=(24, 214, 255, alpha))
     layer = layer.rotate(28, resample=Image.BICUBIC)
     layer = layer.crop((w // 2, h // 2, w // 2 + w, h // 2 + h))
     return Image.alpha_composite(im.convert("RGBA"), layer).convert("RGB")
@@ -185,28 +187,69 @@ def neon_mockup(desk, mob, out):
     bg.save(out, quality=78, optimize=True)
 
 
+def compose(out, theme):
+    """Email images at 2x for a 552px-wide slot: mockup (1104x662), full homepage (1104 wide), page tour (1104x?)."""
+    from PIL import Image, ImageDraw, ImageFont
+    try:
+        font = ImageFont.truetype(str(FONTS / "JetBrainsMono.ttf"), 26)
+    except OSError:
+        font = ImageFont.load_default()
+    neon_mockup(out / "desktop.jpg", out / "mobile.jpg", out / "email.jpg")
+    Image.open(out / "email.jpg").resize((1104, 662), Image.LANCZOS).save(out / "email.jpg", quality=80, optimize=True)
+    full = Image.open(out / "full.png").convert("RGB")
+    full = full.resize((1104, int(full.height * 1104 / full.width)), Image.LANCZOS)
+    full = full.crop((0, 0, 1104, min(full.height, 3000)))
+    full = watermark(full, 46, alpha=34, gap=7)
+    framed = Image.new("RGB", (1104, full.height + 56), (7, 11, 13))
+    d = ImageDraw.Draw(framed)
+    d.rounded_rectangle([0, 0, 1103, 55], 0, fill=(13, 20, 23))
+    for i, c in enumerate([(255, 95, 87), (254, 188, 46), (40, 200, 64)]):
+        d.ellipse([20 + i * 26, 20, 36 + i * 26, 36], fill=c)
+    d.text((120, 14), "Your full homepage, top to bottom", font=font, fill=(24, 214, 255))
+    framed.paste(full, (0, 56))
+    framed.save(out / "fullpage.jpg", quality=68, optimize=True, progressive=True)
+    tiles, W, H = ["services", "about", "contact"], 352, 300
+    tour = Image.new("RGB", (1104, H + 60), (7, 11, 13))
+    d = ImageDraw.Draw(tour)
+    for i, name in enumerate(tiles):
+        im = Image.open(out / f"{name}.png").convert("RGB")
+        im = im.resize((W, int(im.height * W / im.width)), Image.LANCZOS).crop((0, 0, W, H))
+        x = i * (W + 24)
+        tour.paste(watermark(im, 18, alpha=40, gap=5), (x, 0))
+        d.rectangle([x, 0, x + W - 1, H - 1], outline=(24, 214, 255), width=2)
+        d.text((x + W // 2, H + 30), name.title() + " page", font=font, fill=(230, 247, 251), anchor="mm")
+    tour.save(out / "pages.jpg", quality=78, optimize=True)
+
+
 def main(spec_path):
+    from site_themes import site
     p = json.loads(Path(spec_path).read_text())
     out = OUT_ROOT / p["slug"]
     out.mkdir(parents=True, exist_ok=True)
-    (out / "index.html").write_text(page(p))
+    theme, pages = site(p)
+    for fname, doc in pages.items():
+        (out / fname).write_text(doc)
     js = f"""
 const {{ chromium }} = require('playwright');
 (async () => {{
   const b = await chromium.launch({{ proxy: process.env.HTTPS_PROXY ? {{ server: process.env.HTTPS_PROXY }} : undefined }});
-  const url = 'file://{out}/index.html';
   const d = await b.newPage({{ viewport: {{ width: 1280, height: 800 }} }});
-  await d.goto(url, {{ waitUntil: 'networkidle', timeout: 60000 }}).catch(() => {{}}); await d.waitForTimeout(800);
-  await d.screenshot({{ path: '{out}/desktop.jpg', type: 'jpeg', quality: 80 }});
+  const go = async (pg, f) => {{ await pg.goto('file://{out}/' + f, {{ waitUntil: 'networkidle', timeout: 60000 }}).catch(() => {{}}); await pg.waitForTimeout(700); }};
+  await go(d, 'index.html'); await d.screenshot({{ path: '{out}/desktop.jpg', type: 'jpeg', quality: 82 }});
+  await d.addStyleTag({{ content: '.nav{{position:static!important}} .mcall{{display:none!important}}' }});
+  await d.screenshot({{ path: '{out}/full.png', fullPage: true }});
+  for (const f of ['services', 'about', 'contact']) {{ await go(d, f + '.html'); await d.screenshot({{ path: '{out}/' + f + '.png' }}); }}
   const m = await b.newPage({{ viewport: {{ width: 390, height: 780 }}, deviceScaleFactor: 2 }});
-  await m.goto(url, {{ waitUntil: 'networkidle', timeout: 60000 }}).catch(() => {{}}); await m.waitForTimeout(800);
-  await m.screenshot({{ path: '{out}/mobile.jpg', type: 'jpeg', quality: 80 }});
+  await go(m, 'index.html'); await m.screenshot({{ path: '{out}/mobile.jpg', type: 'jpeg', quality: 82 }});
   await b.close();
 }})();"""
     npm_root = subprocess.run(["npm", "root", "-g"], capture_output=True, text=True).stdout.strip()
     subprocess.run(["node", "-e", js], check=True, env={**__import__("os").environ, "NODE_PATH": npm_root})
-    neon_mockup(out / "desktop.jpg", out / "mobile.jpg", out / "email.jpg")
-    print("built", out, sorted(x.name for x in out.iterdir()))
+    compose(out, theme)
+    for f in ["full.png", "services.png", "about.png", "contact.png"]:
+        (out / f).unlink(missing_ok=True)
+    (out / "theme.txt").write_text(theme)
+    print("built", p["slug"], "theme:", theme)
 
 
 if __name__ == "__main__":
