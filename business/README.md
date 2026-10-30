@@ -37,7 +37,7 @@ The agents draft, and you publish. Posting from your own accounts after reading 
 
 1. **Accounts (free):** Gumroad or Lemon Squeezy, a YouTube channel, a Reddit account (start commenting helpfully now; new accounts get filtered).
 2. **Listings:** create FREE and PRO from `marketing/gumroad-listing.md`. Upload the xlsx files, and add a Google Sheets "Make a copy" link if you want (upload to Drive → share → change `/edit` to `/copy`).
-3. **Wire the upsell:** paste your PRO link into `Start Here!B21` of the FREE file, then re-upload it.
+3. **Wire the upsell:** paste your PRO link into `Start Here!B22` of the FREE file, then re-upload it.
 4. **Mockups:** screenshot the Job Dashboard and Cash Flow tabs and frame them on shots.so or in Canva.
 5. **Traffic:** record videos 1 and 5 from `marketing/content-scripts.md`, and write Post A for one subreddit.
 6. **Track:** export Gumroad sales and YouTube stats weekly into `business/metrics/` for `ops-analyst`.

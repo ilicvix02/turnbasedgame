@@ -4,355 +4,683 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Anton&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,700&family=JetBrains+Mono:wght@500;700&display=swap">
 <style>
-/* Layout: cinematic dark sales page; neon gold = money/actions, dark royal cyan = atmosphere/structure, brushed silver = premium detail. Single deliberate dark theme. */
+/* Layout: white page; every key block is a black "neon card" with a turquoise glow, matching the TradeSheets app. Hero is the biggest card. Single theme by choice. */
 :root {
-  --void: #030a12;
-  --night: #061624;
-  --panel: #0a1e2e;
-  --line: #16405a;
-  --text: #eef6fb;
-  --muted: #9fb6c6;
-  --gold: #ffcf4a;
-  --gold-hot: #ffe48a;
-  --silver: #d6e0e8;
-  --cyan: #00c8e8;
-  --cyan-deep: #007a9e;
-  --good: #3ef0a0;
-  --bad: #ff5a7a;
+  --page: #ffffff;
+  --ink: #071012;
+  --ink-soft: #4f6266;
+  --rule: #d9e3e4;
+  --card: #050809;
+  --card-2: #0b1416;
+  --card-ink: #e8fffd;
+  --card-soft: #8fb5b3;
+  --card-rule: #123a3a;
+  --neon: #2ff5e6;
+  --neon-deep: #00897f;
+  --good: #2ff5e6;
+  --bad: #ff4d6d;
   --display: "Anton", "Impact", "Arial Narrow", sans-serif;
   --body: "DM Sans", "Segoe UI", system-ui, sans-serif;
-  --mono: "JetBrains Mono", ui-monospace, "SFMono-Regular", Menlo, monospace;
-  color-scheme: dark;
+  --mono: "JetBrains Mono", ui-monospace, Menlo, monospace;
+  --glow: 0 0 0 1px rgba(0, 229, 212, .5), 0 0 26px rgba(0, 229, 212, .32), 0 18px 40px rgba(7, 16, 18, .22);
+  color-scheme: light;
 }
 * { box-sizing: border-box; }
 html { scroll-behavior: smooth; }
-body {
-  background: var(--void);
-  color: var(--text);
-  font: 400 1.05rem/1.6 var(--body);
-  overflow-x: hidden;
-}
-body::before {
-  content: ""; position: fixed; inset: 0 0 auto; height: env(safe-area-inset-top, 0px);
-  z-index: 10; background: var(--void);
-}
+body { background: var(--page); color: var(--ink); font: 400 1.05rem/1.6 var(--body); overflow-x: hidden; }
+body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-area-inset-top, 0px); z-index: 10; background: var(--page); }
 a { color: inherit; }
-:focus-visible { outline: 2px solid var(--gold); outline-offset: 3px; }
-
-.wrap {
-  width: 100%; max-width: 1120px; margin: 0 auto;
-  padding-left: max(16px, env(safe-area-inset-left, 0px));
-  padding-right: max(16px, env(safe-area-inset-right, 0px));
-}
-.band { padding-block: clamp(64px, 9vw, 120px); position: relative; }
-
-/* type */
-.eyebrow {
-  font: 700 0.78rem/1 var(--mono); letter-spacing: 0.18em; text-transform: uppercase;
-  color: var(--gold);
-}
-h1, h2, h3 { font-family: var(--display); font-weight: 400; text-transform: uppercase; letter-spacing: 0.01em; text-wrap: balance; margin: 0; }
-h1 { font-size: clamp(3rem, 8.5vw, 6.4rem); line-height: 0.95; }
-h2 { font-size: clamp(2.2rem, 5.4vw, 3.8rem); line-height: 1; }
-h3 { font-size: 1.45rem; line-height: 1.1; }
-.neon-gold {
-  color: var(--gold);
-  text-shadow: 0 0 6px rgba(255, 210, 63, .85), 0 0 22px rgba(255, 210, 63, .55), 0 0 48px rgba(255, 176, 20, .35);
-}
-.neon-silver {
-  background: linear-gradient(180deg, #ffffff 0%, #d6e0e8 45%, #8a9aa8 55%, #e9f0f5 100%);
-  -webkit-background-clip: text; background-clip: text; color: transparent;
-  filter: drop-shadow(0 0 10px rgba(214, 224, 232, .35));
-}
-.neon-cyan {
-  color: #b9f6ff;
-  text-shadow: 0 0 6px rgba(0, 200, 232, .9), 0 0 24px rgba(0, 200, 232, .65), 0 0 56px rgba(0, 122, 158, .45);
-}
+:focus-visible { outline: 2px solid var(--neon-deep); outline-offset: 3px; }
+.wrap { width: 100%; max-width: 1140px; margin: 0 auto; padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); }
+.band { padding-block: clamp(56px, 8vw, 104px); }
 p { margin: 0; }
-.lede { color: var(--muted); font-size: clamp(1.05rem, 1.8vw, 1.25rem); max-width: 58ch; }
+h1, h2, h3 { font-family: var(--display); font-weight: 400; text-transform: uppercase; letter-spacing: .01em; text-wrap: balance; margin: 0; }
+h1 { font-size: clamp(2.9rem, 8vw, 6rem); line-height: .95; }
+h2 { font-size: clamp(2.1rem, 5vw, 3.6rem); line-height: 1; }
+h3 { font-size: 1.4rem; line-height: 1.1; }
+.eyebrow { font: 700 .76rem/1 var(--mono); letter-spacing: .18em; text-transform: uppercase; color: var(--neon-deep); }
+.lede { color: var(--ink-soft); font-size: clamp(1.05rem, 1.7vw, 1.22rem); max-width: 60ch; }
+.neon { color: var(--neon); text-shadow: 0 0 6px rgba(47, 245, 230, .9), 0 0 22px rgba(0, 229, 212, .6), 0 0 48px rgba(0, 229, 212, .35); }
+.ink-neon { color: var(--ink); text-decoration: underline; text-decoration-color: var(--neon); text-decoration-thickness: .12em; text-underline-offset: .12em; }
 
-/* buttons */
-.btn {
-  display: inline-flex; align-items: center; justify-content: center; gap: .5em;
-  font: 700 1rem/1 var(--body); text-decoration: none; cursor: pointer;
-  padding: 1.05em 1.6em; border-radius: 999px; border: 0;
-  transition: transform .15s ease, box-shadow .15s ease;
-}
-.btn-gold {
-  background: var(--gold); color: #1a1000;
-  box-shadow: 0 0 0 1px var(--gold-hot), 0 0 24px rgba(255, 210, 63, .55), 0 0 64px rgba(255, 176, 20, .3);
-}
-.btn-gold:hover { transform: translateY(-2px); box-shadow: 0 0 0 1px var(--gold-hot), 0 0 32px rgba(255, 210, 63, .8), 0 0 90px rgba(255, 176, 20, .45); }
-.btn-ghost { background: transparent; color: var(--text); box-shadow: inset 0 0 0 1.5px var(--cyan); }
-.btn-ghost:hover { box-shadow: inset 0 0 0 1.5px var(--cyan), 0 0 24px rgba(0, 200, 232, .5); }
+/* neon card */
+.card { background: var(--card); color: var(--card-ink); border-radius: 20px; box-shadow: var(--glow); --ink: var(--card-ink); --ink-soft: var(--card-soft); --rule: var(--card-rule); color-scheme: dark; }
+.card .eyebrow { color: var(--neon); }
+
+.btn { display: inline-flex; align-items: center; justify-content: center; gap: .5em; font: 700 1rem/1 var(--body); text-decoration: none; cursor: pointer; padding: 1em 1.5em; border-radius: 999px; border: 0; transition: transform .15s ease, box-shadow .15s ease; }
+.btn-neon { background: var(--neon); color: #001412; box-shadow: 0 0 0 1px #9ffff7, 0 0 22px rgba(47, 245, 230, .6); }
+.btn-neon:hover { transform: translateY(-2px); box-shadow: 0 0 0 1px #9ffff7, 0 0 36px rgba(47, 245, 230, .85); }
+.btn-dark { background: var(--card); color: var(--neon); box-shadow: var(--glow); }
+.btn-dark:hover { transform: translateY(-2px); }
+.btn-line { background: transparent; color: var(--ink); box-shadow: inset 0 0 0 1.5px var(--ink-soft); }
+.card .btn-line { box-shadow: inset 0 0 0 1.5px var(--neon); color: var(--card-ink); }
 
 /* nav */
-.nav { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 5; background: rgba(3, 10, 18, .84); backdrop-filter: blur(10px); border-bottom: 1px solid rgba(0, 200, 232, .25); }
-.nav .wrap { display: flex; align-items: center; justify-content: space-between; gap: 16px; padding-block: 14px; }
+.nav { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 5; background: rgba(255, 255, 255, .9); backdrop-filter: blur(10px); border-bottom: 1px solid var(--rule); }
+.nav .wrap { display: flex; align-items: center; justify-content: space-between; gap: 16px; padding-block: 12px; }
 .logo { font: 400 1.5rem/1 var(--display); letter-spacing: .04em; text-transform: uppercase; text-decoration: none; }
-.logo span { color: var(--gold); }
-.logo { background: linear-gradient(180deg, #ffffff, #b8c6d2 60%, #eef4f8); -webkit-background-clip: text; background-clip: text; color: transparent; }
-.logo span { -webkit-text-fill-color: var(--gold); }
-.nav .btn { padding: .75em 1.2em; font-size: .9rem; }
+.logo span { color: var(--neon-deep); }
+.nav-links { display: flex; gap: 22px; align-items: center; font-weight: 700; font-size: .92rem; }
+.nav-links a:not(.btn) { text-decoration: none; color: var(--ink-soft); }
+.nav-links a:not(.btn):hover { color: var(--ink); }
+.nav .btn { padding: .7em 1.1em; font-size: .9rem; }
 
 /* hero */
-.hero { overflow: hidden; padding-block: clamp(48px, 7vw, 96px) clamp(56px, 8vw, 104px); }
-.hero::before, .hero::after {
-  content: ""; position: absolute; border-radius: 50%; filter: blur(80px); pointer-events: none; z-index: 0;
-}
-.hero::before { width: 620px; height: 620px; background: rgba(0, 200, 232, .45); top: -220px; right: -180px; }
-.hero::after { width: 420px; height: 420px; background: rgba(255, 190, 40, .2); bottom: -200px; left: -160px; }
-.hero .wrap { position: relative; z-index: 1; display: grid; grid-template-columns: 1.05fr .95fr; gap: clamp(32px, 5vw, 64px); align-items: center; }
-.hero-copy { display: grid; gap: 24px; min-width: 0; }
-.cta-row { display: flex; flex-wrap: wrap; gap: 12px; align-items: center; }
-.trust { display: flex; flex-wrap: wrap; gap: 8px 20px; color: var(--muted); font-size: .92rem; }
-.trust b { color: var(--text); font-weight: 700; }
+.hero { padding-block: clamp(24px, 4vw, 48px) clamp(40px, 6vw, 72px); }
+.hero .card { position: relative; overflow: hidden; padding: clamp(28px, 5vw, 64px); display: grid; grid-template-columns: 1.05fr .95fr; gap: clamp(28px, 4vw, 56px); align-items: center; }
+.hero .card::before { content: ""; position: absolute; width: 560px; height: 560px; right: -200px; top: -240px; border-radius: 50%; background: rgba(0, 229, 212, .22); filter: blur(90px); pointer-events: none; }
+.hero-copy { position: relative; display: grid; gap: 22px; min-width: 0; }
+.cta-row { display: flex; flex-wrap: wrap; gap: 12px; }
+.trust { display: flex; flex-wrap: wrap; gap: 6px 18px; color: var(--card-soft); font-size: .92rem; }
+.trust b { color: var(--card-ink); }
+.mini { position: relative; min-width: 0; background: var(--card-2); border-radius: 14px; padding: 16px; box-shadow: 0 0 0 1px rgba(47, 245, 230, .35); }
+.mini-top { display: flex; justify-content: space-between; gap: 8px; margin-bottom: 10px; font: 700 .68rem/1 var(--mono); letter-spacing: .12em; text-transform: uppercase; color: var(--card-soft); }
+.mini-top span:last-child { color: var(--neon); }
+.mini .scroll { overflow-x: auto; }
+.mini table { width: 100%; min-width: 400px; border-collapse: collapse; font: 500 .8rem/1.3 var(--mono); font-variant-numeric: tabular-nums; }
+.mini th { text-align: left; font-weight: 500; font-size: .64rem; letter-spacing: .08em; text-transform: uppercase; color: var(--card-soft); padding: 7px; border-bottom: 1px solid var(--card-rule); }
+.mini td { padding: 9px 7px; border-bottom: 1px solid var(--card-rule); }
+.mini .n { text-align: right; }
+.flag { font: 700 .62rem/1 var(--mono); padding: 5px 7px; border-radius: 6px; letter-spacing: .06em; white-space: nowrap; }
+.flag.ok { color: var(--good); box-shadow: inset 0 0 0 1px rgba(47, 245, 230, .5); }
+.flag.over { color: var(--bad); box-shadow: inset 0 0 0 1px rgba(255, 77, 109, .55); }
 
-/* dashboard mock */
-.screen {
-  min-width: 0; background: linear-gradient(180deg, #0b2234, #061420); border-radius: 18px; padding: 18px;
-  box-shadow: 0 0 0 1px rgba(0, 200, 232, .55), 0 0 40px rgba(0, 200, 232, .35), 0 30px 80px rgba(0, 0, 0, .6);
-  transform: perspective(1400px) rotateY(-6deg) rotateX(2deg);
-}
-.screen-top { display: flex; justify-content: space-between; align-items: center; gap: 8px; margin-bottom: 12px; }
-.dots { display: flex; gap: 6px; }
-.dots i { width: 9px; height: 9px; border-radius: 50%; background: var(--line); display: block; }
-.screen-title { font: 700 .72rem/1 var(--mono); color: var(--muted); letter-spacing: .12em; text-transform: uppercase; }
-.example-tag { font: 700 .66rem/1 var(--mono); color: var(--cyan); border: 1px solid var(--cyan); border-radius: 999px; padding: 4px 8px; letter-spacing: .1em; }
-.table-scroll { overflow-x: auto; }
-table { width: 100%; border-collapse: collapse; font: 500 .82rem/1.3 var(--mono); font-variant-numeric: tabular-nums; min-width: 420px; }
-th { text-align: left; color: var(--muted); font-weight: 500; font-size: .68rem; letter-spacing: .08em; text-transform: uppercase; padding: 8px 8px; border-bottom: 1px solid var(--line); }
-td { padding: 10px 8px; border-bottom: 1px solid rgba(22, 64, 90, .6); }
-td.num, th.num { text-align: right; }
-.flag { font: 700 .66rem/1 var(--mono); padding: 5px 8px; border-radius: 6px; letter-spacing: .06em; white-space: nowrap; }
-.flag.ok { color: var(--good); background: rgba(62, 240, 160, .1); box-shadow: inset 0 0 0 1px rgba(62, 240, 160, .4); }
-.flag.over { color: var(--bad); background: rgba(255, 77, 141, .12); box-shadow: inset 0 0 0 1px rgba(255, 77, 141, .5); }
-.screen-foot { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; margin-top: 14px; }
-.kpi { background: rgba(0, 200, 232, .08); border: 1px solid var(--line); border-radius: 10px; padding: 10px 12px; }
-.kpi small { display: block; font: 500 .62rem/1.2 var(--mono); color: var(--muted); letter-spacing: .08em; text-transform: uppercase; }
-.kpi strong { font: 700 1.05rem/1.3 var(--mono); color: var(--gold); }
-.kpi strong.bad { color: var(--bad); }
-
-/* marquee strip */
-.strip { border-block: 1px solid rgba(0, 200, 232, .35); background: var(--night); overflow: hidden; }
-.strip-track { display: flex; gap: 40px; padding-block: 16px; white-space: nowrap; animation: slide 38s linear infinite; width: max-content; }
-.strip-track span { font: 400 1.35rem/1 var(--display); text-transform: uppercase; letter-spacing: .04em; color: var(--muted); }
-.strip-track span b { color: var(--gold); font-weight: 400; }
-@keyframes slide { to { transform: translateX(-50%); } }
+.section-head { display: grid; gap: 14px; margin-bottom: clamp(28px, 4vw, 48px); max-width: 780px; }
 
 /* problem */
-.section-head { display: grid; gap: 16px; margin-bottom: clamp(32px, 5vw, 56px); max-width: 760px; }
-.leaks { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 20px; }
-.leak { background: var(--panel); border: 1px solid var(--line); border-radius: 16px; padding: 26px; display: grid; gap: 12px; align-content: start; min-width: 0; }
-.leak .trade { font: 700 .7rem/1 var(--mono); color: var(--cyan); letter-spacing: .14em; text-transform: uppercase; }
-.leak p { color: var(--muted); }
+.grid-3 { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 22px; }
+.grid-3 .card { padding: 26px; display: grid; gap: 12px; align-content: start; min-width: 0; }
+.grid-3 .card p { color: var(--card-soft); }
+.tag { font: 700 .7rem/1 var(--mono); letter-spacing: .14em; text-transform: uppercase; color: var(--neon); }
+.value { font: 700 .8rem/1.3 var(--mono); color: var(--neon); }
 
-/* system */
-.system { background: radial-gradient(900px 500px at 85% 10%, rgba(0, 200, 232, .22), transparent 70%), var(--night); }
-.modules { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0; border-top: 1px solid var(--line); }
-.module { display: grid; grid-template-columns: auto 1fr; gap: 20px; padding: 28px 8px; border-bottom: 1px solid var(--line); min-width: 0; }
-.module:nth-child(odd) { border-right: 1px solid var(--line); padding-right: 28px; }
-.module:nth-child(even) { padding-left: 28px; }
-.module .tab { font: 700 .72rem/1 var(--mono); color: var(--silver); letter-spacing: .12em; text-transform: uppercase; writing-mode: vertical-rl; transform: rotate(180deg); }
-.module div { display: grid; gap: 8px; min-width: 0; }
-.module p { color: var(--muted); }
+/* demo */
+.demo-card { padding: 14px; }
+.demo-bar { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 8px; padding: 4px 6px 12px; font: 700 .72rem/1 var(--mono); letter-spacing: .1em; text-transform: uppercase; color: var(--card-soft); }
+.demo-bar .live { color: var(--neon); }
+.demo-bar .live::before { content: ""; display: inline-block; width: 8px; height: 8px; border-radius: 50%; background: var(--neon); box-shadow: 0 0 10px var(--neon); margin-right: 8px; vertical-align: 0; }
+.demo-frame { display: block; width: 100%; height: 780px; border: 0; border-radius: 12px; background: #ffffff; }
+.demo-note { margin-top: 14px; color: var(--ink-soft); font-size: .92rem; max-width: 75ch; }
 
-/* process */
-.steps { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 16px; counter-reset: step; }
-.step { position: relative; padding: 26px 22px; border-radius: 16px; background: var(--panel); border: 1px solid var(--line); display: grid; gap: 10px; align-content: start; min-width: 0; }
-.step::before { counter-increment: step; content: "0" counter(step); font: 400 2.6rem/1 var(--display); color: transparent; -webkit-text-stroke: 1.5px var(--cyan); filter: drop-shadow(0 0 8px rgba(0, 200, 232, .7)); }
-.step p { color: var(--muted); font-size: .97rem; }
-.no-calls { margin-top: 28px; display: flex; flex-wrap: wrap; gap: 10px 28px; font: 700 .85rem/1.4 var(--mono); color: var(--gold); letter-spacing: .06em; text-transform: uppercase; }
+/* modules */
+.modules { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); border-top: 1px solid var(--rule); }
+.module { display: grid; grid-template-columns: 70px 1fr; gap: 16px; padding: 24px 6px; border-bottom: 1px solid var(--rule); min-width: 0; }
+.module:nth-child(odd) { border-right: 1px solid var(--rule); padding-right: 24px; }
+.module:nth-child(even) { padding-left: 24px; }
+.module .t { font: 700 .72rem/1.2 var(--mono); color: var(--neon-deep); letter-spacing: .12em; text-transform: uppercase; padding-top: 4px; }
+.module div { display: grid; gap: 6px; min-width: 0; }
+.module p { color: var(--ink-soft); }
 
-/* trial pack */
-.assets { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 20px; }
-.asset {
-  position: relative; border-radius: 18px; padding: 28px 24px; display: grid; gap: 12px; align-content: start; min-width: 0;
-  background: linear-gradient(160deg, rgba(214, 224, 232, .10), rgba(0, 200, 232, .06) 40%, var(--panel) 75%);
-  border: 1px solid rgba(214, 224, 232, .35);
-  box-shadow: 0 0 28px rgba(0, 200, 232, .18);
-}
-.asset .file { font: 700 .7rem/1 var(--mono); letter-spacing: .12em; text-transform: uppercase; color: var(--cyan); }
-.asset p { color: var(--muted); }
-.asset .value { font: 700 .8rem/1 var(--mono); color: var(--gold); letter-spacing: .06em; }
-
-/* poll */
-.poll { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; width: 100%; max-width: 760px; }
-.choice { border-radius: 18px; padding: 24px; display: grid; gap: 10px; text-align: left; background: var(--panel); border: 1px solid var(--line); min-width: 0; }
-.choice.yes { border-color: var(--gold); box-shadow: 0 0 30px rgba(255, 207, 74, .25); }
-.choice b { font: 400 1.6rem/1 var(--display); text-transform: uppercase; letter-spacing: .02em; }
-.choice.yes b { color: var(--gold); }
-.choice.no b { color: var(--silver); }
-.choice p { color: var(--muted); font-size: .95rem; }
-.choice code { font: 700 .95rem/1.4 var(--mono); color: var(--text); }
+/* steps */
+.steps { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 18px; counter-reset: s; }
+.steps .card { padding: 24px 22px; display: grid; gap: 10px; align-content: start; min-width: 0; }
+.steps .card::before { counter-increment: s; content: "0" counter(s); font: 400 2.4rem/1 var(--display); color: transparent; -webkit-text-stroke: 1.5px var(--neon); filter: drop-shadow(0 0 8px rgba(47, 245, 230, .7)); }
+.steps p { color: var(--card-soft); font-size: .96rem; }
+.no-calls { margin-top: 24px; display: flex; flex-wrap: wrap; gap: 8px 26px; font: 700 .82rem/1.4 var(--mono); color: var(--neon-deep); letter-spacing: .06em; text-transform: uppercase; }
 
 /* pricing */
-.plans { display: grid; grid-template-columns: 1.15fr 1fr 1fr; gap: 20px; align-items: stretch; }
-.plan { background: var(--panel); border: 1px solid var(--line); border-radius: 20px; padding: 30px 26px; display: grid; gap: 16px; align-content: start; min-width: 0; }
-.plan.feature {
-  background: linear-gradient(180deg, #0d2a3c, #061624);
-  border-color: var(--gold);
-  box-shadow: 0 0 0 1px rgba(255, 210, 63, .5), 0 0 36px rgba(255, 210, 63, .25), 0 0 80px rgba(0, 200, 232, .35);
-}
-.plan .tag { justify-self: start; font: 700 .68rem/1 var(--mono); letter-spacing: .12em; text-transform: uppercase; padding: 6px 10px; border-radius: 999px; color: #1a1000; background: var(--gold); }
-.plan .tag.alt { background: transparent; color: var(--cyan); box-shadow: inset 0 0 0 1px var(--cyan); }
-.price { display: flex; align-items: baseline; gap: 10px; flex-wrap: wrap; }
-.price strong { font: 400 3.6rem/1 var(--display); }
-.price s { color: var(--muted); font: 500 1.1rem/1 var(--mono); }
-.price small { color: var(--muted); font: 500 .85rem/1 var(--mono); }
-.plan ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 10px; }
-.plan li { padding-left: 26px; position: relative; color: var(--muted); }
-.plan li::before { content: ""; position: absolute; left: 0; top: .55em; width: 12px; height: 6px; border-left: 2px solid var(--gold); border-bottom: 2px solid var(--gold); transform: rotate(-45deg); }
-.plan .btn { margin-top: 4px; justify-self: stretch; }
-.fine { color: var(--muted); font-size: .85rem; }
+.plans { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 18px; align-items: stretch; }
+.plan { border-radius: 20px; padding: 26px 22px; display: grid; gap: 14px; align-content: start; min-width: 0; border: 1px solid var(--rule); background: #ffffff; }
+.plan.card { border: 0; background: var(--card); }
+.plan .pill { justify-self: start; font: 700 .64rem/1 var(--mono); letter-spacing: .12em; text-transform: uppercase; padding: 6px 10px; border-radius: 999px; box-shadow: inset 0 0 0 1px var(--neon-deep); color: var(--neon-deep); }
+.plan.card .pill { background: var(--neon); color: #001412; box-shadow: none; }
+.price { display: flex; flex-wrap: wrap; align-items: baseline; gap: 8px; }
+.price strong { font: 400 3.2rem/1 var(--display); }
+.price s, .price small { color: var(--ink-soft); font: 500 .9rem/1 var(--mono); }
+.plan ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 9px; }
+.plan li { position: relative; padding-left: 24px; color: var(--ink-soft); font-size: .96rem; }
+.plan li::before { content: ""; position: absolute; left: 0; top: .5em; width: 11px; height: 6px; border-left: 2px solid var(--neon-deep); border-bottom: 2px solid var(--neon-deep); transform: rotate(-45deg); }
+.plan.card li::before { border-color: var(--neon); }
+.plan .btn { justify-self: stretch; margin-top: 4px; }
+.fine { color: var(--ink-soft); font-size: .84rem; }
 
 /* faq */
-.faq { display: grid; gap: 12px; max-width: 820px; }
-details { background: var(--panel); border: 1px solid var(--line); border-radius: 14px; padding: 4px 22px; }
-details[open] { border-color: var(--cyan-deep); box-shadow: 0 0 24px rgba(0, 200, 232, .2); }
-summary { cursor: pointer; list-style: none; display: flex; justify-content: space-between; gap: 16px; align-items: center; padding-block: 18px; font-weight: 700; }
+.faq { display: grid; gap: 10px; max-width: 820px; }
+details { border: 1px solid var(--rule); border-radius: 14px; padding: 2px 20px; background: #ffffff; }
+details[open] { box-shadow: 0 0 0 1px rgba(0, 229, 212, .5), 0 0 18px rgba(0, 229, 212, .18); border-color: transparent; }
+summary { cursor: pointer; list-style: none; display: flex; justify-content: space-between; gap: 16px; align-items: center; padding-block: 16px; font-weight: 700; }
 summary::-webkit-details-marker { display: none; }
-summary::after { content: "+"; font: 400 1.6rem/1 var(--display); color: var(--gold); flex: none; }
+summary::after { content: "+"; font: 400 1.6rem/1 var(--display); color: var(--neon-deep); flex: none; }
 details[open] summary::after { content: "–"; }
-details p { color: var(--muted); padding-bottom: 20px; max-width: 65ch; }
+details p { color: var(--ink-soft); padding-bottom: 18px; max-width: 65ch; }
 
 /* final */
-.final { text-align: center; overflow: hidden; }
-.final::before { content: ""; position: absolute; inset: 10% 20%; background: rgba(0, 200, 232, .35); filter: blur(100px); border-radius: 50%; pointer-events: none; }
-.final .wrap { position: relative; display: grid; gap: 24px; justify-items: center; }
-.mailbox { display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: 12px; background: var(--panel); border: 1px solid var(--gold); border-radius: 999px; padding: 8px 8px 8px 24px; box-shadow: 0 0 30px rgba(255, 210, 63, .25); max-width: 100%; }
-.mailbox code { font: 700 1.05rem/1.4 var(--mono); color: var(--gold-hot); user-select: all; overflow-wrap: anywhere; }
-.copied { min-height: 1.4em; font: 500 .85rem/1.4 var(--mono); color: var(--good); }
+.final .card { padding: clamp(28px, 5vw, 60px); display: grid; gap: 22px; justify-items: center; text-align: center; }
+.poll { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; width: 100%; max-width: 760px; }
+.choice { text-align: left; border-radius: 16px; padding: 22px; display: grid; gap: 8px; background: var(--card-2); box-shadow: inset 0 0 0 1px var(--card-rule); min-width: 0; }
+.choice.yes { box-shadow: inset 0 0 0 1px var(--neon), 0 0 22px rgba(47, 245, 230, .25); }
+.choice b { font: 400 1.5rem/1 var(--display); text-transform: uppercase; }
+.choice.yes b { color: var(--neon); }
+.choice p { color: var(--card-soft); font-size: .95rem; }
+.choice code { font: 700 .95rem/1.4 var(--mono); color: var(--card-ink); }
+.mailbox { display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: 12px; padding: 8px 8px 8px 22px; border-radius: 999px; background: var(--card-2); box-shadow: inset 0 0 0 1px var(--neon); max-width: 100%; }
+.mailbox code { font: 700 1.05rem/1.4 var(--mono); color: var(--neon); user-select: all; overflow-wrap: anywhere; }
+.copied { min-height: 1.4em; font: 500 .85rem/1.4 var(--mono); color: var(--neon); }
 
-footer { border-top: 1px solid var(--line); padding-block: 32px; color: var(--muted); font-size: .85rem; }
+footer { border-top: 1px solid var(--rule); padding-block: 28px; color: var(--ink-soft); font-size: .85rem; }
 footer .wrap { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 12px; }
 
+@media (max-width: 980px) { .plans { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
 @media (max-width: 900px) {
-  .assets { grid-template-columns: 1fr; }
-  .hero .wrap { grid-template-columns: 1fr; }
-  .screen { transform: none; }
-  .leaks { grid-template-columns: 1fr; }
+  .hero .card { grid-template-columns: 1fr; }
+  .grid-3 { grid-template-columns: 1fr; }
   .steps { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-  .plans { grid-template-columns: 1fr; }
   .modules { grid-template-columns: 1fr; }
-  .module:nth-child(odd) { border-right: 0; padding-right: 8px; }
-  .module:nth-child(even) { padding-left: 8px; }
+  .module:nth-child(odd) { border-right: 0; padding-right: 6px; }
+  .module:nth-child(even) { padding-left: 6px; }
+  .nav-links a:not(.btn) { display: none; }
+  .demo-frame { height: 720px; }
 }
-@media (max-width: 520px) {
-  .poll { grid-template-columns: 1fr; }
-  .steps { grid-template-columns: 1fr; }
-  .screen-foot { grid-template-columns: 1fr; }
-  .nav .btn { display: none; }
-}
-@media (prefers-reduced-motion: reduce) {
-  .strip-track { animation: none; }
-  .btn, .btn:hover { transition: none; transform: none; }
-  html { scroll-behavior: auto; }
-}
+@media (max-width: 560px) { .steps, .plans, .poll { grid-template-columns: 1fr; } }
+@media (prefers-reduced-motion: reduce) { .btn, .btn:hover { transition: none; transform: none; } html { scroll-behavior: auto; } }
 </style>
 
 <header class="nav">
   <div class="wrap">
     <a class="logo" href="#top">Trade<span>Sheets</span></a>
-    <a class="btn btn-gold" href="#start">Claim a founding spot</a>
+    <nav class="nav-links">
+      <a href="#demo">Live demo</a>
+      <a href="#trial">Free tools</a>
+      <a href="#pricing">Pricing</a>
+      <a class="btn btn-dark" href="#start">Get started</a>
+    </nav>
   </div>
 </header>
 
 <main id="top">
-  <section class="band hero">
+  <section class="hero">
     <div class="wrap">
-      <div class="hero-copy">
-        <p class="eyebrow">For US plumbing &amp; electrical contractors</p>
-        <h1>Know which jobs <span class="neon-gold">make you money.</span></h1>
-        <p class="lede">We build your job-costing and cash-flow system in 48 hours. Every receipt, every labor hour and every truck-stock part is tied to a job, so the leaks show up this week, not at tax time.</p>
-        <div class="cta-row">
-          <a class="btn btn-gold" href="#start">Get my system built →</a>
-          <a class="btn btn-ghost" href="#trial">Get 3 free tools</a>
+      <div class="card">
+        <div class="hero-copy">
+          <p class="eyebrow">For US plumbing &amp; electrical contractors</p>
+          <h1>Know which jobs <span class="neon">make you money.</span></h1>
+          <p class="lede">Every receipt, every labor hour and every truck-stock part is tied to a job, so the losing jobs show up this week, not at tax time. Built for your business in 48 hours.</p>
+          <div class="cta-row">
+            <a class="btn btn-neon" href="#demo">Try the live demo →</a>
+            <a class="btn btn-line" href="#trial">Get 3 free tools</a>
+          </div>
+          <div class="trust">
+            <span><b>48-hour</b> setup</span><span><b>Excel or Google Sheets</b></span><span><b>No calls</b>, all by email</span><span><b>No subscription</b></span>
+          </div>
         </div>
-        <div class="trust">
-          <span><b>48-hour</b> delivery</span>
-          <span><b>Excel or Google Sheets</b></span>
-          <span><b>No calls</b>, all by email</span>
-          <span><b>No subscription</b></span>
-        </div>
-      </div>
-
-      <div class="screen" aria-label="Example job dashboard">
-        <div class="screen-top">
-          <div class="dots" aria-hidden="true"><i></i><i></i><i></i></div>
-          <span class="screen-title">Job Dashboard</span>
-          <span class="example-tag">EXAMPLE DATA</span>
-        </div>
-        <div class="table-scroll">
-          <table>
-            <thead>
-              <tr><th>Job</th><th class="num">Bid</th><th class="num">Actual</th><th class="num">Margin</th><th>Flag</th></tr>
-            </thead>
+        <div class="mini" aria-label="Example job dashboard">
+          <div class="mini-top"><span>Job dashboard</span><span>Example data</span></div>
+          <div class="scroll"><table>
+            <thead><tr><th>Job</th><th class="n">Bid</th><th class="n">Actual</th><th class="n">Margin</th><th>Flag</th></tr></thead>
             <tbody>
-              <tr><td>Water heater swap</td><td class="num">$2,400</td><td class="num">$1,610</td><td class="num">32.9%</td><td><span class="flag ok">OK</span></td></tr>
-              <tr><td>Kitchen repipe</td><td class="num">$6,800</td><td class="num">$7,240</td><td class="num">-6.5%</td><td><span class="flag over">OVER BUDGET</span></td></tr>
-              <tr><td>Panel upgrade 200A</td><td class="num">$3,900</td><td class="num">$2,870</td><td class="num">26.4%</td><td><span class="flag ok">OK</span></td></tr>
-              <tr><td>Service calls (wk)</td><td class="num">$4,150</td><td class="num">$2,980</td><td class="num">28.2%</td><td><span class="flag ok">OK</span></td></tr>
+              <tr><td>Water heater swap</td><td class="n">$2,400</td><td class="n">$1,610</td><td class="n">32.9%</td><td><span class="flag ok">OK</span></td></tr>
+              <tr><td>Kitchen repipe</td><td class="n">$6,800</td><td class="n">$7,240</td><td class="n">-6.5%</td><td><span class="flag over">OVER BUDGET</span></td></tr>
+              <tr><td>Panel upgrade 200A</td><td class="n">$3,900</td><td class="n">$2,870</td><td class="n">26.4%</td><td><span class="flag ok">OK</span></td></tr>
+              <tr><td>Service calls (wk)</td><td class="n">$4,150</td><td class="n">$2,980</td><td class="n">28.2%</td><td><span class="flag ok">OK</span></td></tr>
             </tbody>
-          </table>
-        </div>
-        <div class="screen-foot">
-          <div class="kpi"><small>Profit so far</small><strong>$3,550</strong></div>
-          <div class="kpi"><small>Unbilled parts</small><strong class="bad">$412</strong></div>
-          <div class="kpi"><small>Cash in 30 days</small><strong>$18,900</strong></div>
+          </table></div>
         </div>
       </div>
     </div>
   </section>
-
-  <div class="strip" aria-hidden="true">
-    <div class="strip-track">
-      <span>Job costing <b>✦</b></span><span>Cash flow forecast <b>✦</b></span><span>Truck-stock tracking <b>✦</b></span><span>Labor vs. bid <b>✦</b></span><span>True margin after overhead <b>✦</b></span><span>Change orders <b>✦</b></span>
-      <span>Job costing <b>✦</b></span><span>Cash flow forecast <b>✦</b></span><span>Truck-stock tracking <b>✦</b></span><span>Labor vs. bid <b>✦</b></span><span>True margin after overhead <b>✦</b></span><span>Change orders <b>✦</b></span>
-    </div>
-  </div>
 
   <section class="band" id="problem">
     <div class="wrap">
       <div class="section-head">
         <p class="eyebrow">The problem</p>
-        <h2>Busy all month. <span class="neon-cyan">Not sure where the money went.</span></h2>
+        <h2>Busy all month. <span class="ink-neon">Not sure where the money went.</span></h2>
         <p class="lede">Most small shops judge a job by the bank balance. By the time the numbers show a loss, the job is closed and the money is gone. These are the three leaks we see most:</p>
       </div>
-      <div class="leaks">
-        <article class="leak">
-          <span class="trade">Plumbing</span>
-          <h3>Parts leave the truck and never hit the invoice</h3>
-          <p>Fittings, valves and supply lines get pulled from truck stock on every call. If they aren't tied to a job, you paid for them and the customer didn't.</p>
-        </article>
-        <article class="leak">
-          <span class="trade">Electrical</span>
-          <h3>Labor runs past the bid without anyone noticing</h3>
-          <p>Catch an overrun halfway through and you can still write a change order. Find it at the end and you just eat it.</p>
-        </article>
-        <article class="leak">
-          <span class="trade">Both</span>
-          <h3>Final payments stuck behind inspections</h3>
-          <p>The work is done, the materials are paid for, and the last check waits on an inspector. Profitable on paper, short on cash in the bank.</p>
-        </article>
+      <div class="grid-3">
+        <article class="card"><span class="tag">Plumbing</span><h3>Parts leave the truck and never hit the invoice</h3><p>Miss billing one $40 part a week and that's $2,080 a year walking out of your trucks.</p></article>
+        <article class="card"><span class="tag">Electrical</span><h3>Labor runs past the bid without anyone noticing</h3><p>Catch an overrun halfway through and you can still write a change order. Find it at the end and you just eat it.</p></article>
+        <article class="card"><span class="tag">Both</span><h3>Final payments stuck behind inspections</h3><p>The work is done and the materials are paid for, while the last check waits on an inspector. Profitable on paper, short on cash in the bank.</p></article>
       </div>
     </div>
   </section>
 
-  <section class="band system" id="system">
+  <section class="band" id="demo">
+    <div class="wrap">
+      <div class="section-head">
+        <p class="eyebrow">Live demo</p>
+        <h2>Try it right here. <span class="ink-neon">Edit anything.</span></h2>
+        <p class="lede">This is the TradeSheets app with example jobs loaded. Change a cost, add a job or move a payment date, and watch the margins, flags and cash flow update.</p>
+      </div>
+      <div class="card demo-card">
+        <div class="demo-bar"><span class="live">Live demo</span><span>Example data · your edits stay in this browser</span></div>
+        <iframe class="demo-frame" title="TradeSheets live demo" loading="lazy" srcdoc="&lt;!doctype html&gt;&lt;html lang=&quot;en&quot;&gt;&lt;head&gt;&lt;meta charset=&quot;utf-8&quot;&gt;&lt;meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1&quot;&gt;&lt;style&gt;body{margin:0}&lt;/style&gt;&lt;/head&gt;&lt;body&gt;&lt;title&gt;TradeSheets Job Cost Tracker&lt;/title&gt;
+&lt;meta name=&quot;claude:viewport-fit-sides&quot; content=&quot;cover&quot;&gt;
+&lt;link rel=&quot;preconnect&quot; href=&quot;https://fonts.googleapis.com&quot;&gt;
+&lt;link rel=&quot;preconnect&quot; href=&quot;https://fonts.gstatic.com&quot; crossorigin&gt;
+&lt;link rel=&quot;stylesheet&quot; href=&quot;https://fonts.googleapis.com/css2?family=Anton&amp;family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,700&amp;family=JetBrains+Mono:wght@500;700&amp;display=swap&quot;&gt;
+&lt;style&gt;
+/* Layout: the PRO workbook as a live app. Sticky header with company KPIs, tab bar (Dashboard · Jobs · Costs · Payments · Cash Flow · Settings), one dense data table per tab. Brand: white page, black neon cards glowing turquoise; turquoise = money, actions and inputs. Single theme by choice. */
+:root {
+  --void: #ffffff;
+  --night: #ffffff;
+  --panel: #050809;
+  --panel-2: #0b1416;
+  --line: #d9e3e4;
+  --text: #071012;
+  --muted: #4f6266;
+  --gold: #00e5d4;
+  --silver: #071012;
+  --cyan: #2ff5e6;
+  --good: #2ff5e6;
+  --warn: #ffb547;
+  --bad: #ff4d6d;
+  --display: &quot;Anton&quot;, &quot;Impact&quot;, &quot;Arial Narrow&quot;, sans-serif;
+  --body: &quot;DM Sans&quot;, &quot;Segoe UI&quot;, system-ui, sans-serif;
+  --mono: &quot;JetBrains Mono&quot;, ui-monospace, Menlo, monospace;
+  color-scheme: light;
+}
+/* Inside the black cards the text flips to light. */
+.kpi, .scroll, .chart, .field {
+  --text: #e8fffd;
+  --muted: #8fb5b3;
+  --line: #123a3a;
+  color: var(--text);
+  color-scheme: dark;
+  box-shadow: 0 0 0 1px rgba(0, 229, 212, .45), 0 0 22px rgba(0, 229, 212, .28), 0 10px 30px rgba(7, 16, 18, .18);
+}
+* { box-sizing: border-box; }
+body { background: var(--void); color: var(--text); font: 400 .95rem/1.5 var(--body); }
+body::before { content: &quot;&quot;; position: fixed; inset: 0 0 auto; height: env(safe-area-inset-top, 0px); z-index: 10; background: var(--night); }
+:focus-visible { outline: 2px solid var(--gold); outline-offset: 2px; }
+.wrap { max-width: 1280px; margin: 0 auto; padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); }
+
+header.top { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 5; background: var(--night); border-bottom: 1px solid var(--line); box-shadow: 0 6px 20px rgba(10, 15, 11, .06); }
+.top .wrap { display: grid; gap: 12px; padding-block: 14px 0; }
+.brandrow { display: flex; flex-wrap: wrap; gap: 8px 20px; align-items: baseline; justify-content: space-between; }
+.logo { font: 400 1.4rem/1 var(--display); letter-spacing: .04em; text-transform: uppercase; color: var(--silver); }
+.logo span { color: #00b8aa; }
+.company { font: 700 .8rem/1 var(--mono); color: var(--muted); letter-spacing: .1em; text-transform: uppercase; }
+.example { font: 700 .66rem/1 var(--mono); color: #00897f; border: 1px solid #00b8aa; border-radius: 999px; padding: 4px 8px; letter-spacing: .1em; }
+.kpis { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 10px; }
+.kpi { background: var(--panel); border: 1px solid var(--line); border-radius: 10px; padding: 10px 12px; min-width: 0; }
+.kpi small { display: block; font: 500 .62rem/1.3 var(--mono); color: var(--muted); letter-spacing: .08em; text-transform: uppercase; }
+.kpi strong { font: 700 1.15rem/1.3 var(--mono); font-variant-numeric: tabular-nums; color: var(--gold); text-shadow: 0 0 10px rgba(0, 229, 212, .7); }
+.kpi strong.bad { color: var(--bad); }
+.kpi strong.good { color: var(--good); }
+nav.tabs { display: flex; gap: 4px; overflow-x: auto; scrollbar-width: none; }
+nav.tabs button {
+  font: 700 .82rem/1 var(--body); color: var(--muted); background: transparent; border: 0; cursor: pointer;
+  padding: 12px 14px; border-bottom: 2px solid transparent; white-space: nowrap;
+}
+nav.tabs button[aria-selected=&quot;true&quot;] { color: var(--text); border-bottom-color: var(--gold); border-bottom-width: 3px; box-shadow: 0 6px 12px -8px rgba(0, 229, 212, .9); }
+nav.tabs button:hover { color: var(--text); }
+
+main { padding-block: 22px 48px; }
+.panel { display: grid; gap: 14px; }
+.panel-head { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: end; gap: 10px; }
+.panel-head h2 { font: 400 1.6rem/1 var(--display); text-transform: uppercase; letter-spacing: .02em; margin: 0; }
+.panel-head p { margin: 4px 0 0; color: var(--muted); max-width: 70ch; }
+.btn { font: 700 .82rem/1 var(--body); border-radius: 999px; padding: 10px 16px; cursor: pointer; border: 0; }
+.btn-gold { background: #050809; color: var(--cyan); box-shadow: 0 0 0 1px rgba(0, 229, 212, .7), 0 0 18px rgba(0, 229, 212, .45); text-shadow: 0 0 8px rgba(0, 229, 212, .8); }
+.btn-gold:hover { box-shadow: 0 0 0 1px var(--cyan), 0 0 28px rgba(0, 229, 212, .7); }
+.btn-ghost { background: transparent; color: var(--silver); box-shadow: inset 0 0 0 1px var(--line); }
+.btn-ghost:hover { box-shadow: inset 0 0 0 1px var(--cyan); }
+
+.scroll { overflow-x: auto; border: 1px solid var(--line); border-radius: 12px; background: var(--panel); }
+table { width: 100%; border-collapse: collapse; font: 500 .82rem/1.3 var(--mono); font-variant-numeric: tabular-nums; }
+th { position: sticky; top: 0; background: var(--panel-2); text-align: left; color: var(--muted); font-weight: 500; font-size: .66rem; letter-spacing: .08em; text-transform: uppercase; padding: 10px 8px; border-bottom: 1px solid var(--line); white-space: nowrap; }
+td { padding: 6px 8px; border-bottom: 1px solid #122426; white-space: nowrap; }
+tr:last-child td { border-bottom: 0; }
+td.num, th.num { text-align: right; }
+td.calc { color: var(--silver); }
+tfoot td { font-weight: 700; color: var(--gold); background: var(--panel-2); border-top: 1px solid var(--line); }
+input, select {
+  font: 500 .82rem/1.2 var(--mono); color: var(--cyan); background: transparent; border: 1px solid transparent; border-radius: 6px;
+  padding: 5px 6px; width: 100%; min-width: 70px;
+}
+input:hover, select:hover { border-color: var(--line); }
+input:focus, select:focus { border-color: var(--cyan); background: rgba(0, 229, 212, .08); outline: none; box-shadow: 0 0 10px rgba(0, 229, 212, .35); }
+input[type=&quot;number&quot;] { text-align: right; }
+select option { background: var(--panel); color: var(--text); }
+.del { background: transparent; border: 0; color: var(--muted); cursor: pointer; font-size: 1rem; padding: 2px 6px; border-radius: 6px; }
+.del:hover { color: var(--bad); }
+.flag { font: 700 .64rem/1 var(--mono); padding: 5px 8px; border-radius: 6px; letter-spacing: .06em; }
+.flag.ok { color: var(--good); background: rgba(47, 245, 230, .1); box-shadow: inset 0 0 0 1px rgba(47, 245, 230, .5); }
+.flag.low { color: var(--warn); background: rgba(255, 181, 71, .1); box-shadow: inset 0 0 0 1px rgba(255, 181, 71, .5); }
+.flag.over { color: var(--bad); background: rgba(255, 77, 109, .12); box-shadow: inset 0 0 0 1px rgba(255, 77, 109, .55); }
+.neg { color: var(--bad); }
+.bar { height: 6px; border-radius: 3px; background: #16292b; overflow: hidden; min-width: 70px; }
+.bar i { display: block; height: 100%; background: var(--cyan); }
+.bar i.over { background: var(--bad); }
+
+.chart { background: var(--panel); border: 1px solid var(--line); border-radius: 12px; padding: 14px; }
+.chart svg { display: block; width: 100%; height: auto; }
+.legend { display: flex; flex-wrap: wrap; gap: 6px 16px; font: 500 .72rem/1 var(--mono); color: var(--muted); margin-top: 8px; }
+.legend i { display: inline-block; width: 10px; height: 10px; border-radius: 2px; margin-right: 6px; vertical-align: -1px; }
+
+.settings { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; max-width: 760px; }
+.field { display: grid; gap: 6px; background: var(--panel); border: 1px solid var(--line); border-radius: 12px; padding: 14px; }
+.field label { font: 700 .72rem/1 var(--mono); color: var(--muted); letter-spacing: .08em; text-transform: uppercase; }
+.field input { font-size: 1rem; border-color: var(--line); }
+.field label { color: var(--muted); }
+.field small { color: var(--muted); font-size: .8rem; }
+.note { color: var(--muted); font-size: .85rem; }
+
+@media (max-width: 900px) { .kpis { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+@media (max-width: 560px) { .kpis { grid-template-columns: repeat(2, minmax(0, 1fr)); } .settings { grid-template-columns: 1fr; } }
+&lt;/style&gt;
+
+&lt;header class=&quot;top&quot;&gt;
+  &lt;div class=&quot;wrap&quot;&gt;
+    &lt;div class=&quot;brandrow&quot;&gt;
+      &lt;div class=&quot;logo&quot;&gt;Trade&lt;span&gt;Sheets&lt;/span&gt;&lt;/div&gt;
+      &lt;span class=&quot;company&quot; id=&quot;companyLabel&quot;&gt;&lt;/span&gt;
+      &lt;span class=&quot;example&quot;&gt;EXAMPLE DATA · EDIT ANYTHING&lt;/span&gt;
+    &lt;/div&gt;
+    &lt;div class=&quot;kpis&quot; id=&quot;kpis&quot;&gt;&lt;/div&gt;
+    &lt;nav class=&quot;tabs&quot; role=&quot;tablist&quot; id=&quot;tabs&quot;&gt;
+      &lt;button role=&quot;tab&quot; data-tab=&quot;dashboard&quot;&gt;Job Dashboard&lt;/button&gt;
+      &lt;button role=&quot;tab&quot; data-tab=&quot;jobs&quot;&gt;Jobs&lt;/button&gt;
+      &lt;button role=&quot;tab&quot; data-tab=&quot;costs&quot;&gt;Costs Log&lt;/button&gt;
+      &lt;button role=&quot;tab&quot; data-tab=&quot;payments&quot;&gt;Payments Log&lt;/button&gt;
+      &lt;button role=&quot;tab&quot; data-tab=&quot;cashflow&quot;&gt;Cash Flow&lt;/button&gt;
+      &lt;button role=&quot;tab&quot; data-tab=&quot;setup&quot;&gt;Settings&lt;/button&gt;
+    &lt;/nav&gt;
+  &lt;/div&gt;
+&lt;/header&gt;
+
+&lt;main class=&quot;wrap&quot; id=&quot;view&quot;&gt;&lt;/main&gt;
+
+&lt;script&gt;
+const CATS = [&quot;Labor&quot;, &quot;Materials&quot;, &quot;Subcontractors&quot;, &quot;Equipment&quot;, &quot;Other&quot;];
+const STATUSES = [&quot;Bidding&quot;, &quot;Active&quot;, &quot;Complete&quot;, &quot;On Hold&quot;];
+const SAMPLE = {
+  settings: { company: &quot;Lone Star Plumbing &amp; Electric (example)&quot;, cash: 15000, overhead: 1500, target: 0.10, start: &quot;2026-01&quot; },
+  jobs: [
+    { id: &quot;J-101&quot;, client: &quot;Miller&quot;, desc: &quot;Kitchen repipe + fixtures&quot;, status: &quot;Active&quot;, contract: 48000, co: 2500, est: [14000, 12000, 6000, 1200, 800] },
+    { id: &quot;J-102&quot;, client: &quot;Okafor&quot;, desc: &quot;Panel upgrade 200A&quot;, status: &quot;Complete&quot;, contract: 22000, co: 0, est: [6500, 7000, 0, 600, 400] },
+    { id: &quot;J-103&quot;, client: &quot;Chen&quot;, desc: &quot;Basement rough-in&quot;, status: &quot;Active&quot;, contract: 61000, co: 0, est: [18000, 14000, 11000, 1500, 1000] },
+    { id: &quot;J-104&quot;, client: &quot;Patel&quot;, desc: &quot;Water heater swap x3&quot;, status: &quot;Bidding&quot;, contract: 9800, co: 0, est: [2400, 4100, 0, 300, 200] }
+  ],
+  costs: [
+    [&quot;2026-01-08&quot;, &quot;J-101&quot;, &quot;Materials&quot;, &quot;Ferguson&quot;, &quot;Fixtures deposit&quot;, 6200],
+    [&quot;2026-01-15&quot;, &quot;J-101&quot;, &quot;Labor&quot;, &quot;Crew payroll&quot;, &quot;Week 2 demo + rough-in&quot;, 4100],
+    [&quot;2026-01-14&quot;, &quot;J-102&quot;, &quot;Materials&quot;, &quot;City Electric Supply&quot;, &quot;Panel + breakers&quot;, 7400],
+    [&quot;2026-01-21&quot;, &quot;J-102&quot;, &quot;Labor&quot;, &quot;Crew payroll&quot;, &quot;Panel swap&quot;, 6900],
+    [&quot;2026-02-03&quot;, &quot;J-101&quot;, &quot;Subcontractors&quot;, &quot;Spark Drywall&quot;, &quot;Patch + finish&quot;, 3800],
+    [&quot;2026-02-10&quot;, &quot;J-103&quot;, &quot;Materials&quot;, &quot;Ferguson&quot;, &quot;PEX + fittings&quot;, 5200],
+    [&quot;2026-02-18&quot;, &quot;J-101&quot;, &quot;Labor&quot;, &quot;Crew payroll&quot;, &quot;Fixture install&quot;, 5600],
+    [&quot;2026-03-04&quot;, &quot;J-103&quot;, &quot;Labor&quot;, &quot;Crew payroll&quot;, &quot;Rough-in&quot;, 6100]
+  ].map(r =&gt; ({ date: r[0], job: r[1], cat: r[2], vendor: r[3], desc: r[4], amt: r[5] })),
+  payments: [
+    [&quot;2026-01-05&quot;, &quot;J-101&quot;, &quot;INV-001&quot;, &quot;Deposit 30%&quot;, 14400],
+    [&quot;2026-01-12&quot;, &quot;J-102&quot;, &quot;INV-002&quot;, &quot;Deposit 50%&quot;, 11000],
+    [&quot;2026-01-30&quot;, &quot;J-102&quot;, &quot;INV-003&quot;, &quot;Final&quot;, 11000],
+    [&quot;2026-02-02&quot;, &quot;J-103&quot;, &quot;INV-004&quot;, &quot;Deposit 25%&quot;, 15250],
+    [&quot;2026-02-20&quot;, &quot;J-101&quot;, &quot;INV-005&quot;, &quot;Progress 40%&quot;, 19200]
+  ].map(r =&gt; ({ date: r[0], job: r[1], inv: r[2], note: r[3], amt: r[4] }))
+};
+
+const KEY = &quot;tradesheets-tracker-v1&quot;;
+let state;
+try { state = JSON.parse(localStorage.getItem(KEY)) || structuredClone(SAMPLE); } catch (e) { state = structuredClone(SAMPLE); }
+let tab = &quot;dashboard&quot;;
+try { tab = localStorage.getItem(KEY + &quot;-tab&quot;) || &quot;dashboard&quot;; } catch (e) {}
+function save() { try { localStorage.setItem(KEY, JSON.stringify(state)); } catch (e) {} }
+
+const usd = v =&gt; (v == null || v === &quot;&quot; || isNaN(v)) ? &quot;-&quot; : (v &lt; 0 ? &quot;(&quot; : &quot;&quot;) + &quot;$&quot; + Math.round(Math.abs(v)).toLocaleString(&quot;en-US&quot;) + (v &lt; 0 ? &quot;)&quot; : &quot;&quot;);
+const pct = v =&gt; (v == null || isNaN(v) || !isFinite(v)) ? &quot;-&quot; : (v * 100).toFixed(1) + &quot;%&quot;;
+const num = v =&gt; Number(v) || 0;
+const esc = s =&gt; String(s ?? &quot;&quot;).replace(/[&amp;&lt;&gt;&quot;]/g, c =&gt; ({ &quot;&amp;&quot;: &quot;&amp;amp;&quot;, &quot;&lt;&quot;: &quot;&amp;lt;&quot;, &quot;&gt;&quot;: &quot;&amp;gt;&quot;, &#x27;&quot;&#x27;: &quot;&amp;quot;&quot; }[c]));
+
+// Same math as the PRO workbook (business/scripts/build_job_cost_tracker.py).
+function compute() {
+  const s = state.settings;
+  const jobs = state.jobs.filter(j =&gt; j.id);
+  const nonBidding = jobs.filter(j =&gt; j.status !== &quot;Bidding&quot;).reduce((a, j) =&gt; a + num(j.contract) + num(j.co), 0);
+  const rows = jobs.map(j =&gt; {
+    const contract = num(j.contract) + num(j.co);
+    const est = j.est.reduce((a, b) =&gt; a + num(b), 0);
+    const act = CATS.map(c =&gt; state.costs.filter(x =&gt; x.job === j.id &amp;&amp; x.cat === c).reduce((a, x) =&gt; a + num(x.amt), 0));
+    const actual = act.reduce((a, b) =&gt; a + b, 0);
+    const received = state.payments.filter(p =&gt; p.job === j.id).reduce((a, p) =&gt; a + num(p.amt), 0);
+    const ovh = j.status === &quot;Bidding&quot; || !nonBidding ? 0 : num(s.overhead) * 12 * contract / nonBidding;
+    const margin = contract ? (contract - Math.max(est, actual) - ovh) / contract : NaN;
+    const flag = actual &gt; est ? &quot;over&quot; : (margin &lt; num(s.target) ? &quot;low&quot; : &quot;ok&quot;);
+    return { j, contract, est, act, actual, used: est ? actual / est : NaN, laborVar: num(j.est[0]) - act[0], matVar: num(j.est[1]) - act[1],
+             received, unbilled: contract - received, profit: received - actual, ovh, margin, flag,
+             estMargin: contract ? (contract - est) / contract : NaN };
+  });
+  const [y, m] = (s.start || &quot;2026-01&quot;).split(&quot;-&quot;).map(Number);
+  let bal = num(s.cash);
+  const months = Array.from({ length: 12 }, (_, i) =&gt; {
+    const d = new Date(Date.UTC(y, m - 1 + i, 1));
+    const key = d.toISOString().slice(0, 7);
+    const inn = state.payments.filter(p =&gt; (p.date || &quot;&quot;).slice(0, 7) === key).reduce((a, p) =&gt; a + num(p.amt), 0);
+    const out = state.costs.filter(c =&gt; (c.date || &quot;&quot;).slice(0, 7) === key).reduce((a, c) =&gt; a + num(c.amt), 0);
+    const net = inn - out - num(s.overhead);
+    bal += net;
+    return { label: d.toLocaleString(&quot;en-US&quot;, { month: &quot;short&quot;, year: &quot;numeric&quot;, timeZone: &quot;UTC&quot; }), inn, out, ovh: num(s.overhead), net, bal,
+             warn: bal &lt; 0 ? &quot;CASH SHORTFALL&quot; : (bal &lt; num(s.overhead) ? &quot;Below 1 month overhead&quot; : &quot;&quot;) };
+  });
+  return { rows, months };
+}
+
+function renderKpis(c) {
+  const t = c.rows.reduce((a, r) =&gt; ({ contract: a.contract + r.contract, profit: a.profit + r.profit, unbilled: a.unbilled + (r.j.status === &quot;Bidding&quot; ? 0 : r.unbilled) }), { contract: 0, profit: 0, unbilled: 0 });
+  const over = c.rows.filter(r =&gt; r.flag === &quot;over&quot;).length;
+  const low = c.months.reduce((m, x) =&gt; x.bal &lt; m.bal ? x : m, c.months[0]);
+  document.getElementById(&quot;companyLabel&quot;).textContent = state.settings.company;
+  document.getElementById(&quot;kpis&quot;).innerHTML = [
+    [&quot;Contract value&quot;, usd(t.contract), &quot;&quot;],
+    [&quot;Profit so far&quot;, usd(t.profit), t.profit &lt; 0 ? &quot;bad&quot; : &quot;good&quot;],
+    [&quot;Still to bill&quot;, usd(t.unbilled), &quot;&quot;],
+    [&quot;Jobs over budget&quot;, String(over), over ? &quot;bad&quot; : &quot;good&quot;],
+    [&quot;Lowest cash month&quot;, usd(low.bal) + &quot; · &quot; + low.label.split(&quot; &quot;)[0], low.bal &lt; 0 ? &quot;bad&quot; : &quot;&quot;]
+  ].map(([k, v, cls]) =&gt; `&lt;div class=&quot;kpi&quot;&gt;&lt;small&gt;${k}&lt;/small&gt;&lt;strong class=&quot;${cls}&quot;&gt;${v}&lt;/strong&gt;&lt;/div&gt;`).join(&quot;&quot;);
+}
+
+function dashboard(c) {
+  const flagTxt = { ok: &quot;OK&quot;, low: &quot;LOW MARGIN&quot;, over: &quot;OVER BUDGET&quot; };
+  const body = c.rows.map(r =&gt; `&lt;tr&gt;
+    &lt;td&gt;${esc(r.j.id)}&lt;/td&gt;&lt;td&gt;${esc(r.j.client)}&lt;/td&gt;&lt;td&gt;${esc(r.j.status)}&lt;/td&gt;
+    &lt;td class=&quot;num&quot;&gt;${usd(r.contract)}&lt;/td&gt;&lt;td class=&quot;num&quot;&gt;${usd(r.est)}&lt;/td&gt;
+    ${r.act.map(v =&gt; `&lt;td class=&quot;num calc&quot;&gt;${usd(v)}&lt;/td&gt;`).join(&quot;&quot;)}
+    &lt;td class=&quot;num&quot;&gt;${usd(r.actual)}&lt;/td&gt;
+    &lt;td&gt;&lt;div class=&quot;bar&quot; title=&quot;${pct(r.used)}&quot;&gt;&lt;i class=&quot;${r.used &gt; 1 ? &quot;over&quot; : &quot;&quot;}&quot; style=&quot;width:${Math.min(100, (r.used || 0) * 100)}%&quot;&gt;&lt;/i&gt;&lt;/div&gt;&lt;/td&gt;
+    &lt;td class=&quot;num ${r.laborVar &lt; 0 ? &quot;neg&quot; : &quot;&quot;}&quot;&gt;${usd(r.laborVar)}&lt;/td&gt;&lt;td class=&quot;num ${r.matVar &lt; 0 ? &quot;neg&quot; : &quot;&quot;}&quot;&gt;${usd(r.matVar)}&lt;/td&gt;
+    &lt;td class=&quot;num&quot;&gt;${usd(r.received)}&lt;/td&gt;&lt;td class=&quot;num&quot;&gt;${usd(r.unbilled)}&lt;/td&gt;
+    &lt;td class=&quot;num ${r.profit &lt; 0 ? &quot;neg&quot; : &quot;&quot;}&quot;&gt;${usd(r.profit)}&lt;/td&gt;&lt;td class=&quot;num calc&quot;&gt;${usd(r.ovh)}&lt;/td&gt;
+    &lt;td class=&quot;num&quot;&gt;${pct(r.margin)}&lt;/td&gt;&lt;td&gt;&lt;span class=&quot;flag ${r.flag}&quot;&gt;${flagTxt[r.flag]}&lt;/span&gt;&lt;/td&gt;&lt;/tr&gt;`).join(&quot;&quot;);
+  const sum = k =&gt; c.rows.reduce((a, r) =&gt; a + r[k], 0);
+  return `&lt;section class=&quot;panel&quot;&gt;
+    &lt;div class=&quot;panel-head&quot;&gt;&lt;div&gt;&lt;h2&gt;Job Dashboard&lt;/h2&gt;&lt;p&gt;Actual cost by category against your estimate, money received, and projected net margin after overhead. Red means over budget, amber means below your target margin.&lt;/p&gt;&lt;/div&gt;&lt;/div&gt;
+    &lt;div class=&quot;scroll&quot;&gt;&lt;table&gt;
+      &lt;thead&gt;&lt;tr&gt;&lt;th&gt;Job&lt;/th&gt;&lt;th&gt;Client&lt;/th&gt;&lt;th&gt;Status&lt;/th&gt;&lt;th class=&quot;num&quot;&gt;Contract + COs&lt;/th&gt;&lt;th class=&quot;num&quot;&gt;Est. cost&lt;/th&gt;
+      ${CATS.map(x =&gt; `&lt;th class=&quot;num&quot;&gt;${x}&lt;/th&gt;`).join(&quot;&quot;)}&lt;th class=&quot;num&quot;&gt;Actual cost&lt;/th&gt;&lt;th&gt;Budget used&lt;/th&gt;
+      &lt;th class=&quot;num&quot;&gt;Labor var.&lt;/th&gt;&lt;th class=&quot;num&quot;&gt;Materials var.&lt;/th&gt;&lt;th class=&quot;num&quot;&gt;Received&lt;/th&gt;&lt;th class=&quot;num&quot;&gt;To bill&lt;/th&gt;
+      &lt;th class=&quot;num&quot;&gt;Profit so far&lt;/th&gt;&lt;th class=&quot;num&quot;&gt;Overhead share&lt;/th&gt;&lt;th class=&quot;num&quot;&gt;Net margin&lt;/th&gt;&lt;th&gt;Flag&lt;/th&gt;&lt;/tr&gt;&lt;/thead&gt;
+      &lt;tbody&gt;${body}&lt;/tbody&gt;
+      &lt;tfoot&gt;&lt;tr&gt;&lt;td colspan=&quot;3&quot;&gt;Total&lt;/td&gt;&lt;td class=&quot;num&quot;&gt;${usd(sum(&quot;contract&quot;))}&lt;/td&gt;&lt;td class=&quot;num&quot;&gt;${usd(sum(&quot;est&quot;))}&lt;/td&gt;
+      ${CATS.map((_, i) =&gt; `&lt;td class=&quot;num&quot;&gt;${usd(c.rows.reduce((a, r) =&gt; a + r.act[i], 0))}&lt;/td&gt;`).join(&quot;&quot;)}
+      &lt;td class=&quot;num&quot;&gt;${usd(sum(&quot;actual&quot;))}&lt;/td&gt;&lt;td&gt;&lt;/td&gt;&lt;td class=&quot;num&quot;&gt;${usd(sum(&quot;laborVar&quot;))}&lt;/td&gt;&lt;td class=&quot;num&quot;&gt;${usd(sum(&quot;matVar&quot;))}&lt;/td&gt;
+      &lt;td class=&quot;num&quot;&gt;${usd(sum(&quot;received&quot;))}&lt;/td&gt;&lt;td class=&quot;num&quot;&gt;${usd(sum(&quot;unbilled&quot;))}&lt;/td&gt;&lt;td class=&quot;num&quot;&gt;${usd(sum(&quot;profit&quot;))}&lt;/td&gt;
+      &lt;td class=&quot;num&quot;&gt;${usd(sum(&quot;ovh&quot;))}&lt;/td&gt;&lt;td&gt;&lt;/td&gt;&lt;td&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/tfoot&gt;
+    &lt;/table&gt;&lt;/div&gt;&lt;/section&gt;`;
+}
+
+const opt = (list, v) =&gt; list.map(x =&gt; `&lt;option ${x === v ? &quot;selected&quot; : &quot;&quot;}&gt;${esc(x)}&lt;/option&gt;`).join(&quot;&quot;);
+const jobIds = () =&gt; state.jobs.map(j =&gt; j.id).filter(Boolean);
+
+function jobsTab(c) {
+  const byId = Object.fromEntries(c.rows.map(r =&gt; [r.j.id, r]));
+  const body = state.jobs.map((j, i) =&gt; {
+    const r = byId[j.id];
+    return `&lt;tr&gt;
+    &lt;td&gt;&lt;input id=&quot;j-${i}-id&quot; data-t=&quot;jobs&quot; data-i=&quot;${i}&quot; data-k=&quot;id&quot; value=&quot;${esc(j.id)}&quot;&gt;&lt;/td&gt;
+    &lt;td&gt;&lt;input id=&quot;j-${i}-client&quot; data-t=&quot;jobs&quot; data-i=&quot;${i}&quot; data-k=&quot;client&quot; value=&quot;${esc(j.client)}&quot;&gt;&lt;/td&gt;
+    &lt;td&gt;&lt;input id=&quot;j-${i}-desc&quot; data-t=&quot;jobs&quot; data-i=&quot;${i}&quot; data-k=&quot;desc&quot; value=&quot;${esc(j.desc)}&quot; style=&quot;min-width:180px&quot;&gt;&lt;/td&gt;
+    &lt;td&gt;&lt;select id=&quot;j-${i}-status&quot; data-t=&quot;jobs&quot; data-i=&quot;${i}&quot; data-k=&quot;status&quot;&gt;${opt(STATUSES, j.status)}&lt;/select&gt;&lt;/td&gt;
+    &lt;td&gt;&lt;input id=&quot;j-${i}-contract&quot; type=&quot;number&quot; data-t=&quot;jobs&quot; data-i=&quot;${i}&quot; data-k=&quot;contract&quot; value=&quot;${j.contract}&quot;&gt;&lt;/td&gt;
+    &lt;td&gt;&lt;input id=&quot;j-${i}-co&quot; type=&quot;number&quot; data-t=&quot;jobs&quot; data-i=&quot;${i}&quot; data-k=&quot;co&quot; value=&quot;${j.co}&quot;&gt;&lt;/td&gt;
+    ${CATS.map((_, k) =&gt; `&lt;td&gt;&lt;input id=&quot;j-${i}-est${k}&quot; type=&quot;number&quot; data-t=&quot;jobs&quot; data-i=&quot;${i}&quot; data-k=&quot;est&quot; data-e=&quot;${k}&quot; value=&quot;${j.est[k]}&quot;&gt;&lt;/td&gt;`).join(&quot;&quot;)}
+    &lt;td class=&quot;num calc&quot;&gt;${usd(r ? r.est : NaN)}&lt;/td&gt;&lt;td class=&quot;num calc&quot;&gt;${pct(r ? r.estMargin : NaN)}&lt;/td&gt;
+    &lt;td&gt;&lt;button class=&quot;del&quot; data-del=&quot;jobs&quot; data-i=&quot;${i}&quot; aria-label=&quot;Delete job&quot;&gt;✕&lt;/button&gt;&lt;/td&gt;&lt;/tr&gt;`;
+  }).join(&quot;&quot;);
+  return `&lt;section class=&quot;panel&quot;&gt;
+    &lt;div class=&quot;panel-head&quot;&gt;&lt;div&gt;&lt;h2&gt;Jobs&lt;/h2&gt;&lt;p&gt;One row per job: the contract, approved change orders and your estimated cost by category.&lt;/p&gt;&lt;/div&gt;
+    &lt;button class=&quot;btn btn-gold&quot; data-add=&quot;jobs&quot;&gt;+ Add job&lt;/button&gt;&lt;/div&gt;
+    &lt;div class=&quot;scroll&quot;&gt;&lt;table&gt;&lt;thead&gt;&lt;tr&gt;&lt;th&gt;Job ID&lt;/th&gt;&lt;th&gt;Client&lt;/th&gt;&lt;th&gt;Description&lt;/th&gt;&lt;th&gt;Status&lt;/th&gt;&lt;th class=&quot;num&quot;&gt;Contract&lt;/th&gt;&lt;th class=&quot;num&quot;&gt;Change orders&lt;/th&gt;
+    ${CATS.map(x =&gt; `&lt;th class=&quot;num&quot;&gt;Est. ${x.toLowerCase()}&lt;/th&gt;`).join(&quot;&quot;)}&lt;th class=&quot;num&quot;&gt;Est. total&lt;/th&gt;&lt;th class=&quot;num&quot;&gt;Est. margin&lt;/th&gt;&lt;th&gt;&lt;/th&gt;&lt;/tr&gt;&lt;/thead&gt;
+    &lt;tbody&gt;${body}&lt;/tbody&gt;&lt;/table&gt;&lt;/div&gt;&lt;/section&gt;`;
+}
+
+function logTab(t) {
+  const isCost = t === &quot;costs&quot;;
+  const list = state[t];
+  const body = list.map((r, i) =&gt; `&lt;tr&gt;
+    &lt;td&gt;&lt;input id=&quot;${t}-${i}-date&quot; type=&quot;date&quot; data-t=&quot;${t}&quot; data-i=&quot;${i}&quot; data-k=&quot;date&quot; value=&quot;${esc(r.date)}&quot;&gt;&lt;/td&gt;
+    &lt;td&gt;&lt;select id=&quot;${t}-${i}-job&quot; data-t=&quot;${t}&quot; data-i=&quot;${i}&quot; data-k=&quot;job&quot;&gt;${opt(jobIds(), r.job)}&lt;/select&gt;&lt;/td&gt;
+    ${isCost ? `&lt;td&gt;&lt;select id=&quot;${t}-${i}-cat&quot; data-t=&quot;${t}&quot; data-i=&quot;${i}&quot; data-k=&quot;cat&quot;&gt;${opt(CATS, r.cat)}&lt;/select&gt;&lt;/td&gt;
+    &lt;td&gt;&lt;input id=&quot;${t}-${i}-vendor&quot; data-t=&quot;${t}&quot; data-i=&quot;${i}&quot; data-k=&quot;vendor&quot; value=&quot;${esc(r.vendor)}&quot;&gt;&lt;/td&gt;`
+    : `&lt;td&gt;&lt;input id=&quot;${t}-${i}-inv&quot; data-t=&quot;${t}&quot; data-i=&quot;${i}&quot; data-k=&quot;inv&quot; value=&quot;${esc(r.inv)}&quot;&gt;&lt;/td&gt;`}
+    &lt;td&gt;&lt;input id=&quot;${t}-${i}-desc&quot; data-t=&quot;${t}&quot; data-i=&quot;${i}&quot; data-k=&quot;${isCost ? &quot;desc&quot; : &quot;note&quot;}&quot; value=&quot;${esc(isCost ? r.desc : r.note)}&quot; style=&quot;min-width:180px&quot;&gt;&lt;/td&gt;
+    &lt;td&gt;&lt;input id=&quot;${t}-${i}-amt&quot; type=&quot;number&quot; data-t=&quot;${t}&quot; data-i=&quot;${i}&quot; data-k=&quot;amt&quot; value=&quot;${r.amt}&quot;&gt;&lt;/td&gt;
+    &lt;td&gt;&lt;button class=&quot;del&quot; data-del=&quot;${t}&quot; data-i=&quot;${i}&quot; aria-label=&quot;Delete row&quot;&gt;✕&lt;/button&gt;&lt;/td&gt;&lt;/tr&gt;`).join(&quot;&quot;);
+  const total = list.reduce((a, r) =&gt; a + num(r.amt), 0);
+  return `&lt;section class=&quot;panel&quot;&gt;
+    &lt;div class=&quot;panel-head&quot;&gt;&lt;div&gt;&lt;h2&gt;${isCost ? &quot;Costs Log&quot; : &quot;Payments Log&quot;}&lt;/h2&gt;&lt;p&gt;${isCost
+      ? &quot;Every receipt, payroll run, sub invoice and truck-stock pull, tied to a job and a category.&quot;
+      : &quot;Every deposit and progress payment from a client. Add expected future payments to turn Cash Flow into a forecast.&quot;}&lt;/p&gt;&lt;/div&gt;
+    &lt;button class=&quot;btn btn-gold&quot; data-add=&quot;${t}&quot;&gt;+ Add ${isCost ? &quot;cost&quot; : &quot;payment&quot;}&lt;/button&gt;&lt;/div&gt;
+    &lt;div class=&quot;scroll&quot;&gt;&lt;table&gt;&lt;thead&gt;&lt;tr&gt;&lt;th&gt;Date&lt;/th&gt;&lt;th&gt;Job&lt;/th&gt;${isCost ? &quot;&lt;th&gt;Category&lt;/th&gt;&lt;th&gt;Vendor / worker&lt;/th&gt;&quot; : &quot;&lt;th&gt;Invoice #&lt;/th&gt;&quot;}
+    &lt;th&gt;${isCost ? &quot;Description&quot; : &quot;Note&quot;}&lt;/th&gt;&lt;th class=&quot;num&quot;&gt;Amount ($)&lt;/th&gt;&lt;th&gt;&lt;/th&gt;&lt;/tr&gt;&lt;/thead&gt;
+    &lt;tbody&gt;${body}&lt;/tbody&gt;&lt;tfoot&gt;&lt;tr&gt;&lt;td colspan=&quot;${isCost ? 5 : 4}&quot;&gt;Total&lt;/td&gt;&lt;td class=&quot;num&quot;&gt;${usd(total)}&lt;/td&gt;&lt;td&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/tfoot&gt;&lt;/table&gt;&lt;/div&gt;&lt;/section&gt;`;
+}
+
+function cashflow(c) {
+  const W = 900, H = 220, P = 44;
+  const vals = c.months.map(m =&gt; m.bal);
+  const lo = Math.min(0, ...vals), hi = Math.max(...vals, 1);
+  const x = i =&gt; P + i * (W - P - 16) / 11;
+  const y = v =&gt; 16 + (hi - v) * (H - 46) / (hi - lo || 1);
+  const pts = vals.map((v, i) =&gt; `${x(i)},${y(v)}`).join(&quot; &quot;);
+  const area = `${x(0)},${y(lo)} ${pts} ${x(11)},${y(lo)}`;
+  const ticks = [lo, (lo + hi) / 2, hi];
+  const svg = `&lt;svg viewBox=&quot;0 0 ${W} ${H}&quot; role=&quot;img&quot; aria-label=&quot;Ending cash balance by month&quot;&gt;
+    ${ticks.map(t =&gt; `&lt;line x1=&quot;${P}&quot; x2=&quot;${W - 16}&quot; y1=&quot;${y(t)}&quot; y2=&quot;${y(t)}&quot; stroke=&quot;#123a3a&quot; stroke-width=&quot;1&quot;/&gt;
+      &lt;text x=&quot;${P - 6}&quot; y=&quot;${y(t) + 4}&quot; text-anchor=&quot;end&quot; fill=&quot;#8fb5b3&quot; font-size=&quot;11&quot; font-family=&quot;JetBrains Mono, monospace&quot;&gt;${usd(t)}&lt;/text&gt;`).join(&quot;&quot;)}
+    ${lo &lt; 0 ? `&lt;line x1=&quot;${P}&quot; x2=&quot;${W - 16}&quot; y1=&quot;${y(0)}&quot; y2=&quot;${y(0)}&quot; stroke=&quot;#ff4d6d&quot; stroke-dasharray=&quot;4 4&quot;/&gt;` : &quot;&quot;}
+    &lt;polygon points=&quot;${area}&quot; fill=&quot;rgba(0,229,212,.16)&quot;/&gt;
+    &lt;polyline points=&quot;${pts}&quot; fill=&quot;none&quot; stroke=&quot;#2ff5e6&quot; stroke-width=&quot;2.5&quot; style=&quot;filter:drop-shadow(0 0 6px rgba(0,229,212,.9))&quot;/&gt;
+    ${vals.map((v, i) =&gt; `&lt;circle cx=&quot;${x(i)}&quot; cy=&quot;${y(v)}&quot; r=&quot;${i === 11 ? 5 : 3}&quot; fill=&quot;${v &lt; 0 ? &quot;#ff4d6d&quot; : (i === 11 ? &quot;#ffffff&quot; : &quot;#2ff5e6&quot;)}&quot;/&gt;
+      &lt;text x=&quot;${x(i)}&quot; y=&quot;${H - 8}&quot; text-anchor=&quot;middle&quot; fill=&quot;#8fb5b3&quot; font-size=&quot;10&quot; font-family=&quot;JetBrains Mono, monospace&quot;&gt;${c.months[i].label.split(&quot; &quot;)[0]}&lt;/text&gt;`).join(&quot;&quot;)}
+  &lt;/svg&gt;`;
+  const body = c.months.map(m =&gt; `&lt;tr&gt;&lt;td&gt;${m.label}&lt;/td&gt;&lt;td class=&quot;num&quot;&gt;${usd(m.inn)}&lt;/td&gt;&lt;td class=&quot;num&quot;&gt;${usd(m.out)}&lt;/td&gt;&lt;td class=&quot;num calc&quot;&gt;${usd(m.ovh)}&lt;/td&gt;
+    &lt;td class=&quot;num ${m.net &lt; 0 ? &quot;neg&quot; : &quot;&quot;}&quot;&gt;${usd(m.net)}&lt;/td&gt;&lt;td class=&quot;num ${m.bal &lt; 0 ? &quot;neg&quot; : &quot;&quot;}&quot;&gt;${usd(m.bal)}&lt;/td&gt;
+    &lt;td&gt;${m.warn ? `&lt;span class=&quot;flag ${m.bal &lt; 0 ? &quot;over&quot; : &quot;low&quot;}&quot;&gt;${m.warn}&lt;/span&gt;` : &quot;&quot;}&lt;/td&gt;&lt;/tr&gt;`).join(&quot;&quot;);
+  return `&lt;section class=&quot;panel&quot;&gt;
+    &lt;div class=&quot;panel-head&quot;&gt;&lt;div&gt;&lt;h2&gt;12-Month Cash Flow&lt;/h2&gt;&lt;p&gt;Client payments in, job costs and overhead out, month by month from your opening balance. Red marks a month where the bank would go negative.&lt;/p&gt;&lt;/div&gt;&lt;/div&gt;
+    &lt;div class=&quot;chart&quot;&gt;${svg}&lt;div class=&quot;legend&quot;&gt;&lt;span&gt;&lt;i style=&quot;background:#2ff5e6&quot;&gt;&lt;/i&gt;Ending cash balance&lt;/span&gt;&lt;span&gt;&lt;i style=&quot;background:#ff4d6d&quot;&gt;&lt;/i&gt;Below zero&lt;/span&gt;&lt;/div&gt;&lt;/div&gt;
+    &lt;div class=&quot;scroll&quot;&gt;&lt;table&gt;&lt;thead&gt;&lt;tr&gt;&lt;th&gt;Month&lt;/th&gt;&lt;th class=&quot;num&quot;&gt;Cash in&lt;/th&gt;&lt;th class=&quot;num&quot;&gt;Job costs&lt;/th&gt;&lt;th class=&quot;num&quot;&gt;Overhead&lt;/th&gt;&lt;th class=&quot;num&quot;&gt;Net&lt;/th&gt;&lt;th class=&quot;num&quot;&gt;Ending balance&lt;/th&gt;&lt;th&gt;Warning&lt;/th&gt;&lt;/tr&gt;&lt;/thead&gt;
+    &lt;tbody&gt;${body}&lt;/tbody&gt;&lt;/table&gt;&lt;/div&gt;&lt;/section&gt;`;
+}
+
+function setup() {
+  const s = state.settings;
+  const f = (id, label, val, type, hint) =&gt; `&lt;div class=&quot;field&quot;&gt;&lt;label for=&quot;s-${id}&quot;&gt;${label}&lt;/label&gt;
+    &lt;input id=&quot;s-${id}&quot; type=&quot;${type}&quot; data-s=&quot;${id}&quot; value=&quot;${esc(val)}&quot; ${type === &quot;number&quot; ? &#x27;step=&quot;any&quot;&#x27; : &quot;&quot;}&gt;&lt;small&gt;${hint}&lt;/small&gt;&lt;/div&gt;`;
+  return `&lt;section class=&quot;panel&quot;&gt;
+    &lt;div class=&quot;panel-head&quot;&gt;&lt;div&gt;&lt;h2&gt;Settings&lt;/h2&gt;&lt;p&gt;Five numbers drive every calculation. Your edits are saved in this browser only.&lt;/p&gt;&lt;/div&gt;
+    &lt;button class=&quot;btn btn-ghost&quot; id=&quot;reset&quot;&gt;Reset to example data&lt;/button&gt;&lt;/div&gt;
+    &lt;div class=&quot;settings&quot;&gt;
+      ${f(&quot;company&quot;, &quot;Company name&quot;, s.company, &quot;text&quot;, &quot;Shown at the top.&quot;)}
+      ${f(&quot;cash&quot;, &quot;Opening cash balance ($)&quot;, s.cash, &quot;number&quot;, &quot;Bank balance on the first day of the start month.&quot;)}
+      ${f(&quot;overhead&quot;, &quot;Monthly fixed overhead ($)&quot;, s.overhead, &quot;number&quot;, &quot;Rent, insurance, trucks, software, office pay.&quot;)}
+      ${f(&quot;target&quot;, &quot;Target margin after overhead&quot;, s.target, &quot;number&quot;, &quot;As a decimal: 0.10 = 10%.&quot;)}
+      ${f(&quot;start&quot;, &quot;Forecast start month&quot;, s.start, &quot;month&quot;, &quot;First month of the 12-month cash flow.&quot;)}
+    &lt;/div&gt;
+    &lt;p class=&quot;note&quot;&gt;This is a live preview of the TradeSheets PRO spreadsheet. The real product is an Excel / Google Sheets file with the same tabs and formulas.&lt;/p&gt;
+  &lt;/section&gt;`;
+}
+
+function render() {
+  const c = compute();
+  renderKpis(c);
+  document.querySelectorAll(&quot;#tabs button&quot;).forEach(b =&gt; b.setAttribute(&quot;aria-selected&quot;, String(b.dataset.tab === tab)));
+  const v = document.getElementById(&quot;view&quot;);
+  v.innerHTML = tab === &quot;jobs&quot; ? jobsTab(c) : tab === &quot;costs&quot; ? logTab(&quot;costs&quot;) : tab === &quot;payments&quot; ? logTab(&quot;payments&quot;)
+    : tab === &quot;cashflow&quot; ? cashflow(c) : tab === &quot;setup&quot; ? setup() : dashboard(c);
+}
+
+document.getElementById(&quot;tabs&quot;).addEventListener(&quot;click&quot;, e =&gt; {
+  const b = e.target.closest(&quot;button[data-tab]&quot;); if (!b) return;
+  tab = b.dataset.tab; try { localStorage.setItem(KEY + &quot;-tab&quot;, tab); } catch (err) {}
+  render();
+});
+
+const view = document.getElementById(&quot;view&quot;);
+view.addEventListener(&quot;change&quot;, e =&gt; {
+  const el = e.target;
+  if (el.dataset.s) {
+    const k = el.dataset.s;
+    state.settings[k] = el.type === &quot;number&quot; ? num(el.value) : el.value;
+  } else if (el.dataset.t) {
+    const row = state[el.dataset.t][+el.dataset.i];
+    const k = el.dataset.k;
+    if (k === &quot;est&quot;) row.est[+el.dataset.e] = num(el.value);
+    else if (el.type === &quot;number&quot;) row[k] = num(el.value);
+    else if (k === &quot;id&quot;) {
+      const old = row.id; row.id = el.value.trim();
+      state.costs.forEach(x =&gt; { if (x.job === old) x.job = row.id; });
+      state.payments.forEach(x =&gt; { if (x.job === old) x.job = row.id; });
+    } else row[k] = el.value;
+  } else return;
+  save(); render();
+  const again = document.getElementById(el.id); if (again) again.focus();
+});
+view.addEventListener(&quot;click&quot;, e =&gt; {
+  const add = e.target.closest(&quot;[data-add]&quot;), del = e.target.closest(&quot;[data-del]&quot;);
+  if (add) {
+    const t = add.dataset.add, today = new Date().toISOString().slice(0, 10), first = jobIds()[0] || &quot;&quot;;
+    if (t === &quot;jobs&quot;) state.jobs.push({ id: &quot;J-&quot; + (100 + state.jobs.length + 1), client: &quot;&quot;, desc: &quot;&quot;, status: &quot;Bidding&quot;, contract: 0, co: 0, est: [0, 0, 0, 0, 0] });
+    if (t === &quot;costs&quot;) state.costs.push({ date: today, job: first, cat: &quot;Materials&quot;, vendor: &quot;&quot;, desc: &quot;&quot;, amt: 0 });
+    if (t === &quot;payments&quot;) state.payments.push({ date: today, job: first, inv: &quot;&quot;, note: &quot;&quot;, amt: 0 });
+    save(); render();
+  } else if (del) {
+    state[del.dataset.del].splice(+del.dataset.i, 1); save(); render();
+  } else if (e.target.id === &quot;reset&quot;) {
+    state = structuredClone(SAMPLE); save(); render();
+  }
+});
+
+render();
+&lt;/script&gt;
+&lt;/body&gt;&lt;/html&gt;"></iframe>
+      </div>
+      <p class="demo-note">The web app is in development. Today you get the same system, with the same tabs and formulas, as an Excel or Google Sheets file you own. Want the app when it launches? Email <b>APP</b> to the address at the bottom of this page.</p>
+    </div>
+  </section>
+
+  <section class="band" id="system">
     <div class="wrap">
       <div class="section-head">
         <p class="eyebrow">What you get</p>
-        <h2>Your system, <span class="neon-gold">built for your trade.</span></h2>
-        <p class="lede">One spreadsheet with five tabs, set up with your job types, your cost categories, your labor rates and your logo. All the formulas are done. You type in receipts and payments, and it does the rest.</p>
+        <h2>Your system, <span class="ink-neon">built for your trade.</span></h2>
+        <p class="lede">One file with five tabs, set up with your job types, cost categories, labor rates and logo. The formulas are locked so nothing breaks, and every input cell is yours to edit.</p>
       </div>
       <div class="modules">
-        <div class="module"><span class="tab">Tab 1</span><div><h3>Job dashboard</h3><p>Every job's bid, actual cost, profit so far and margin, with an OVER BUDGET flag the moment a job crosses its estimate.</p></div></div>
-        <div class="module"><span class="tab">Tab 2</span><div><h3>Cost log</h3><p>Receipts, payroll, sub invoices and truck stock, each tied to a job and a category. Dropdowns keep the data clean.</p></div></div>
-        <div class="module"><span class="tab">Tab 3</span><div><h3>12-month cash flow</h3><p>Money in, money out and overhead by month, with a CASH SHORTFALL warning before it happens.</p></div></div>
-        <div class="module"><span class="tab">Tab 4</span><div><h3>True margin</h3><p>Your rent, insurance, trucks and software spread across jobs, so you see net profit and not just gross.</p></div></div>
-        <div class="module"><span class="tab">Tab 5</span><div><h3>Change orders &amp; billing gap</h3><p>Approved change orders on top of the contract, and how much of each job you still haven't billed.</p></div></div>
-        <div class="module"><span class="tab">Bonus</span><div><h3>Quick-start guide</h3><p>A one-page guide in plain language, with examples taken from your own jobs.</p></div></div>
+        <div class="module"><span class="t">Tab 1</span><div><h3>Job dashboard</h3><p>Bid, actual cost, profit so far and margin for every job, with an OVER BUDGET flag the moment a job crosses its estimate.</p></div></div>
+        <div class="module"><span class="t">Tab 2</span><div><h3>Cost log</h3><p>Receipts, payroll, sub invoices and truck stock, each tied to a job and a category. Dropdowns keep the data clean.</p></div></div>
+        <div class="module"><span class="t">Tab 3</span><div><h3>12-month cash flow</h3><p>Money in, money out and overhead by month, with a CASH SHORTFALL warning before it happens.</p></div></div>
+        <div class="module"><span class="t">Tab 4</span><div><h3>True margin</h3><p>Your rent, insurance, trucks and software spread across jobs, so you see net profit and not just gross.</p></div></div>
+        <div class="module"><span class="t">Tab 5</span><div><h3>Change orders &amp; billing gap</h3><p>Approved change orders on top of the contract, and how much of each job you still haven't billed.</p></div></div>
+        <div class="module"><span class="t">Bonus</span><div><h3>Quick-start guide</h3><p>A one-page guide in plain language, with examples taken from your own jobs.</p></div></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="band" id="trial">
+    <div class="wrap">
+      <div class="section-head">
+        <p class="eyebrow">Free trial pack</p>
+        <h2>Three premium tools. <span class="ink-neon">Yours free.</span></h2>
+        <p class="lede">Say "I want it" and these three spreadsheets arrive in your inbox, ready to use. Keep them whether or not you buy anything.</p>
+      </div>
+      <div class="grid-3">
+        <article class="card"><span class="tag">Tool 1 · .xlsx</span><h3>Job Profit Snapshot</h3><p>Enter a job's price, hours, labor rate, materials and overhead. See true profit and margin before you bid, and again when the job closes.</p><span class="value">Answers: was this job worth it?</span></article>
+        <article class="card"><span class="tag">Tool 2 · .xlsx</span><h3>90-Day Cash Flow Forecaster</h3><p>Thirteen weeks of money in and money out, with a red warning on any week your balance would go negative.</p><span class="value">Answers: will I make payroll?</span></article>
+        <article class="card"><span class="tag">Tool 3 · .xlsx</span><h3>Truck Stock &amp; Unbilled Parts</h3><p>Log parts pulled from each truck, tied to a job. Anything not on an invoice gets flagged, with the dollar total.</p><span class="value">Answers: what did I forget to bill?</span></article>
       </div>
     </div>
   </section>
@@ -361,89 +689,53 @@ footer .wrap { display: flex; flex-wrap: wrap; justify-content: space-between; g
     <div class="wrap">
       <div class="section-head">
         <p class="eyebrow">How it works</p>
-        <h2>Four emails. <span class="neon-gold">Done in 48 hours.</span></h2>
+        <h2>Four emails. <span class="ink-neon">Done in 48 hours.</span></h2>
       </div>
       <div class="steps">
-        <div class="step"><h3>Email "yes"</h3><p>Send a one-word email to the address below. You get a free sample built for your trade.</p></div>
-        <div class="step"><h3>Answer 3 questions</h3><p>Your job types, how many trucks or techs, and Excel or Google Sheets.</p></div>
-        <div class="step"><h3>Pay securely</h3><p>You get a checkout link by email. Card or PayPal.</p></div>
-        <div class="step"><h3>Get your system</h3><p>Your custom file arrives within 48 hours, with a quick-start guide and a check-in a week later.</p></div>
+        <div class="card"><h3>Say "I want it"</h3><p>Email the word YES. The 3 free tools arrive within one US business day.</p></div>
+        <div class="card"><h3>Answer 3 questions</h3><p>Your job types, how many trucks or techs, and Excel or Google Sheets.</p></div>
+        <div class="card"><h3>Pay securely</h3><p>You get a checkout link by email. Card or PayPal.</p></div>
+        <div class="card"><h3>Get your system</h3><p>Your custom file arrives within 48 hours, with a quick-start guide and a check-in a week later.</p></div>
       </div>
       <div class="no-calls"><span>✦ No sales calls</span><span>✦ No software to install</span><span>✦ No monthly fees</span></div>
     </div>
   </section>
 
-  <section class="band" id="trial">
-    <div class="wrap">
-      <div class="section-head">
-        <p class="eyebrow">Free trial pack</p>
-        <h2>Three premium tools. <span class="neon-silver">Yours free.</span></h2>
-        <p class="lede">Reply "I want it" and these three spreadsheets arrive in your inbox, ready to use. Keep them whether or not you buy the full setup.</p>
-      </div>
-      <div class="assets">
-        <article class="asset">
-          <span class="file">Tool 1 · .xlsx</span>
-          <h3>Job Profit Snapshot</h3>
-          <p>Enter a job's price, hours, labor rate, materials and overhead. You see your true profit and margin before you send the bid, and again when the job closes.</p>
-          <span class="value">Answers: was this job worth it?</span>
-        </article>
-        <article class="asset">
-          <span class="file">Tool 2 · .xlsx</span>
-          <h3>90-Day Cash Flow Forecaster</h3>
-          <p>Thirteen weeks of money in and money out, with a warning in red on any week your bank balance would go negative.</p>
-          <span class="value">Answers: will I make payroll?</span>
-        </article>
-        <article class="asset">
-          <span class="file">Tool 3 · .xlsx</span>
-          <h3>Truck Stock &amp; Unbilled Parts Tracker</h3>
-          <p>Log parts and materials pulled from each truck, tied to a job. Anything not on an invoice gets flagged, with the dollar total.</p>
-          <span class="value">Answers: what did I forget to bill?</span>
-        </article>
-      </div>
-    </div>
-  </section>
-
-  <section class="band system" id="pricing">
+  <section class="band" id="pricing">
     <div class="wrap">
       <div class="section-head">
         <p class="eyebrow">Pricing</p>
-        <h2>Pick your <span class="neon-cyan">level.</span></h2>
+        <h2>Pick your <span class="ink-neon">level.</span></h2>
       </div>
       <div class="plans">
-        <article class="plan feature">
-          <span class="tag">Founding client · 5 spots</span>
+        <article class="plan card">
+          <span class="pill">Founding client · 5 spots</span>
           <h3>Done-for-you setup</h3>
-          <div class="price"><strong class="neon-gold">$150</strong><s>$250</s><small>one-time</small></div>
-          <ul>
-            <li>Built for your trade, jobs and labor rates</li>
-            <li>All five tabs, branded with your logo</li>
-            <li>Delivered in 48 hours</li>
-            <li>Quick-start guide and 7-day email check-in</li>
-          </ul>
-          <a class="btn btn-gold" href="#start">Claim a founding spot</a>
-          <p class="fine">The founding price applies to the first 5 clients. In exchange we ask for honest feedback.</p>
+          <div class="price"><strong class="neon">$150</strong><s>$250</s><small>one-time</small></div>
+          <ul><li>Built for your trade, jobs and labor rates</li><li>All five tabs, branded with your logo</li><li>Delivered in 48 hours</li><li>Quick-start guide and 7-day check-in</li></ul>
+          <a class="btn btn-neon" href="#start">Claim a founding spot</a>
+          <p class="fine" style="color:var(--card-soft)">The founding price applies to the first 5 clients, in exchange for honest feedback.</p>
         </article>
         <article class="plan">
-          <span class="tag alt">Do it yourself</span>
+          <span class="pill">Do it yourself</span>
           <h3>PRO template</h3>
           <div class="price"><strong>$49</strong><small>one-time</small></div>
-          <ul>
-            <li>The same five-tab tracker</li>
-            <li>Up to 50 jobs and 1,000 cost entries</li>
-            <li>You set it up in about 10 minutes</li>
-          </ul>
-          <a class="btn btn-ghost" href="#start">Ask for the template</a>
+          <ul><li>The same five-tab tracker</li><li>Up to 50 jobs and 1,000 cost entries</li><li>Set it up yourself in about 10 minutes</li></ul>
+          <a class="btn btn-line" href="#start">Ask for the template</a>
         </article>
         <article class="plan">
-          <span class="tag alt">Optional add-on</span>
+          <span class="pill">Optional add-on</span>
           <h3>Monthly upkeep</h3>
           <div class="price"><strong>$49</strong><small>/ month</small></div>
-          <ul>
-            <li>Forward your receipts, and we log them</li>
-            <li>One-page profit summary each month</li>
-            <li>Cancel any time</li>
-          </ul>
-          <a class="btn btn-ghost" href="#start">Ask about upkeep</a>
+          <ul><li>Forward your receipts, and we log them</li><li>One-page profit summary each month</li><li>Cancel any time</li></ul>
+          <a class="btn btn-line" href="#start">Ask about upkeep</a>
+        </article>
+        <article class="plan">
+          <span class="pill">Coming soon</span>
+          <h3>TradeSheets app</h3>
+          <div class="price"><strong>Early</strong><small>access list</small></div>
+          <ul><li>Everything in the live demo, in your browser</li><li>Your data saved and backed up</li><li>Early-access members hear about pricing first</li></ul>
+          <a class="btn btn-line" href="#start">Email APP to join</a>
         </article>
       </div>
     </div>
@@ -451,79 +743,48 @@ footer .wrap { display: flex; flex-wrap: wrap; justify-content: space-between; g
 
   <section class="band" id="faq">
     <div class="wrap">
-      <div class="section-head">
-        <p class="eyebrow">Questions</p>
-        <h2 class="neon-silver">Straight answers.</h2>
-      </div>
+      <div class="section-head"><p class="eyebrow">Questions</p><h2>Straight answers.</h2></div>
       <div class="faq">
-        <details>
-          <summary>Who builds it?</summary>
-          <p>Viktor Ilic, the founder of TradeSheets. He works remotely from Serbia and handles everything by email, so you never have to schedule a call.</p>
-        </details>
-        <details>
-          <summary>Do I need any special software?</summary>
-          <p>No. It runs in Microsoft Excel (2010 or newer) or free Google Sheets. There are no macros, no add-ons and no logins.</p>
-        </details>
-        <details>
-          <summary>I already use QuickBooks. Do I still need this?</summary>
-          <p>QuickBooks tells you what the business made overall. This tells you what each job made while it's still running, and when cash will get tight. Many shops use both.</p>
-        </details>
-        <details>
-          <summary>Where does my data live?</summary>
-          <p>In your own file, on your computer or your Google Drive. We don't host it, and we don't keep a copy after delivery unless you sign up for monthly upkeep.</p>
-        </details>
-        <details>
-          <summary>How much time does it take each week?</summary>
-          <p>About ten minutes: type in the week's receipts and payments. The dashboard and cash flow update themselves.</p>
-        </details>
+        <details><summary>Who builds it?</summary><p>Viktor Ilic, the founder of TradeSheets. He works remotely from Serbia and handles everything by email, so you never have to schedule a call.</p></details>
+        <details><summary>Do I need any special software?</summary><p>No. The spreadsheet runs in Microsoft Excel (2010 or newer) or free Google Sheets. There are no macros, add-ons or logins.</p></details>
+        <details><summary>Can I edit the spreadsheet?</summary><p>Yes. Every input cell is editable. The formula cells are locked so nothing breaks by accident. If you want to change a formula, use Review → Unprotect Sheet. There's no password.</p></details>
+        <details><summary>I already use QuickBooks. Do I still need this?</summary><p>QuickBooks tells you what the business made overall. This tells you what each job made while it's still running, and when cash will get tight. Many shops use both.</p></details>
+        <details><summary>When does the app launch?</summary><p>It's in development, and there's no launch date yet. The live demo on this page shows how it works. Email APP to join the early-access list.</p></details>
+        <details><summary>Where does my data live?</summary><p>In your own file, on your computer or your Google Drive. We don't host it, and we don't keep a copy after delivery unless you sign up for monthly upkeep.</p></details>
       </div>
     </div>
   </section>
 
   <section class="band final" id="start">
     <div class="wrap">
-      <p class="eyebrow">Your answer</p>
-      <h2>Want the <span class="neon-gold">free trial pack?</span></h2>
-      <p class="lede">Email one word to the address below. Every answer is read, and a "no" is respected right away.</p>
-      <div class="poll">
-        <div class="choice yes">
-          <b>I want it</b>
-          <p>Email the subject <code>YES</code>. You get the three tools and a sample built for your trade, usually within one US business day.</p>
+      <div class="card">
+        <p class="eyebrow">Your answer</p>
+        <h2>Want the <span class="neon">free trial pack?</span></h2>
+        <p class="lede">Email one word to the address below. Every answer is read, and a "no" is respected right away.</p>
+        <div class="poll">
+          <div class="choice yes"><b>I want it</b><p>Email the subject <code>YES</code>. You get the three tools, plus a sample built for your trade.</p></div>
+          <div class="choice"><b>Not interested</b><p>Email the subject <code>NO</code>. You'll be removed and never contacted again.</p></div>
         </div>
-        <div class="choice no">
-          <b>Not interested</b>
-          <p>Email the subject <code>NO</code>. You'll be removed and never contacted again.</p>
-        </div>
+        <div class="mailbox"><code id="email">ilicvix@gmail.com</code><button class="btn btn-neon" id="copy" type="button">Copy address</button></div>
+        <p class="copied" id="copied" aria-live="polite"></p>
       </div>
-      <div class="mailbox">
-        <code id="email">ilicvix@gmail.com</code>
-        <button class="btn btn-gold" id="copy" type="button">Copy address</button>
-      </div>
-      <p class="copied" id="copied" aria-live="polite"></p>
     </div>
   </section>
 </main>
 
 <footer>
-  <div class="wrap">
-    <span>© 2026 TradeSheets · Viktor Ilic</span>
-    <span>Kajmakcalanska 21/1, 11420 Smederevska Palanka, Serbia</span>
-  </div>
+  <div class="wrap"><span>© 2026 TradeSheets · Viktor Ilic</span><span>Kajmakcalanska 21/1, 11420 Smederevska Palanka, Serbia</span></div>
 </footer>
 
 <script>
-  const btn = document.getElementById('copy');
-  const note = document.getElementById('copied');
-  const email = document.getElementById('email');
+  const btn = document.getElementById('copy'), note = document.getElementById('copied'), email = document.getElementById('email');
   btn.addEventListener('click', () => {
-    const done = () => { note.textContent = 'Copied. Paste it into your email app.'; };
     const fallback = () => {
       const r = document.createRange(); r.selectNodeContents(email);
       const s = getSelection(); s.removeAllRanges(); s.addRange(r);
       note.textContent = 'Selected. Press Ctrl+C (or Cmd+C) to copy.';
     };
-    try {
-      navigator.clipboard.writeText(email.textContent).then(done, fallback);
-    } catch (e) { fallback(); }
+    try { navigator.clipboard.writeText(email.textContent).then(() => { note.textContent = 'Copied. Paste it into your email app.'; }, fallback); }
+    catch (e) { fallback(); }
   });
 </script>

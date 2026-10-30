@@ -47,5 +47,5 @@ Paste into Gumroad or Lemon Squeezy. Both act as Merchant of Record and handle V
 **Thumbnail checklist:** dashboard screenshot with a red "OVER BUDGET" cell visible · headline "Know which jobs make money" · make mockups free at shots.so or in Canva.
 
 ## Upsell wiring
-- Put the PRO link in the FREE sheet: `Start Here!B21` (replace `[YOUR GUMROAD / LEMON SQUEEZY LINK]`).
+- Put the PRO link in the FREE sheet: `Start Here!B22` (replace `[YOUR GUMROAD / LEMON SQUEEZY LINK]`).
 - Gumroad: Checkout → Upsells → offer PRO at $39 to anyone who downloads FREE.

@@ -12,6 +12,8 @@ from openpyxl.formatting.rule import CellIsRule, FormulaRule
 from openpyxl.styles import Alignment, Border, Font, PatternFill, Side
 from openpyxl.worksheet.datavalidation import DataValidation
 
+from protect import apply_editing_rights
+
 FONT = "Arial"
 BLUE = Font(name=FONT, color="0000FF")
 BLACK = Font(name=FONT)
@@ -31,7 +33,7 @@ USD = '$#,##0;($#,##0);"-"'
 USD2 = '$#,##0.00;($#,##0.00);"-"'
 PCT = '0.0%;(0.0%);"-"'
 DATE = "yyyy-mm-dd"
-FOOTER = "TradeSheets free trial pack · Blue text = your inputs · Black = formulas (don't overwrite) · Full custom setup: reply to the email you got this from."
+FOOTER = "TradeSheets free trial pack · Blue text = your inputs · Black = locked formulas (Review > Unprotect Sheet to change) · Full custom setup: reply to the email you got this from."
 
 
 def brand(ws, title, subtitle, width_cols):
@@ -119,6 +121,7 @@ def job_profit_snapshot(out):
     ws["B26"].font = BOLD
     ws["A28"] = FOOTER
     ws["A28"].font = NOTE
+    apply_editing_rights(wb)
     wb.save(out)
 
 
@@ -174,6 +177,7 @@ def cash_flow_90(out):
     ws["A27"] = FOOTER
     ws["A27"].font = NOTE
     ws.freeze_panes = "C9"
+    apply_editing_rights(wb)
     wb.save(out)
 
 
@@ -238,6 +242,7 @@ def truck_stock(out):
     cell(sm, "A15", "Type your own truck names in the blue cells above.", NOTE)
     sm["A17"] = FOOTER
     sm["A17"].font = NOTE
+    apply_editing_rights(wb)
     wb.save(out)
 
 

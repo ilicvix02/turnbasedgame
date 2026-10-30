@@ -1,0 +1,387 @@
+<title>TradeSheets Job Costing</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Anton&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,700&family=JetBrains+Mono:wght@500;700&display=swap">
+<style>
+/* Layout: white page; every key block is a black "neon card" with a turquoise glow, matching the TradeSheets app. Hero is the biggest card. Single theme by choice. */
+:root {
+  --page: #ffffff;
+  --ink: #071012;
+  --ink-soft: #4f6266;
+  --rule: #d9e3e4;
+  --card: #050809;
+  --card-2: #0b1416;
+  --card-ink: #e8fffd;
+  --card-soft: #8fb5b3;
+  --card-rule: #123a3a;
+  --neon: #2ff5e6;
+  --neon-deep: #00897f;
+  --good: #2ff5e6;
+  --bad: #ff4d6d;
+  --display: "Anton", "Impact", "Arial Narrow", sans-serif;
+  --body: "DM Sans", "Segoe UI", system-ui, sans-serif;
+  --mono: "JetBrains Mono", ui-monospace, Menlo, monospace;
+  --glow: 0 0 0 1px rgba(0, 229, 212, .5), 0 0 26px rgba(0, 229, 212, .32), 0 18px 40px rgba(7, 16, 18, .22);
+  color-scheme: light;
+}
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body { background: var(--page); color: var(--ink); font: 400 1.05rem/1.6 var(--body); overflow-x: hidden; }
+body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-area-inset-top, 0px); z-index: 10; background: var(--page); }
+a { color: inherit; }
+:focus-visible { outline: 2px solid var(--neon-deep); outline-offset: 3px; }
+.wrap { width: 100%; max-width: 1140px; margin: 0 auto; padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); }
+.band { padding-block: clamp(56px, 8vw, 104px); }
+p { margin: 0; }
+h1, h2, h3 { font-family: var(--display); font-weight: 400; text-transform: uppercase; letter-spacing: .01em; text-wrap: balance; margin: 0; }
+h1 { font-size: clamp(2.9rem, 8vw, 6rem); line-height: .95; }
+h2 { font-size: clamp(2.1rem, 5vw, 3.6rem); line-height: 1; }
+h3 { font-size: 1.4rem; line-height: 1.1; }
+.eyebrow { font: 700 .76rem/1 var(--mono); letter-spacing: .18em; text-transform: uppercase; color: var(--neon-deep); }
+.lede { color: var(--ink-soft); font-size: clamp(1.05rem, 1.7vw, 1.22rem); max-width: 60ch; }
+.neon { color: var(--neon); text-shadow: 0 0 6px rgba(47, 245, 230, .9), 0 0 22px rgba(0, 229, 212, .6), 0 0 48px rgba(0, 229, 212, .35); }
+.ink-neon { color: var(--ink); text-decoration: underline; text-decoration-color: var(--neon); text-decoration-thickness: .12em; text-underline-offset: .12em; }
+
+/* neon card */
+.card { background: var(--card); color: var(--card-ink); border-radius: 20px; box-shadow: var(--glow); --ink: var(--card-ink); --ink-soft: var(--card-soft); --rule: var(--card-rule); color-scheme: dark; }
+.card .eyebrow { color: var(--neon); }
+
+.btn { display: inline-flex; align-items: center; justify-content: center; gap: .5em; font: 700 1rem/1 var(--body); text-decoration: none; cursor: pointer; padding: 1em 1.5em; border-radius: 999px; border: 0; transition: transform .15s ease, box-shadow .15s ease; }
+.btn-neon { background: var(--neon); color: #001412; box-shadow: 0 0 0 1px #9ffff7, 0 0 22px rgba(47, 245, 230, .6); }
+.btn-neon:hover { transform: translateY(-2px); box-shadow: 0 0 0 1px #9ffff7, 0 0 36px rgba(47, 245, 230, .85); }
+.btn-dark { background: var(--card); color: var(--neon); box-shadow: var(--glow); }
+.btn-dark:hover { transform: translateY(-2px); }
+.btn-line { background: transparent; color: var(--ink); box-shadow: inset 0 0 0 1.5px var(--ink-soft); }
+.card .btn-line { box-shadow: inset 0 0 0 1.5px var(--neon); color: var(--card-ink); }
+
+/* nav */
+.nav { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 5; background: rgba(255, 255, 255, .9); backdrop-filter: blur(10px); border-bottom: 1px solid var(--rule); }
+.nav .wrap { display: flex; align-items: center; justify-content: space-between; gap: 16px; padding-block: 12px; }
+.logo { font: 400 1.5rem/1 var(--display); letter-spacing: .04em; text-transform: uppercase; text-decoration: none; }
+.logo span { color: var(--neon-deep); }
+.nav-links { display: flex; gap: 22px; align-items: center; font-weight: 700; font-size: .92rem; }
+.nav-links a:not(.btn) { text-decoration: none; color: var(--ink-soft); }
+.nav-links a:not(.btn):hover { color: var(--ink); }
+.nav .btn { padding: .7em 1.1em; font-size: .9rem; }
+
+/* hero */
+.hero { padding-block: clamp(24px, 4vw, 48px) clamp(40px, 6vw, 72px); }
+.hero .card { position: relative; overflow: hidden; padding: clamp(28px, 5vw, 64px); display: grid; grid-template-columns: 1.05fr .95fr; gap: clamp(28px, 4vw, 56px); align-items: center; }
+.hero .card::before { content: ""; position: absolute; width: 560px; height: 560px; right: -200px; top: -240px; border-radius: 50%; background: rgba(0, 229, 212, .22); filter: blur(90px); pointer-events: none; }
+.hero-copy { position: relative; display: grid; gap: 22px; min-width: 0; }
+.cta-row { display: flex; flex-wrap: wrap; gap: 12px; }
+.trust { display: flex; flex-wrap: wrap; gap: 6px 18px; color: var(--card-soft); font-size: .92rem; }
+.trust b { color: var(--card-ink); }
+.mini { position: relative; min-width: 0; background: var(--card-2); border-radius: 14px; padding: 16px; box-shadow: 0 0 0 1px rgba(47, 245, 230, .35); }
+.mini-top { display: flex; justify-content: space-between; gap: 8px; margin-bottom: 10px; font: 700 .68rem/1 var(--mono); letter-spacing: .12em; text-transform: uppercase; color: var(--card-soft); }
+.mini-top span:last-child { color: var(--neon); }
+.mini .scroll { overflow-x: auto; }
+.mini table { width: 100%; min-width: 400px; border-collapse: collapse; font: 500 .8rem/1.3 var(--mono); font-variant-numeric: tabular-nums; }
+.mini th { text-align: left; font-weight: 500; font-size: .64rem; letter-spacing: .08em; text-transform: uppercase; color: var(--card-soft); padding: 7px; border-bottom: 1px solid var(--card-rule); }
+.mini td { padding: 9px 7px; border-bottom: 1px solid var(--card-rule); }
+.mini .n { text-align: right; }
+.flag { font: 700 .62rem/1 var(--mono); padding: 5px 7px; border-radius: 6px; letter-spacing: .06em; white-space: nowrap; }
+.flag.ok { color: var(--good); box-shadow: inset 0 0 0 1px rgba(47, 245, 230, .5); }
+.flag.over { color: var(--bad); box-shadow: inset 0 0 0 1px rgba(255, 77, 109, .55); }
+
+.section-head { display: grid; gap: 14px; margin-bottom: clamp(28px, 4vw, 48px); max-width: 780px; }
+
+/* problem */
+.grid-3 { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 22px; }
+.grid-3 .card { padding: 26px; display: grid; gap: 12px; align-content: start; min-width: 0; }
+.grid-3 .card p { color: var(--card-soft); }
+.tag { font: 700 .7rem/1 var(--mono); letter-spacing: .14em; text-transform: uppercase; color: var(--neon); }
+.value { font: 700 .8rem/1.3 var(--mono); color: var(--neon); }
+
+/* demo */
+.demo-card { padding: 14px; }
+.demo-bar { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 8px; padding: 4px 6px 12px; font: 700 .72rem/1 var(--mono); letter-spacing: .1em; text-transform: uppercase; color: var(--card-soft); }
+.demo-bar .live { color: var(--neon); }
+.demo-bar .live::before { content: ""; display: inline-block; width: 8px; height: 8px; border-radius: 50%; background: var(--neon); box-shadow: 0 0 10px var(--neon); margin-right: 8px; vertical-align: 0; }
+.demo-frame { display: block; width: 100%; height: 780px; border: 0; border-radius: 12px; background: #ffffff; }
+.demo-note { margin-top: 14px; color: var(--ink-soft); font-size: .92rem; max-width: 75ch; }
+
+/* modules */
+.modules { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); border-top: 1px solid var(--rule); }
+.module { display: grid; grid-template-columns: 70px 1fr; gap: 16px; padding: 24px 6px; border-bottom: 1px solid var(--rule); min-width: 0; }
+.module:nth-child(odd) { border-right: 1px solid var(--rule); padding-right: 24px; }
+.module:nth-child(even) { padding-left: 24px; }
+.module .t { font: 700 .72rem/1.2 var(--mono); color: var(--neon-deep); letter-spacing: .12em; text-transform: uppercase; padding-top: 4px; }
+.module div { display: grid; gap: 6px; min-width: 0; }
+.module p { color: var(--ink-soft); }
+
+/* steps */
+.steps { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 18px; counter-reset: s; }
+.steps .card { padding: 24px 22px; display: grid; gap: 10px; align-content: start; min-width: 0; }
+.steps .card::before { counter-increment: s; content: "0" counter(s); font: 400 2.4rem/1 var(--display); color: transparent; -webkit-text-stroke: 1.5px var(--neon); filter: drop-shadow(0 0 8px rgba(47, 245, 230, .7)); }
+.steps p { color: var(--card-soft); font-size: .96rem; }
+.no-calls { margin-top: 24px; display: flex; flex-wrap: wrap; gap: 8px 26px; font: 700 .82rem/1.4 var(--mono); color: var(--neon-deep); letter-spacing: .06em; text-transform: uppercase; }
+
+/* pricing */
+.plans { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 18px; align-items: stretch; }
+.plan { border-radius: 20px; padding: 26px 22px; display: grid; gap: 14px; align-content: start; min-width: 0; border: 1px solid var(--rule); background: #ffffff; }
+.plan.card { border: 0; background: var(--card); }
+.plan .pill { justify-self: start; font: 700 .64rem/1 var(--mono); letter-spacing: .12em; text-transform: uppercase; padding: 6px 10px; border-radius: 999px; box-shadow: inset 0 0 0 1px var(--neon-deep); color: var(--neon-deep); }
+.plan.card .pill { background: var(--neon); color: #001412; box-shadow: none; }
+.price { display: flex; flex-wrap: wrap; align-items: baseline; gap: 8px; }
+.price strong { font: 400 3.2rem/1 var(--display); }
+.price s, .price small { color: var(--ink-soft); font: 500 .9rem/1 var(--mono); }
+.plan ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 9px; }
+.plan li { position: relative; padding-left: 24px; color: var(--ink-soft); font-size: .96rem; }
+.plan li::before { content: ""; position: absolute; left: 0; top: .5em; width: 11px; height: 6px; border-left: 2px solid var(--neon-deep); border-bottom: 2px solid var(--neon-deep); transform: rotate(-45deg); }
+.plan.card li::before { border-color: var(--neon); }
+.plan .btn { justify-self: stretch; margin-top: 4px; }
+.fine { color: var(--ink-soft); font-size: .84rem; }
+
+/* faq */
+.faq { display: grid; gap: 10px; max-width: 820px; }
+details { border: 1px solid var(--rule); border-radius: 14px; padding: 2px 20px; background: #ffffff; }
+details[open] { box-shadow: 0 0 0 1px rgba(0, 229, 212, .5), 0 0 18px rgba(0, 229, 212, .18); border-color: transparent; }
+summary { cursor: pointer; list-style: none; display: flex; justify-content: space-between; gap: 16px; align-items: center; padding-block: 16px; font-weight: 700; }
+summary::-webkit-details-marker { display: none; }
+summary::after { content: "+"; font: 400 1.6rem/1 var(--display); color: var(--neon-deep); flex: none; }
+details[open] summary::after { content: "–"; }
+details p { color: var(--ink-soft); padding-bottom: 18px; max-width: 65ch; }
+
+/* final */
+.final .card { padding: clamp(28px, 5vw, 60px); display: grid; gap: 22px; justify-items: center; text-align: center; }
+.poll { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; width: 100%; max-width: 760px; }
+.choice { text-align: left; border-radius: 16px; padding: 22px; display: grid; gap: 8px; background: var(--card-2); box-shadow: inset 0 0 0 1px var(--card-rule); min-width: 0; }
+.choice.yes { box-shadow: inset 0 0 0 1px var(--neon), 0 0 22px rgba(47, 245, 230, .25); }
+.choice b { font: 400 1.5rem/1 var(--display); text-transform: uppercase; }
+.choice.yes b { color: var(--neon); }
+.choice p { color: var(--card-soft); font-size: .95rem; }
+.choice code { font: 700 .95rem/1.4 var(--mono); color: var(--card-ink); }
+.mailbox { display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: 12px; padding: 8px 8px 8px 22px; border-radius: 999px; background: var(--card-2); box-shadow: inset 0 0 0 1px var(--neon); max-width: 100%; }
+.mailbox code { font: 700 1.05rem/1.4 var(--mono); color: var(--neon); user-select: all; overflow-wrap: anywhere; }
+.copied { min-height: 1.4em; font: 500 .85rem/1.4 var(--mono); color: var(--neon); }
+
+footer { border-top: 1px solid var(--rule); padding-block: 28px; color: var(--ink-soft); font-size: .85rem; }
+footer .wrap { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 12px; }
+
+@media (max-width: 980px) { .plans { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 900px) {
+  .hero .card { grid-template-columns: 1fr; }
+  .grid-3 { grid-template-columns: 1fr; }
+  .steps { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .modules { grid-template-columns: 1fr; }
+  .module:nth-child(odd) { border-right: 0; padding-right: 6px; }
+  .module:nth-child(even) { padding-left: 6px; }
+  .nav-links a:not(.btn) { display: none; }
+  .demo-frame { height: 720px; }
+}
+@media (max-width: 560px) { .steps, .plans, .poll { grid-template-columns: 1fr; } }
+@media (prefers-reduced-motion: reduce) { .btn, .btn:hover { transition: none; transform: none; } html { scroll-behavior: auto; } }
+</style>
+
+<header class="nav">
+  <div class="wrap">
+    <a class="logo" href="#top">Trade<span>Sheets</span></a>
+    <nav class="nav-links">
+      <a href="#demo">Live demo</a>
+      <a href="#trial">Free tools</a>
+      <a href="#pricing">Pricing</a>
+      <a class="btn btn-dark" href="#start">Get started</a>
+    </nav>
+  </div>
+</header>
+
+<main id="top">
+  <section class="hero">
+    <div class="wrap">
+      <div class="card">
+        <div class="hero-copy">
+          <p class="eyebrow">For US plumbing &amp; electrical contractors</p>
+          <h1>Know which jobs <span class="neon">make you money.</span></h1>
+          <p class="lede">Every receipt, every labor hour and every truck-stock part is tied to a job, so the losing jobs show up this week, not at tax time. Built for your business in 48 hours.</p>
+          <div class="cta-row">
+            <a class="btn btn-neon" href="#demo">Try the live demo →</a>
+            <a class="btn btn-line" href="#trial">Get 3 free tools</a>
+          </div>
+          <div class="trust">
+            <span><b>48-hour</b> setup</span><span><b>Excel or Google Sheets</b></span><span><b>No calls</b>, all by email</span><span><b>No subscription</b></span>
+          </div>
+        </div>
+        <div class="mini" aria-label="Example job dashboard">
+          <div class="mini-top"><span>Job dashboard</span><span>Example data</span></div>
+          <div class="scroll"><table>
+            <thead><tr><th>Job</th><th class="n">Bid</th><th class="n">Actual</th><th class="n">Margin</th><th>Flag</th></tr></thead>
+            <tbody>
+              <tr><td>Water heater swap</td><td class="n">$2,400</td><td class="n">$1,610</td><td class="n">32.9%</td><td><span class="flag ok">OK</span></td></tr>
+              <tr><td>Kitchen repipe</td><td class="n">$6,800</td><td class="n">$7,240</td><td class="n">-6.5%</td><td><span class="flag over">OVER BUDGET</span></td></tr>
+              <tr><td>Panel upgrade 200A</td><td class="n">$3,900</td><td class="n">$2,870</td><td class="n">26.4%</td><td><span class="flag ok">OK</span></td></tr>
+              <tr><td>Service calls (wk)</td><td class="n">$4,150</td><td class="n">$2,980</td><td class="n">28.2%</td><td><span class="flag ok">OK</span></td></tr>
+            </tbody>
+          </table></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="band" id="problem">
+    <div class="wrap">
+      <div class="section-head">
+        <p class="eyebrow">The problem</p>
+        <h2>Busy all month. <span class="ink-neon">Not sure where the money went.</span></h2>
+        <p class="lede">Most small shops judge a job by the bank balance. By the time the numbers show a loss, the job is closed and the money is gone. These are the three leaks we see most:</p>
+      </div>
+      <div class="grid-3">
+        <article class="card"><span class="tag">Plumbing</span><h3>Parts leave the truck and never hit the invoice</h3><p>Miss billing one $40 part a week and that's $2,080 a year walking out of your trucks.</p></article>
+        <article class="card"><span class="tag">Electrical</span><h3>Labor runs past the bid without anyone noticing</h3><p>Catch an overrun halfway through and you can still write a change order. Find it at the end and you just eat it.</p></article>
+        <article class="card"><span class="tag">Both</span><h3>Final payments stuck behind inspections</h3><p>The work is done and the materials are paid for, while the last check waits on an inspector. Profitable on paper, short on cash in the bank.</p></article>
+      </div>
+    </div>
+  </section>
+
+  <section class="band" id="demo">
+    <div class="wrap">
+      <div class="section-head">
+        <p class="eyebrow">Live demo</p>
+        <h2>Try it right here. <span class="ink-neon">Edit anything.</span></h2>
+        <p class="lede">This is the TradeSheets app with example jobs loaded. Change a cost, add a job or move a payment date, and watch the margins, flags and cash flow update.</p>
+      </div>
+      <div class="card demo-card">
+        <div class="demo-bar"><span class="live">Live demo</span><span>Example data · your edits stay in this browser</span></div>
+        <iframe class="demo-frame" title="TradeSheets live demo" loading="lazy" srcdoc="__DEMO_SRCDOC__"></iframe>
+      </div>
+      <p class="demo-note">The web app is in development. Today you get the same system, with the same tabs and formulas, as an Excel or Google Sheets file you own. Want the app when it launches? Email <b>APP</b> to the address at the bottom of this page.</p>
+    </div>
+  </section>
+
+  <section class="band" id="system">
+    <div class="wrap">
+      <div class="section-head">
+        <p class="eyebrow">What you get</p>
+        <h2>Your system, <span class="ink-neon">built for your trade.</span></h2>
+        <p class="lede">One file with five tabs, set up with your job types, cost categories, labor rates and logo. The formulas are locked so nothing breaks, and every input cell is yours to edit.</p>
+      </div>
+      <div class="modules">
+        <div class="module"><span class="t">Tab 1</span><div><h3>Job dashboard</h3><p>Bid, actual cost, profit so far and margin for every job, with an OVER BUDGET flag the moment a job crosses its estimate.</p></div></div>
+        <div class="module"><span class="t">Tab 2</span><div><h3>Cost log</h3><p>Receipts, payroll, sub invoices and truck stock, each tied to a job and a category. Dropdowns keep the data clean.</p></div></div>
+        <div class="module"><span class="t">Tab 3</span><div><h3>12-month cash flow</h3><p>Money in, money out and overhead by month, with a CASH SHORTFALL warning before it happens.</p></div></div>
+        <div class="module"><span class="t">Tab 4</span><div><h3>True margin</h3><p>Your rent, insurance, trucks and software spread across jobs, so you see net profit and not just gross.</p></div></div>
+        <div class="module"><span class="t">Tab 5</span><div><h3>Change orders &amp; billing gap</h3><p>Approved change orders on top of the contract, and how much of each job you still haven't billed.</p></div></div>
+        <div class="module"><span class="t">Bonus</span><div><h3>Quick-start guide</h3><p>A one-page guide in plain language, with examples taken from your own jobs.</p></div></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="band" id="trial">
+    <div class="wrap">
+      <div class="section-head">
+        <p class="eyebrow">Free trial pack</p>
+        <h2>Three premium tools. <span class="ink-neon">Yours free.</span></h2>
+        <p class="lede">Say "I want it" and these three spreadsheets arrive in your inbox, ready to use. Keep them whether or not you buy anything.</p>
+      </div>
+      <div class="grid-3">
+        <article class="card"><span class="tag">Tool 1 · .xlsx</span><h3>Job Profit Snapshot</h3><p>Enter a job's price, hours, labor rate, materials and overhead. See true profit and margin before you bid, and again when the job closes.</p><span class="value">Answers: was this job worth it?</span></article>
+        <article class="card"><span class="tag">Tool 2 · .xlsx</span><h3>90-Day Cash Flow Forecaster</h3><p>Thirteen weeks of money in and money out, with a red warning on any week your balance would go negative.</p><span class="value">Answers: will I make payroll?</span></article>
+        <article class="card"><span class="tag">Tool 3 · .xlsx</span><h3>Truck Stock &amp; Unbilled Parts</h3><p>Log parts pulled from each truck, tied to a job. Anything not on an invoice gets flagged, with the dollar total.</p><span class="value">Answers: what did I forget to bill?</span></article>
+      </div>
+    </div>
+  </section>
+
+  <section class="band" id="how">
+    <div class="wrap">
+      <div class="section-head">
+        <p class="eyebrow">How it works</p>
+        <h2>Four emails. <span class="ink-neon">Done in 48 hours.</span></h2>
+      </div>
+      <div class="steps">
+        <div class="card"><h3>Say "I want it"</h3><p>Email the word YES. The 3 free tools arrive within one US business day.</p></div>
+        <div class="card"><h3>Answer 3 questions</h3><p>Your job types, how many trucks or techs, and Excel or Google Sheets.</p></div>
+        <div class="card"><h3>Pay securely</h3><p>You get a checkout link by email. Card or PayPal.</p></div>
+        <div class="card"><h3>Get your system</h3><p>Your custom file arrives within 48 hours, with a quick-start guide and a check-in a week later.</p></div>
+      </div>
+      <div class="no-calls"><span>✦ No sales calls</span><span>✦ No software to install</span><span>✦ No monthly fees</span></div>
+    </div>
+  </section>
+
+  <section class="band" id="pricing">
+    <div class="wrap">
+      <div class="section-head">
+        <p class="eyebrow">Pricing</p>
+        <h2>Pick your <span class="ink-neon">level.</span></h2>
+      </div>
+      <div class="plans">
+        <article class="plan card">
+          <span class="pill">Founding client · 5 spots</span>
+          <h3>Done-for-you setup</h3>
+          <div class="price"><strong class="neon">$150</strong><s>$250</s><small>one-time</small></div>
+          <ul><li>Built for your trade, jobs and labor rates</li><li>All five tabs, branded with your logo</li><li>Delivered in 48 hours</li><li>Quick-start guide and 7-day check-in</li></ul>
+          <a class="btn btn-neon" href="#start">Claim a founding spot</a>
+          <p class="fine" style="color:var(--card-soft)">The founding price applies to the first 5 clients, in exchange for honest feedback.</p>
+        </article>
+        <article class="plan">
+          <span class="pill">Do it yourself</span>
+          <h3>PRO template</h3>
+          <div class="price"><strong>$49</strong><small>one-time</small></div>
+          <ul><li>The same five-tab tracker</li><li>Up to 50 jobs and 1,000 cost entries</li><li>Set it up yourself in about 10 minutes</li></ul>
+          <a class="btn btn-line" href="#start">Ask for the template</a>
+        </article>
+        <article class="plan">
+          <span class="pill">Optional add-on</span>
+          <h3>Monthly upkeep</h3>
+          <div class="price"><strong>$49</strong><small>/ month</small></div>
+          <ul><li>Forward your receipts, and we log them</li><li>One-page profit summary each month</li><li>Cancel any time</li></ul>
+          <a class="btn btn-line" href="#start">Ask about upkeep</a>
+        </article>
+        <article class="plan">
+          <span class="pill">Coming soon</span>
+          <h3>TradeSheets app</h3>
+          <div class="price"><strong>Early</strong><small>access list</small></div>
+          <ul><li>Everything in the live demo, in your browser</li><li>Your data saved and backed up</li><li>Early-access members hear about pricing first</li></ul>
+          <a class="btn btn-line" href="#start">Email APP to join</a>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="band" id="faq">
+    <div class="wrap">
+      <div class="section-head"><p class="eyebrow">Questions</p><h2>Straight answers.</h2></div>
+      <div class="faq">
+        <details><summary>Who builds it?</summary><p>Viktor Ilic, the founder of TradeSheets. He works remotely from Serbia and handles everything by email, so you never have to schedule a call.</p></details>
+        <details><summary>Do I need any special software?</summary><p>No. The spreadsheet runs in Microsoft Excel (2010 or newer) or free Google Sheets. There are no macros, add-ons or logins.</p></details>
+        <details><summary>Can I edit the spreadsheet?</summary><p>Yes. Every input cell is editable. The formula cells are locked so nothing breaks by accident. If you want to change a formula, use Review → Unprotect Sheet. There's no password.</p></details>
+        <details><summary>I already use QuickBooks. Do I still need this?</summary><p>QuickBooks tells you what the business made overall. This tells you what each job made while it's still running, and when cash will get tight. Many shops use both.</p></details>
+        <details><summary>When does the app launch?</summary><p>It's in development, and there's no launch date yet. The live demo on this page shows how it works. Email APP to join the early-access list.</p></details>
+        <details><summary>Where does my data live?</summary><p>In your own file, on your computer or your Google Drive. We don't host it, and we don't keep a copy after delivery unless you sign up for monthly upkeep.</p></details>
+      </div>
+    </div>
+  </section>
+
+  <section class="band final" id="start">
+    <div class="wrap">
+      <div class="card">
+        <p class="eyebrow">Your answer</p>
+        <h2>Want the <span class="neon">free trial pack?</span></h2>
+        <p class="lede">Email one word to the address below. Every answer is read, and a "no" is respected right away.</p>
+        <div class="poll">
+          <div class="choice yes"><b>I want it</b><p>Email the subject <code>YES</code>. You get the three tools, plus a sample built for your trade.</p></div>
+          <div class="choice"><b>Not interested</b><p>Email the subject <code>NO</code>. You'll be removed and never contacted again.</p></div>
+        </div>
+        <div class="mailbox"><code id="email">ilicvix@gmail.com</code><button class="btn btn-neon" id="copy" type="button">Copy address</button></div>
+        <p class="copied" id="copied" aria-live="polite"></p>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap"><span>© 2026 TradeSheets · Viktor Ilic</span><span>Kajmakcalanska 21/1, 11420 Smederevska Palanka, Serbia</span></div>
+</footer>
+
+<script>
+  const btn = document.getElementById('copy'), note = document.getElementById('copied'), email = document.getElementById('email');
+  btn.addEventListener('click', () => {
+    const fallback = () => {
+      const r = document.createRange(); r.selectNodeContents(email);
+      const s = getSelection(); s.removeAllRanges(); s.addRange(r);
+      note.textContent = 'Selected. Press Ctrl+C (or Cmd+C) to copy.';
+    };
+    try { navigator.clipboard.writeText(email.textContent).then(() => { note.textContent = 'Copied. Paste it into your email app.'; }, fallback); }
+    catch (e) { fallback(); }
+  });
+</script>

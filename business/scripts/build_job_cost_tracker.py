@@ -15,6 +15,8 @@ from openpyxl.styles import Alignment, Border, Font, PatternFill, Side
 from openpyxl.utils import get_column_letter
 from openpyxl.worksheet.datavalidation import DataValidation
 
+from protect import apply_editing_rights
+
 FONT = "Arial"
 BLUE = Font(name=FONT, color="0000FF")
 BLACK = Font(name=FONT)
@@ -84,6 +86,7 @@ def build(lite: bool, out: Path):
         ("COLOR LEGEND", BOLD),
         ("Blue text = a value you type in.   Black text = formula, do not overwrite.   Green text = pulled from another tab.", BLACK),
         ("Yellow fill = key setting you should review first.", BLACK),
+        ("Formula cells are locked so they can't be overwritten by accident. To change a formula: Review > Unprotect Sheet (no password).", BLACK),
         ("", BLACK),
         ("The example rows (jobs J-101 to J-103 and their costs/payments) show the expected format. Overwrite or delete them.", BLACK),
     ]
@@ -307,6 +310,7 @@ def build(lite: bool, out: Path):
         cf[f"A{tr+2}"].font = Font(name=FONT, italic=True, color="666666")
 
     ws.sheet_view.showGridLines = False
+    apply_editing_rights(wb)
     wb.save(out)
 
 
