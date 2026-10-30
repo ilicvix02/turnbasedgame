@@ -1,0 +1,28 @@
+{
+  "slug": "nct-plumbing",
+  "company": "NCT Plumbing",
+  "trade": "plumbing",
+  "email": "service@nctplumbing.com",
+  "city": "Fort Worth",
+  "state": "TX",
+  "phone": "(817) 431-5952",
+  "source_domain": "nctplumbing.com",
+  "sources": ["https://nctplumbing.com/", "https://nctplumbing.com/about-us/", "https://nctplumbing.com/contact/", "https://nctplumbing.com/north-central-texas-plumbing-services/"],
+  "badge": "Family owned and operated",
+  "headline": "Fort Worth plumbers, <em>establishing customers for life.</em>",
+  "sub": "Water heaters, drains, leaks and repipes for homes and businesses, from a family-owned Fort Worth plumbing company with over 60 years serving the area.",
+  "proof": [["60+ years", "serving Fort Worth"], ["Family", "owned and operated"], ["24/7", "emergency service"]],
+  "services": [
+    {"name": "Water heaters", "desc": "Tank and tankless repair and replacement, often within one business day."},
+    {"name": "Drain cleaning", "desc": "Clogged or slow drains and toilets cleared."},
+    {"name": "Leak repair", "desc": "Water and gas leaks found and fixed, including slab leaks."},
+    {"name": "Repiping", "desc": "Water, gas and sewer repipes for older homes."},
+    {"name": "Water filters", "desc": "Home water filter and filtration system installs and upkeep."},
+    {"name": "New construction", "desc": "Plumbing for new homes and commercial builds in Fort Worth."}
+  ],
+  "why_title": "Customers for life",
+  "facts": [["60+ yrs", "Serving Fort Worth"], ["Master plumbers", "Office staff are all master plumbers"], ["24/7", "Emergency service available"], ["Emerald Club", "Members save 20% on service repairs"]],
+  "areas": ["Fort Worth", "Keller", "Denton", "Mid Cities"],
+  "final": "Water where it shouldn't be?",
+  "personalization": "I saw NCT Plumbing has been serving Fort Worth for over 60 years, and that everyone in your office is a master plumber."
+}
