@@ -45,9 +45,9 @@ def main(slugs):
     (DEST / "assets").mkdir(exist_ok=True)
     for a in ["neon-header.gif", "founder-card.jpg"]:
         shutil.copy2(ASSETS / a, DEST / "assets" / a)
-    (DEST / "robots.txt").write_text("User-agent: *\nDisallow: /\n")
+    (DEST / "robots.txt").write_text("User-agent: *\nAllow: /\n")
     (DEST / ".nojekyll").write_text("")
-    (DEST / "index.html").write_text('<!doctype html><meta charset="utf-8"><meta name="robots" content="noindex,nofollow">'
+    (DEST / "index.html").exists() or (DEST / "index.html").write_text('<!doctype html><meta charset="utf-8"><meta name="robots" content="noindex,nofollow">'
                                     '<title>TradeSheets previews</title><body style="font:16px system-ui;padding:40px;background:#050809;color:#bff3ff">'
                                     'TradeSheets website concept previews. Each preview is private to the business it was made for.</body>')
     (DEST / "README.md").write_text("# TradeSheets previews\n\nWatermarked website concept previews and email images for TradeSheets outreach. Not indexed.\n")
