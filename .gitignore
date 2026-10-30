@@ -8,3 +8,4 @@ data/
 business/leads/
 business/products/clients/
 __pycache__/
+business/private/
