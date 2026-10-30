@@ -1,0 +1,457 @@
+<title>TradeSheets Job Costing</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Anton&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,700&family=JetBrains+Mono:wght@500;700&display=swap">
+<style>
+/* Layout: cinematic dark sales page; neon gold = money/actions, neon purple = atmosphere/structure. Single deliberate dark theme. */
+:root {
+  --void: #0b0614;
+  --night: #140a24;
+  --panel: #1b0f30;
+  --line: #3a2160;
+  --text: #f3ecff;
+  --muted: #b6a6d4;
+  --gold: #ffd23f;
+  --gold-hot: #ffe57a;
+  --purple: #b026ff;
+  --purple-soft: #7d3cff;
+  --good: #3ef0a0;
+  --bad: #ff4d8d;
+  --display: "Anton", "Impact", "Arial Narrow", sans-serif;
+  --body: "DM Sans", "Segoe UI", system-ui, sans-serif;
+  --mono: "JetBrains Mono", ui-monospace, "SFMono-Regular", Menlo, monospace;
+  color-scheme: dark;
+}
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body {
+  background: var(--void);
+  color: var(--text);
+  font: 400 1.05rem/1.6 var(--body);
+  overflow-x: hidden;
+}
+body::before {
+  content: ""; position: fixed; inset: 0 0 auto; height: env(safe-area-inset-top, 0px);
+  z-index: 10; background: var(--void);
+}
+a { color: inherit; }
+:focus-visible { outline: 2px solid var(--gold); outline-offset: 3px; }
+
+.wrap {
+  width: 100%; max-width: 1120px; margin: 0 auto;
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+}
+.band { padding-block: clamp(64px, 9vw, 120px); position: relative; }
+
+/* type */
+.eyebrow {
+  font: 700 0.78rem/1 var(--mono); letter-spacing: 0.18em; text-transform: uppercase;
+  color: var(--gold);
+}
+h1, h2, h3 { font-family: var(--display); font-weight: 400; text-transform: uppercase; letter-spacing: 0.01em; text-wrap: balance; margin: 0; }
+h1 { font-size: clamp(3rem, 8.5vw, 6.4rem); line-height: 0.95; }
+h2 { font-size: clamp(2.2rem, 5.4vw, 3.8rem); line-height: 1; }
+h3 { font-size: 1.45rem; line-height: 1.1; }
+.neon-gold {
+  color: var(--gold);
+  text-shadow: 0 0 6px rgba(255, 210, 63, .85), 0 0 22px rgba(255, 210, 63, .55), 0 0 48px rgba(255, 170, 0, .35);
+}
+.neon-purple {
+  color: #e2b8ff;
+  text-shadow: 0 0 6px rgba(176, 38, 255, .9), 0 0 24px rgba(176, 38, 255, .65), 0 0 56px rgba(125, 60, 255, .45);
+}
+p { margin: 0; }
+.lede { color: var(--muted); font-size: clamp(1.05rem, 1.8vw, 1.25rem); max-width: 58ch; }
+
+/* buttons */
+.btn {
+  display: inline-flex; align-items: center; justify-content: center; gap: .5em;
+  font: 700 1rem/1 var(--body); text-decoration: none; cursor: pointer;
+  padding: 1.05em 1.6em; border-radius: 999px; border: 0;
+  transition: transform .15s ease, box-shadow .15s ease;
+}
+.btn-gold {
+  background: var(--gold); color: #1a0b00;
+  box-shadow: 0 0 0 1px var(--gold-hot), 0 0 24px rgba(255, 210, 63, .55), 0 0 64px rgba(255, 170, 0, .3);
+}
+.btn-gold:hover { transform: translateY(-2px); box-shadow: 0 0 0 1px var(--gold-hot), 0 0 32px rgba(255, 210, 63, .8), 0 0 90px rgba(255, 170, 0, .45); }
+.btn-ghost { background: transparent; color: var(--text); box-shadow: inset 0 0 0 1.5px var(--purple); }
+.btn-ghost:hover { box-shadow: inset 0 0 0 1.5px var(--purple), 0 0 24px rgba(176, 38, 255, .5); }
+
+/* nav */
+.nav { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 5; background: rgba(11, 6, 20, .82); backdrop-filter: blur(10px); border-bottom: 1px solid rgba(176, 38, 255, .25); }
+.nav .wrap { display: flex; align-items: center; justify-content: space-between; gap: 16px; padding-block: 14px; }
+.logo { font: 400 1.5rem/1 var(--display); letter-spacing: .04em; text-transform: uppercase; text-decoration: none; }
+.logo span { color: var(--gold); }
+.nav .btn { padding: .75em 1.2em; font-size: .9rem; }
+
+/* hero */
+.hero { overflow: hidden; padding-block: clamp(48px, 7vw, 96px) clamp(56px, 8vw, 104px); }
+.hero::before, .hero::after {
+  content: ""; position: absolute; border-radius: 50%; filter: blur(80px); pointer-events: none; z-index: 0;
+}
+.hero::before { width: 620px; height: 620px; background: rgba(176, 38, 255, .45); top: -220px; right: -180px; }
+.hero::after { width: 420px; height: 420px; background: rgba(255, 190, 40, .2); bottom: -200px; left: -160px; }
+.hero .wrap { position: relative; z-index: 1; display: grid; grid-template-columns: 1.05fr .95fr; gap: clamp(32px, 5vw, 64px); align-items: center; }
+.hero-copy { display: grid; gap: 24px; min-width: 0; }
+.cta-row { display: flex; flex-wrap: wrap; gap: 12px; align-items: center; }
+.trust { display: flex; flex-wrap: wrap; gap: 8px 20px; color: var(--muted); font-size: .92rem; }
+.trust b { color: var(--text); font-weight: 700; }
+
+/* dashboard mock */
+.screen {
+  min-width: 0; background: linear-gradient(180deg, #1d1033, #120a22); border-radius: 18px; padding: 18px;
+  box-shadow: 0 0 0 1px rgba(176, 38, 255, .55), 0 0 40px rgba(176, 38, 255, .35), 0 30px 80px rgba(0, 0, 0, .6);
+  transform: perspective(1400px) rotateY(-6deg) rotateX(2deg);
+}
+.screen-top { display: flex; justify-content: space-between; align-items: center; gap: 8px; margin-bottom: 12px; }
+.dots { display: flex; gap: 6px; }
+.dots i { width: 9px; height: 9px; border-radius: 50%; background: var(--line); display: block; }
+.screen-title { font: 700 .72rem/1 var(--mono); color: var(--muted); letter-spacing: .12em; text-transform: uppercase; }
+.example-tag { font: 700 .66rem/1 var(--mono); color: var(--purple); border: 1px solid var(--purple); border-radius: 999px; padding: 4px 8px; letter-spacing: .1em; }
+.table-scroll { overflow-x: auto; }
+table { width: 100%; border-collapse: collapse; font: 500 .82rem/1.3 var(--mono); font-variant-numeric: tabular-nums; min-width: 420px; }
+th { text-align: left; color: var(--muted); font-weight: 500; font-size: .68rem; letter-spacing: .08em; text-transform: uppercase; padding: 8px 8px; border-bottom: 1px solid var(--line); }
+td { padding: 10px 8px; border-bottom: 1px solid rgba(58, 33, 96, .6); }
+td.num, th.num { text-align: right; }
+.flag { font: 700 .66rem/1 var(--mono); padding: 5px 8px; border-radius: 6px; letter-spacing: .06em; white-space: nowrap; }
+.flag.ok { color: var(--good); background: rgba(62, 240, 160, .1); box-shadow: inset 0 0 0 1px rgba(62, 240, 160, .4); }
+.flag.over { color: var(--bad); background: rgba(255, 77, 141, .12); box-shadow: inset 0 0 0 1px rgba(255, 77, 141, .5); }
+.screen-foot { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; margin-top: 14px; }
+.kpi { background: rgba(176, 38, 255, .08); border: 1px solid var(--line); border-radius: 10px; padding: 10px 12px; }
+.kpi small { display: block; font: 500 .62rem/1.2 var(--mono); color: var(--muted); letter-spacing: .08em; text-transform: uppercase; }
+.kpi strong { font: 700 1.05rem/1.3 var(--mono); color: var(--gold); }
+.kpi strong.bad { color: var(--bad); }
+
+/* marquee strip */
+.strip { border-block: 1px solid rgba(176, 38, 255, .35); background: var(--night); overflow: hidden; }
+.strip-track { display: flex; gap: 40px; padding-block: 16px; white-space: nowrap; animation: slide 38s linear infinite; width: max-content; }
+.strip-track span { font: 400 1.35rem/1 var(--display); text-transform: uppercase; letter-spacing: .04em; color: var(--muted); }
+.strip-track span b { color: var(--gold); font-weight: 400; }
+@keyframes slide { to { transform: translateX(-50%); } }
+
+/* problem */
+.section-head { display: grid; gap: 16px; margin-bottom: clamp(32px, 5vw, 56px); max-width: 760px; }
+.leaks { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 20px; }
+.leak { background: var(--panel); border: 1px solid var(--line); border-radius: 16px; padding: 26px; display: grid; gap: 12px; align-content: start; min-width: 0; }
+.leak .trade { font: 700 .7rem/1 var(--mono); color: var(--purple); letter-spacing: .14em; text-transform: uppercase; }
+.leak p { color: var(--muted); }
+
+/* system */
+.system { background: radial-gradient(900px 500px at 85% 10%, rgba(176, 38, 255, .22), transparent 70%), var(--night); }
+.modules { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0; border-top: 1px solid var(--line); }
+.module { display: grid; grid-template-columns: auto 1fr; gap: 20px; padding: 28px 8px; border-bottom: 1px solid var(--line); min-width: 0; }
+.module:nth-child(odd) { border-right: 1px solid var(--line); padding-right: 28px; }
+.module:nth-child(even) { padding-left: 28px; }
+.module .tab { font: 700 .72rem/1 var(--mono); color: var(--gold); letter-spacing: .12em; text-transform: uppercase; writing-mode: vertical-rl; transform: rotate(180deg); }
+.module div { display: grid; gap: 8px; min-width: 0; }
+.module p { color: var(--muted); }
+
+/* process */
+.steps { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 16px; counter-reset: step; }
+.step { position: relative; padding: 26px 22px; border-radius: 16px; background: var(--panel); border: 1px solid var(--line); display: grid; gap: 10px; align-content: start; min-width: 0; }
+.step::before { counter-increment: step; content: "0" counter(step); font: 400 2.6rem/1 var(--display); color: transparent; -webkit-text-stroke: 1.5px var(--purple); filter: drop-shadow(0 0 8px rgba(176, 38, 255, .7)); }
+.step p { color: var(--muted); font-size: .97rem; }
+.no-calls { margin-top: 28px; display: flex; flex-wrap: wrap; gap: 10px 28px; font: 700 .85rem/1.4 var(--mono); color: var(--gold); letter-spacing: .06em; text-transform: uppercase; }
+
+/* pricing */
+.plans { display: grid; grid-template-columns: 1.15fr 1fr 1fr; gap: 20px; align-items: stretch; }
+.plan { background: var(--panel); border: 1px solid var(--line); border-radius: 20px; padding: 30px 26px; display: grid; gap: 16px; align-content: start; min-width: 0; }
+.plan.feature {
+  background: linear-gradient(180deg, #2a1150, #170a2c);
+  border-color: var(--gold);
+  box-shadow: 0 0 0 1px rgba(255, 210, 63, .5), 0 0 36px rgba(255, 210, 63, .25), 0 0 80px rgba(176, 38, 255, .35);
+}
+.plan .tag { justify-self: start; font: 700 .68rem/1 var(--mono); letter-spacing: .12em; text-transform: uppercase; padding: 6px 10px; border-radius: 999px; color: #1a0b00; background: var(--gold); }
+.plan .tag.alt { background: transparent; color: var(--purple); box-shadow: inset 0 0 0 1px var(--purple); }
+.price { display: flex; align-items: baseline; gap: 10px; flex-wrap: wrap; }
+.price strong { font: 400 3.6rem/1 var(--display); }
+.price s { color: var(--muted); font: 500 1.1rem/1 var(--mono); }
+.price small { color: var(--muted); font: 500 .85rem/1 var(--mono); }
+.plan ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 10px; }
+.plan li { padding-left: 26px; position: relative; color: var(--muted); }
+.plan li::before { content: ""; position: absolute; left: 0; top: .55em; width: 12px; height: 6px; border-left: 2px solid var(--gold); border-bottom: 2px solid var(--gold); transform: rotate(-45deg); }
+.plan .btn { margin-top: 4px; justify-self: stretch; }
+.fine { color: var(--muted); font-size: .85rem; }
+
+/* faq */
+.faq { display: grid; gap: 12px; max-width: 820px; }
+details { background: var(--panel); border: 1px solid var(--line); border-radius: 14px; padding: 4px 22px; }
+details[open] { border-color: var(--purple-soft); box-shadow: 0 0 24px rgba(176, 38, 255, .2); }
+summary { cursor: pointer; list-style: none; display: flex; justify-content: space-between; gap: 16px; align-items: center; padding-block: 18px; font-weight: 700; }
+summary::-webkit-details-marker { display: none; }
+summary::after { content: "+"; font: 400 1.6rem/1 var(--display); color: var(--gold); flex: none; }
+details[open] summary::after { content: "–"; }
+details p { color: var(--muted); padding-bottom: 20px; max-width: 65ch; }
+
+/* final */
+.final { text-align: center; overflow: hidden; }
+.final::before { content: ""; position: absolute; inset: 10% 20%; background: rgba(176, 38, 255, .35); filter: blur(100px); border-radius: 50%; pointer-events: none; }
+.final .wrap { position: relative; display: grid; gap: 24px; justify-items: center; }
+.mailbox { display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: 12px; background: var(--panel); border: 1px solid var(--gold); border-radius: 999px; padding: 8px 8px 8px 24px; box-shadow: 0 0 30px rgba(255, 210, 63, .25); max-width: 100%; }
+.mailbox code { font: 700 1.05rem/1.4 var(--mono); color: var(--gold-hot); user-select: all; overflow-wrap: anywhere; }
+.copied { min-height: 1.4em; font: 500 .85rem/1.4 var(--mono); color: var(--good); }
+
+footer { border-top: 1px solid var(--line); padding-block: 32px; color: var(--muted); font-size: .85rem; }
+footer .wrap { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 12px; }
+
+@media (max-width: 900px) {
+  .hero .wrap { grid-template-columns: 1fr; }
+  .screen { transform: none; }
+  .leaks { grid-template-columns: 1fr; }
+  .steps { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .plans { grid-template-columns: 1fr; }
+  .modules { grid-template-columns: 1fr; }
+  .module:nth-child(odd) { border-right: 0; padding-right: 8px; }
+  .module:nth-child(even) { padding-left: 8px; }
+}
+@media (max-width: 520px) {
+  .steps { grid-template-columns: 1fr; }
+  .screen-foot { grid-template-columns: 1fr; }
+  .nav .btn { display: none; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .strip-track { animation: none; }
+  .btn, .btn:hover { transition: none; transform: none; }
+  html { scroll-behavior: auto; }
+}
+</style>
+
+<header class="nav">
+  <div class="wrap">
+    <a class="logo" href="#top">Trade<span>Sheets</span></a>
+    <a class="btn btn-gold" href="#start">Claim a founding spot</a>
+  </div>
+</header>
+
+<main id="top">
+  <section class="band hero">
+    <div class="wrap">
+      <div class="hero-copy">
+        <p class="eyebrow">For US plumbing &amp; electrical contractors</p>
+        <h1>Know which jobs <span class="neon-gold">make you money.</span></h1>
+        <p class="lede">We build your job-costing and cash-flow system in 48 hours. Every receipt, every labor hour and every truck-stock part is tied to a job, so the leaks show up this week, not at tax time.</p>
+        <div class="cta-row">
+          <a class="btn btn-gold" href="#start">Get my system built →</a>
+          <a class="btn btn-ghost" href="#system">See what's inside</a>
+        </div>
+        <div class="trust">
+          <span><b>48-hour</b> delivery</span>
+          <span><b>Excel or Google Sheets</b></span>
+          <span><b>No calls</b>, all by email</span>
+          <span><b>No subscription</b></span>
+        </div>
+      </div>
+
+      <div class="screen" aria-label="Example job dashboard">
+        <div class="screen-top">
+          <div class="dots" aria-hidden="true"><i></i><i></i><i></i></div>
+          <span class="screen-title">Job Dashboard</span>
+          <span class="example-tag">EXAMPLE DATA</span>
+        </div>
+        <div class="table-scroll">
+          <table>
+            <thead>
+              <tr><th>Job</th><th class="num">Bid</th><th class="num">Actual</th><th class="num">Margin</th><th>Flag</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>Water heater swap</td><td class="num">$2,400</td><td class="num">$1,610</td><td class="num">32.9%</td><td><span class="flag ok">OK</span></td></tr>
+              <tr><td>Kitchen repipe</td><td class="num">$6,800</td><td class="num">$7,240</td><td class="num">-6.5%</td><td><span class="flag over">OVER BUDGET</span></td></tr>
+              <tr><td>Panel upgrade 200A</td><td class="num">$3,900</td><td class="num">$2,870</td><td class="num">26.4%</td><td><span class="flag ok">OK</span></td></tr>
+              <tr><td>Service calls (wk)</td><td class="num">$4,150</td><td class="num">$2,980</td><td class="num">28.2%</td><td><span class="flag ok">OK</span></td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="screen-foot">
+          <div class="kpi"><small>Profit so far</small><strong>$3,550</strong></div>
+          <div class="kpi"><small>Unbilled parts</small><strong class="bad">$412</strong></div>
+          <div class="kpi"><small>Cash in 30 days</small><strong>$18,900</strong></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="strip" aria-hidden="true">
+    <div class="strip-track">
+      <span>Job costing <b>✦</b></span><span>Cash flow forecast <b>✦</b></span><span>Truck-stock tracking <b>✦</b></span><span>Labor vs. bid <b>✦</b></span><span>True margin after overhead <b>✦</b></span><span>Change orders <b>✦</b></span>
+      <span>Job costing <b>✦</b></span><span>Cash flow forecast <b>✦</b></span><span>Truck-stock tracking <b>✦</b></span><span>Labor vs. bid <b>✦</b></span><span>True margin after overhead <b>✦</b></span><span>Change orders <b>✦</b></span>
+    </div>
+  </div>
+
+  <section class="band" id="problem">
+    <div class="wrap">
+      <div class="section-head">
+        <p class="eyebrow">The problem</p>
+        <h2>Busy all month. <span class="neon-purple">Not sure where the money went.</span></h2>
+        <p class="lede">Most small shops judge a job by the bank balance. By the time the numbers show a loss, the job is closed and the money is gone. These are the three leaks we see most:</p>
+      </div>
+      <div class="leaks">
+        <article class="leak">
+          <span class="trade">Plumbing</span>
+          <h3>Parts leave the truck and never hit the invoice</h3>
+          <p>Fittings, valves and supply lines get pulled from truck stock on every call. If they aren't tied to a job, you paid for them and the customer didn't.</p>
+        </article>
+        <article class="leak">
+          <span class="trade">Electrical</span>
+          <h3>Labor runs past the bid without anyone noticing</h3>
+          <p>Catch an overrun halfway through and you can still write a change order. Find it at the end and you just eat it.</p>
+        </article>
+        <article class="leak">
+          <span class="trade">Both</span>
+          <h3>Final payments stuck behind inspections</h3>
+          <p>The work is done, the materials are paid for, and the last check waits on an inspector. Profitable on paper, short on cash in the bank.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="band system" id="system">
+    <div class="wrap">
+      <div class="section-head">
+        <p class="eyebrow">What you get</p>
+        <h2>Your system, <span class="neon-gold">built for your trade.</span></h2>
+        <p class="lede">One spreadsheet with five tabs, set up with your job types, your cost categories, your labor rates and your logo. All the formulas are done. You type in receipts and payments, and it does the rest.</p>
+      </div>
+      <div class="modules">
+        <div class="module"><span class="tab">Tab 1</span><div><h3>Job dashboard</h3><p>Every job's bid, actual cost, profit so far and margin, with an OVER BUDGET flag the moment a job crosses its estimate.</p></div></div>
+        <div class="module"><span class="tab">Tab 2</span><div><h3>Cost log</h3><p>Receipts, payroll, sub invoices and truck stock, each tied to a job and a category. Dropdowns keep the data clean.</p></div></div>
+        <div class="module"><span class="tab">Tab 3</span><div><h3>12-month cash flow</h3><p>Money in, money out and overhead by month, with a CASH SHORTFALL warning before it happens.</p></div></div>
+        <div class="module"><span class="tab">Tab 4</span><div><h3>True margin</h3><p>Your rent, insurance, trucks and software spread across jobs, so you see net profit and not just gross.</p></div></div>
+        <div class="module"><span class="tab">Tab 5</span><div><h3>Change orders &amp; billing gap</h3><p>Approved change orders on top of the contract, and how much of each job you still haven't billed.</p></div></div>
+        <div class="module"><span class="tab">Bonus</span><div><h3>Quick-start guide</h3><p>A one-page guide in plain language, with examples taken from your own jobs.</p></div></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="band" id="how">
+    <div class="wrap">
+      <div class="section-head">
+        <p class="eyebrow">How it works</p>
+        <h2>Four emails. <span class="neon-gold">Done in 48 hours.</span></h2>
+      </div>
+      <div class="steps">
+        <div class="step"><h3>Email "yes"</h3><p>Send a one-word email to the address below. You get a free sample built for your trade.</p></div>
+        <div class="step"><h3>Answer 3 questions</h3><p>Your job types, how many trucks or techs, and Excel or Google Sheets.</p></div>
+        <div class="step"><h3>Pay securely</h3><p>You get a checkout link by email. Card or PayPal.</p></div>
+        <div class="step"><h3>Get your system</h3><p>Your custom file arrives within 48 hours, with a quick-start guide and a check-in a week later.</p></div>
+      </div>
+      <div class="no-calls"><span>✦ No sales calls</span><span>✦ No software to install</span><span>✦ No monthly fees</span></div>
+    </div>
+  </section>
+
+  <section class="band system" id="pricing">
+    <div class="wrap">
+      <div class="section-head">
+        <p class="eyebrow">Pricing</p>
+        <h2>Pick your <span class="neon-purple">level.</span></h2>
+      </div>
+      <div class="plans">
+        <article class="plan feature">
+          <span class="tag">Founding client · 5 spots</span>
+          <h3>Done-for-you setup</h3>
+          <div class="price"><strong class="neon-gold">$150</strong><s>$250</s><small>one-time</small></div>
+          <ul>
+            <li>Built for your trade, jobs and labor rates</li>
+            <li>All five tabs, branded with your logo</li>
+            <li>Delivered in 48 hours</li>
+            <li>Quick-start guide and 7-day email check-in</li>
+          </ul>
+          <a class="btn btn-gold" href="#start">Claim a founding spot</a>
+          <p class="fine">The founding price applies to the first 5 clients. In exchange we ask for honest feedback.</p>
+        </article>
+        <article class="plan">
+          <span class="tag alt">Do it yourself</span>
+          <h3>PRO template</h3>
+          <div class="price"><strong>$49</strong><small>one-time</small></div>
+          <ul>
+            <li>The same five-tab tracker</li>
+            <li>Up to 50 jobs and 1,000 cost entries</li>
+            <li>You set it up in about 10 minutes</li>
+          </ul>
+          <a class="btn btn-ghost" href="#start">Ask for the template</a>
+        </article>
+        <article class="plan">
+          <span class="tag alt">Optional add-on</span>
+          <h3>Monthly upkeep</h3>
+          <div class="price"><strong>$49</strong><small>/ month</small></div>
+          <ul>
+            <li>Forward your receipts, and we log them</li>
+            <li>One-page profit summary each month</li>
+            <li>Cancel any time</li>
+          </ul>
+          <a class="btn btn-ghost" href="#start">Ask about upkeep</a>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="band" id="faq">
+    <div class="wrap">
+      <div class="section-head">
+        <p class="eyebrow">Questions</p>
+        <h2>Straight answers.</h2>
+      </div>
+      <div class="faq">
+        <details>
+          <summary>Who builds it?</summary>
+          <p>Viktor Ilic, the founder of TradeSheets. He works remotely from Serbia and handles everything by email, so you never have to schedule a call.</p>
+        </details>
+        <details>
+          <summary>Do I need any special software?</summary>
+          <p>No. It runs in Microsoft Excel (2010 or newer) or free Google Sheets. There are no macros, no add-ons and no logins.</p>
+        </details>
+        <details>
+          <summary>I already use QuickBooks. Do I still need this?</summary>
+          <p>QuickBooks tells you what the business made overall. This tells you what each job made while it's still running, and when cash will get tight. Many shops use both.</p>
+        </details>
+        <details>
+          <summary>Where does my data live?</summary>
+          <p>In your own file, on your computer or your Google Drive. We don't host it, and we don't keep a copy after delivery unless you sign up for monthly upkeep.</p>
+        </details>
+        <details>
+          <summary>How much time does it take each week?</summary>
+          <p>About ten minutes: type in the week's receipts and payments. The dashboard and cash flow update themselves.</p>
+        </details>
+      </div>
+    </div>
+  </section>
+
+  <section class="band final" id="start">
+    <div class="wrap">
+      <p class="eyebrow">Get started</p>
+      <h2>Email one word: <span class="neon-gold">YES</span></h2>
+      <p class="lede">Send it to the address below. You'll get a free sample built for your trade, usually within one US business day.</p>
+      <div class="mailbox">
+        <code id="email">ilicvix@gmail.com</code>
+        <button class="btn btn-gold" id="copy" type="button">Copy address</button>
+      </div>
+      <p class="copied" id="copied" aria-live="polite"></p>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <span>© 2026 TradeSheets · Viktor Ilic</span>
+    <span>Kajmakcalanska 21/1, 11420 Smederevska Palanka, Serbia</span>
+  </div>
+</footer>
+
+<script>
+  const btn = document.getElementById('copy');
+  const note = document.getElementById('copied');
+  const email = document.getElementById('email');
+  btn.addEventListener('click', () => {
+    const done = () => { note.textContent = 'Copied. Paste it into your email app.'; };
+    const fallback = () => {
+      const r = document.createRange(); r.selectNodeContents(email);
+      const s = getSelection(); s.removeAllRanges(); s.addRange(r);
+      note.textContent = 'Selected. Press Ctrl+C (or Cmd+C) to copy.';
+    };
+    try {
+      navigator.clipboard.writeText(email.textContent).then(done, fallback);
+    } catch (e) { fallback(); }
+  });
+</script>
