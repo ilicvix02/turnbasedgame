@@ -1,0 +1,392 @@
+<title>TradeSheets Job Cost Tracker</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Anton&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,700&family=JetBrains+Mono:wght@500;700&display=swap">
+<style>
+/* Layout: the PRO workbook as a live app. Sticky header with company KPIs, tab bar (Dashboard · Jobs · Costs · Payments · Cash Flow · Settings), one dense data table per tab. Brand: deep blue-black ground, neon orange = money and actions, neon blue = data and structure. Single dark theme by choice. */
+:root {
+  --void: #02060f;
+  --night: #050d1f;
+  --panel: #08142c;
+  --panel-2: #0c1b3a;
+  --line: #1b3a78;
+  --text: #eef6fb;
+  --muted: #9bb0d6;
+  --gold: #ff8a1f;
+  --silver: #cfdcff;
+  --cyan: #2f8cff;
+  --good: #3ef0a0;
+  --warn: #ffb547;
+  --bad: #ff5a7a;
+  --display: "Anton", "Impact", "Arial Narrow", sans-serif;
+  --body: "DM Sans", "Segoe UI", system-ui, sans-serif;
+  --mono: "JetBrains Mono", ui-monospace, Menlo, monospace;
+  color-scheme: dark;
+}
+* { box-sizing: border-box; }
+body { background: var(--void); color: var(--text); font: 400 .95rem/1.5 var(--body); }
+body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-area-inset-top, 0px); z-index: 10; background: var(--night); }
+:focus-visible { outline: 2px solid var(--gold); outline-offset: 2px; }
+.wrap { max-width: 1280px; margin: 0 auto; padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); }
+
+header.top { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 5; background: var(--night); border-bottom: 1px solid var(--line); box-shadow: 0 8px 30px rgba(0, 0, 0, .35); }
+.top .wrap { display: grid; gap: 12px; padding-block: 14px 0; }
+.brandrow { display: flex; flex-wrap: wrap; gap: 8px 20px; align-items: baseline; justify-content: space-between; }
+.logo { font: 400 1.4rem/1 var(--display); letter-spacing: .04em; text-transform: uppercase; color: var(--silver); }
+.logo span { color: var(--gold); text-shadow: 0 0 8px rgba(255, 138, 31, .8), 0 0 24px rgba(255, 138, 31, .45); }
+.company { font: 700 .8rem/1 var(--mono); color: var(--muted); letter-spacing: .1em; text-transform: uppercase; }
+.example { font: 700 .66rem/1 var(--mono); color: var(--cyan); border: 1px solid var(--cyan); border-radius: 999px; padding: 4px 8px; letter-spacing: .1em; }
+.kpis { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 10px; }
+.kpi { background: var(--panel); border: 1px solid var(--line); box-shadow: 0 0 18px rgba(47, 140, 255, .15); border-radius: 10px; padding: 10px 12px; min-width: 0; }
+.kpi small { display: block; font: 500 .62rem/1.3 var(--mono); color: var(--muted); letter-spacing: .08em; text-transform: uppercase; }
+.kpi strong { font: 700 1.15rem/1.3 var(--mono); font-variant-numeric: tabular-nums; color: var(--gold); text-shadow: 0 0 10px rgba(255, 138, 31, .55); }
+.kpi strong.bad { color: var(--bad); }
+.kpi strong.good { color: var(--good); }
+nav.tabs { display: flex; gap: 4px; overflow-x: auto; scrollbar-width: none; }
+nav.tabs button {
+  font: 700 .82rem/1 var(--body); color: var(--muted); background: transparent; border: 0; cursor: pointer;
+  padding: 12px 14px; border-bottom: 2px solid transparent; white-space: nowrap;
+}
+nav.tabs button[aria-selected="true"] { color: var(--text); border-bottom-color: var(--gold); text-shadow: 0 0 12px rgba(255, 138, 31, .7); }
+nav.tabs button:hover { color: var(--text); }
+
+main { padding-block: 22px 48px; }
+.panel { display: grid; gap: 14px; }
+.panel-head { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: end; gap: 10px; }
+.panel-head h2 { font: 400 1.6rem/1 var(--display); text-transform: uppercase; letter-spacing: .02em; margin: 0; }
+.panel-head p { margin: 4px 0 0; color: var(--muted); max-width: 70ch; }
+.btn { font: 700 .82rem/1 var(--body); border-radius: 999px; padding: 10px 16px; cursor: pointer; border: 0; }
+.btn-gold { background: var(--gold); color: #1a0800; box-shadow: 0 0 18px rgba(255, 138, 31, .55); }
+.btn-ghost { background: transparent; color: var(--silver); box-shadow: inset 0 0 0 1px var(--line); }
+.btn-ghost:hover { box-shadow: inset 0 0 0 1px var(--cyan); }
+
+.scroll { overflow-x: auto; border: 1px solid var(--line); box-shadow: 0 0 24px rgba(47, 140, 255, .14); border-radius: 12px; background: var(--panel); }
+table { width: 100%; border-collapse: collapse; font: 500 .82rem/1.3 var(--mono); font-variant-numeric: tabular-nums; }
+th { position: sticky; top: 0; background: var(--panel-2); text-align: left; color: var(--muted); font-weight: 500; font-size: .66rem; letter-spacing: .08em; text-transform: uppercase; padding: 10px 8px; border-bottom: 1px solid var(--line); white-space: nowrap; }
+td { padding: 6px 8px; border-bottom: 1px solid rgba(27, 58, 120, .55); white-space: nowrap; }
+tr:last-child td { border-bottom: 0; }
+td.num, th.num { text-align: right; }
+td.calc { color: var(--silver); }
+tfoot td { font-weight: 700; color: var(--gold); background: var(--panel-2); border-top: 1px solid var(--line); }
+input, select {
+  font: 500 .82rem/1.2 var(--mono); color: var(--cyan); background: transparent; border: 1px solid transparent; border-radius: 6px;
+  padding: 5px 6px; width: 100%; min-width: 70px;
+}
+input:hover, select:hover { border-color: var(--line); }
+input:focus, select:focus { border-color: var(--cyan); background: rgba(47, 140, 255, .08); outline: none; }
+input[type="number"] { text-align: right; }
+select option { background: var(--panel); color: var(--text); }
+.del { background: transparent; border: 0; color: var(--muted); cursor: pointer; font-size: 1rem; padding: 2px 6px; border-radius: 6px; }
+.del:hover { color: var(--bad); }
+.flag { font: 700 .64rem/1 var(--mono); padding: 5px 8px; border-radius: 6px; letter-spacing: .06em; }
+.flag.ok { color: var(--good); background: rgba(62, 240, 160, .1); box-shadow: inset 0 0 0 1px rgba(62, 240, 160, .4); }
+.flag.low { color: var(--warn); background: rgba(255, 181, 71, .1); box-shadow: inset 0 0 0 1px rgba(255, 181, 71, .45); }
+.flag.over { color: var(--bad); background: rgba(255, 90, 122, .12); box-shadow: inset 0 0 0 1px rgba(255, 90, 122, .5); }
+.neg { color: var(--bad); }
+.bar { height: 6px; border-radius: 3px; background: rgba(214, 224, 232, .12); overflow: hidden; min-width: 70px; }
+.bar i { display: block; height: 100%; background: var(--cyan); }
+.bar i.over { background: var(--bad); }
+
+.chart { background: var(--panel); border: 1px solid var(--line); border-radius: 12px; padding: 14px; }
+.chart svg { display: block; width: 100%; height: auto; }
+.legend { display: flex; flex-wrap: wrap; gap: 6px 16px; font: 500 .72rem/1 var(--mono); color: var(--muted); margin-top: 8px; }
+.legend i { display: inline-block; width: 10px; height: 10px; border-radius: 2px; margin-right: 6px; vertical-align: -1px; }
+
+.settings { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; max-width: 760px; }
+.field { display: grid; gap: 6px; background: var(--panel); border: 1px solid var(--line); border-radius: 12px; padding: 14px; }
+.field label { font: 700 .72rem/1 var(--mono); color: var(--muted); letter-spacing: .08em; text-transform: uppercase; }
+.field input { font-size: 1rem; border-color: var(--line); }
+.field small { color: var(--muted); font-size: .8rem; }
+.note { color: var(--muted); font-size: .85rem; }
+
+@media (max-width: 900px) { .kpis { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+@media (max-width: 560px) { .kpis { grid-template-columns: repeat(2, minmax(0, 1fr)); } .settings { grid-template-columns: 1fr; } }
+</style>
+
+<header class="top">
+  <div class="wrap">
+    <div class="brandrow">
+      <div class="logo">Trade<span>Sheets</span></div>
+      <span class="company" id="companyLabel"></span>
+      <span class="example">EXAMPLE DATA · EDIT ANYTHING</span>
+    </div>
+    <div class="kpis" id="kpis"></div>
+    <nav class="tabs" role="tablist" id="tabs">
+      <button role="tab" data-tab="dashboard">Job Dashboard</button>
+      <button role="tab" data-tab="jobs">Jobs</button>
+      <button role="tab" data-tab="costs">Costs Log</button>
+      <button role="tab" data-tab="payments">Payments Log</button>
+      <button role="tab" data-tab="cashflow">Cash Flow</button>
+      <button role="tab" data-tab="setup">Settings</button>
+    </nav>
+  </div>
+</header>
+
+<main class="wrap" id="view"></main>
+
+<script>
+const CATS = ["Labor", "Materials", "Subcontractors", "Equipment", "Other"];
+const STATUSES = ["Bidding", "Active", "Complete", "On Hold"];
+const SAMPLE = {
+  settings: { company: "Lone Star Plumbing & Electric (example)", cash: 15000, overhead: 1500, target: 0.10, start: "2026-01" },
+  jobs: [
+    { id: "J-101", client: "Miller", desc: "Kitchen repipe + fixtures", status: "Active", contract: 48000, co: 2500, est: [14000, 12000, 6000, 1200, 800] },
+    { id: "J-102", client: "Okafor", desc: "Panel upgrade 200A", status: "Complete", contract: 22000, co: 0, est: [6500, 7000, 0, 600, 400] },
+    { id: "J-103", client: "Chen", desc: "Basement rough-in", status: "Active", contract: 61000, co: 0, est: [18000, 14000, 11000, 1500, 1000] },
+    { id: "J-104", client: "Patel", desc: "Water heater swap x3", status: "Bidding", contract: 9800, co: 0, est: [2400, 4100, 0, 300, 200] }
+  ],
+  costs: [
+    ["2026-01-08", "J-101", "Materials", "Ferguson", "Fixtures deposit", 6200],
+    ["2026-01-15", "J-101", "Labor", "Crew payroll", "Week 2 demo + rough-in", 4100],
+    ["2026-01-14", "J-102", "Materials", "City Electric Supply", "Panel + breakers", 7400],
+    ["2026-01-21", "J-102", "Labor", "Crew payroll", "Panel swap", 6900],
+    ["2026-02-03", "J-101", "Subcontractors", "Spark Drywall", "Patch + finish", 3800],
+    ["2026-02-10", "J-103", "Materials", "Ferguson", "PEX + fittings", 5200],
+    ["2026-02-18", "J-101", "Labor", "Crew payroll", "Fixture install", 5600],
+    ["2026-03-04", "J-103", "Labor", "Crew payroll", "Rough-in", 6100]
+  ].map(r => ({ date: r[0], job: r[1], cat: r[2], vendor: r[3], desc: r[4], amt: r[5] })),
+  payments: [
+    ["2026-01-05", "J-101", "INV-001", "Deposit 30%", 14400],
+    ["2026-01-12", "J-102", "INV-002", "Deposit 50%", 11000],
+    ["2026-01-30", "J-102", "INV-003", "Final", 11000],
+    ["2026-02-02", "J-103", "INV-004", "Deposit 25%", 15250],
+    ["2026-02-20", "J-101", "INV-005", "Progress 40%", 19200]
+  ].map(r => ({ date: r[0], job: r[1], inv: r[2], note: r[3], amt: r[4] }))
+};
+
+const KEY = "tradesheets-tracker-v1";
+let state;
+try { state = JSON.parse(localStorage.getItem(KEY)) || structuredClone(SAMPLE); } catch (e) { state = structuredClone(SAMPLE); }
+let tab = "dashboard";
+try { tab = localStorage.getItem(KEY + "-tab") || "dashboard"; } catch (e) {}
+function save() { try { localStorage.setItem(KEY, JSON.stringify(state)); } catch (e) {} }
+
+const usd = v => (v == null || v === "" || isNaN(v)) ? "-" : (v < 0 ? "(" : "") + "$" + Math.round(Math.abs(v)).toLocaleString("en-US") + (v < 0 ? ")" : "");
+const pct = v => (v == null || isNaN(v) || !isFinite(v)) ? "-" : (v * 100).toFixed(1) + "%";
+const num = v => Number(v) || 0;
+const esc = s => String(s ?? "").replace(/[&<>"]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
+
+// Same math as the PRO workbook (business/scripts/build_job_cost_tracker.py).
+function compute() {
+  const s = state.settings;
+  const jobs = state.jobs.filter(j => j.id);
+  const nonBidding = jobs.filter(j => j.status !== "Bidding").reduce((a, j) => a + num(j.contract) + num(j.co), 0);
+  const rows = jobs.map(j => {
+    const contract = num(j.contract) + num(j.co);
+    const est = j.est.reduce((a, b) => a + num(b), 0);
+    const act = CATS.map(c => state.costs.filter(x => x.job === j.id && x.cat === c).reduce((a, x) => a + num(x.amt), 0));
+    const actual = act.reduce((a, b) => a + b, 0);
+    const received = state.payments.filter(p => p.job === j.id).reduce((a, p) => a + num(p.amt), 0);
+    const ovh = j.status === "Bidding" || !nonBidding ? 0 : num(s.overhead) * 12 * contract / nonBidding;
+    const margin = contract ? (contract - Math.max(est, actual) - ovh) / contract : NaN;
+    const flag = actual > est ? "over" : (margin < num(s.target) ? "low" : "ok");
+    return { j, contract, est, act, actual, used: est ? actual / est : NaN, laborVar: num(j.est[0]) - act[0], matVar: num(j.est[1]) - act[1],
+             received, unbilled: contract - received, profit: received - actual, ovh, margin, flag,
+             estMargin: contract ? (contract - est) / contract : NaN };
+  });
+  const [y, m] = (s.start || "2026-01").split("-").map(Number);
+  let bal = num(s.cash);
+  const months = Array.from({ length: 12 }, (_, i) => {
+    const d = new Date(Date.UTC(y, m - 1 + i, 1));
+    const key = d.toISOString().slice(0, 7);
+    const inn = state.payments.filter(p => (p.date || "").slice(0, 7) === key).reduce((a, p) => a + num(p.amt), 0);
+    const out = state.costs.filter(c => (c.date || "").slice(0, 7) === key).reduce((a, c) => a + num(c.amt), 0);
+    const net = inn - out - num(s.overhead);
+    bal += net;
+    return { label: d.toLocaleString("en-US", { month: "short", year: "numeric", timeZone: "UTC" }), inn, out, ovh: num(s.overhead), net, bal,
+             warn: bal < 0 ? "CASH SHORTFALL" : (bal < num(s.overhead) ? "Below 1 month overhead" : "") };
+  });
+  return { rows, months };
+}
+
+function renderKpis(c) {
+  const t = c.rows.reduce((a, r) => ({ contract: a.contract + r.contract, profit: a.profit + r.profit, unbilled: a.unbilled + (r.j.status === "Bidding" ? 0 : r.unbilled) }), { contract: 0, profit: 0, unbilled: 0 });
+  const over = c.rows.filter(r => r.flag === "over").length;
+  const low = c.months.reduce((m, x) => x.bal < m.bal ? x : m, c.months[0]);
+  document.getElementById("companyLabel").textContent = state.settings.company;
+  document.getElementById("kpis").innerHTML = [
+    ["Contract value", usd(t.contract), ""],
+    ["Profit so far", usd(t.profit), t.profit < 0 ? "bad" : "good"],
+    ["Still to bill", usd(t.unbilled), ""],
+    ["Jobs over budget", String(over), over ? "bad" : "good"],
+    ["Lowest cash month", usd(low.bal) + " · " + low.label.split(" ")[0], low.bal < 0 ? "bad" : ""]
+  ].map(([k, v, cls]) => `<div class="kpi"><small>${k}</small><strong class="${cls}">${v}</strong></div>`).join("");
+}
+
+function dashboard(c) {
+  const flagTxt = { ok: "OK", low: "LOW MARGIN", over: "OVER BUDGET" };
+  const body = c.rows.map(r => `<tr>
+    <td>${esc(r.j.id)}</td><td>${esc(r.j.client)}</td><td>${esc(r.j.status)}</td>
+    <td class="num">${usd(r.contract)}</td><td class="num">${usd(r.est)}</td>
+    ${r.act.map(v => `<td class="num calc">${usd(v)}</td>`).join("")}
+    <td class="num">${usd(r.actual)}</td>
+    <td><div class="bar" title="${pct(r.used)}"><i class="${r.used > 1 ? "over" : ""}" style="width:${Math.min(100, (r.used || 0) * 100)}%"></i></div></td>
+    <td class="num ${r.laborVar < 0 ? "neg" : ""}">${usd(r.laborVar)}</td><td class="num ${r.matVar < 0 ? "neg" : ""}">${usd(r.matVar)}</td>
+    <td class="num">${usd(r.received)}</td><td class="num">${usd(r.unbilled)}</td>
+    <td class="num ${r.profit < 0 ? "neg" : ""}">${usd(r.profit)}</td><td class="num calc">${usd(r.ovh)}</td>
+    <td class="num">${pct(r.margin)}</td><td><span class="flag ${r.flag}">${flagTxt[r.flag]}</span></td></tr>`).join("");
+  const sum = k => c.rows.reduce((a, r) => a + r[k], 0);
+  return `<section class="panel">
+    <div class="panel-head"><div><h2>Job Dashboard</h2><p>Actual cost by category against your estimate, money received, and projected net margin after overhead. Red means over budget, amber means below your target margin.</p></div></div>
+    <div class="scroll"><table>
+      <thead><tr><th>Job</th><th>Client</th><th>Status</th><th class="num">Contract + COs</th><th class="num">Est. cost</th>
+      ${CATS.map(x => `<th class="num">${x}</th>`).join("")}<th class="num">Actual cost</th><th>Budget used</th>
+      <th class="num">Labor var.</th><th class="num">Materials var.</th><th class="num">Received</th><th class="num">To bill</th>
+      <th class="num">Profit so far</th><th class="num">Overhead share</th><th class="num">Net margin</th><th>Flag</th></tr></thead>
+      <tbody>${body}</tbody>
+      <tfoot><tr><td colspan="3">Total</td><td class="num">${usd(sum("contract"))}</td><td class="num">${usd(sum("est"))}</td>
+      ${CATS.map((_, i) => `<td class="num">${usd(c.rows.reduce((a, r) => a + r.act[i], 0))}</td>`).join("")}
+      <td class="num">${usd(sum("actual"))}</td><td></td><td class="num">${usd(sum("laborVar"))}</td><td class="num">${usd(sum("matVar"))}</td>
+      <td class="num">${usd(sum("received"))}</td><td class="num">${usd(sum("unbilled"))}</td><td class="num">${usd(sum("profit"))}</td>
+      <td class="num">${usd(sum("ovh"))}</td><td></td><td></td></tr></tfoot>
+    </table></div></section>`;
+}
+
+const opt = (list, v) => list.map(x => `<option ${x === v ? "selected" : ""}>${esc(x)}</option>`).join("");
+const jobIds = () => state.jobs.map(j => j.id).filter(Boolean);
+
+function jobsTab(c) {
+  const byId = Object.fromEntries(c.rows.map(r => [r.j.id, r]));
+  const body = state.jobs.map((j, i) => {
+    const r = byId[j.id];
+    return `<tr>
+    <td><input id="j-${i}-id" data-t="jobs" data-i="${i}" data-k="id" value="${esc(j.id)}"></td>
+    <td><input id="j-${i}-client" data-t="jobs" data-i="${i}" data-k="client" value="${esc(j.client)}"></td>
+    <td><input id="j-${i}-desc" data-t="jobs" data-i="${i}" data-k="desc" value="${esc(j.desc)}" style="min-width:180px"></td>
+    <td><select id="j-${i}-status" data-t="jobs" data-i="${i}" data-k="status">${opt(STATUSES, j.status)}</select></td>
+    <td><input id="j-${i}-contract" type="number" data-t="jobs" data-i="${i}" data-k="contract" value="${j.contract}"></td>
+    <td><input id="j-${i}-co" type="number" data-t="jobs" data-i="${i}" data-k="co" value="${j.co}"></td>
+    ${CATS.map((_, k) => `<td><input id="j-${i}-est${k}" type="number" data-t="jobs" data-i="${i}" data-k="est" data-e="${k}" value="${j.est[k]}"></td>`).join("")}
+    <td class="num calc">${usd(r ? r.est : NaN)}</td><td class="num calc">${pct(r ? r.estMargin : NaN)}</td>
+    <td><button class="del" data-del="jobs" data-i="${i}" aria-label="Delete job">✕</button></td></tr>`;
+  }).join("");
+  return `<section class="panel">
+    <div class="panel-head"><div><h2>Jobs</h2><p>One row per job: the contract, approved change orders and your estimated cost by category.</p></div>
+    <button class="btn btn-gold" data-add="jobs">+ Add job</button></div>
+    <div class="scroll"><table><thead><tr><th>Job ID</th><th>Client</th><th>Description</th><th>Status</th><th class="num">Contract</th><th class="num">Change orders</th>
+    ${CATS.map(x => `<th class="num">Est. ${x.toLowerCase()}</th>`).join("")}<th class="num">Est. total</th><th class="num">Est. margin</th><th></th></tr></thead>
+    <tbody>${body}</tbody></table></div></section>`;
+}
+
+function logTab(t) {
+  const isCost = t === "costs";
+  const list = state[t];
+  const body = list.map((r, i) => `<tr>
+    <td><input id="${t}-${i}-date" type="date" data-t="${t}" data-i="${i}" data-k="date" value="${esc(r.date)}"></td>
+    <td><select id="${t}-${i}-job" data-t="${t}" data-i="${i}" data-k="job">${opt(jobIds(), r.job)}</select></td>
+    ${isCost ? `<td><select id="${t}-${i}-cat" data-t="${t}" data-i="${i}" data-k="cat">${opt(CATS, r.cat)}</select></td>
+    <td><input id="${t}-${i}-vendor" data-t="${t}" data-i="${i}" data-k="vendor" value="${esc(r.vendor)}"></td>`
+    : `<td><input id="${t}-${i}-inv" data-t="${t}" data-i="${i}" data-k="inv" value="${esc(r.inv)}"></td>`}
+    <td><input id="${t}-${i}-desc" data-t="${t}" data-i="${i}" data-k="${isCost ? "desc" : "note"}" value="${esc(isCost ? r.desc : r.note)}" style="min-width:180px"></td>
+    <td><input id="${t}-${i}-amt" type="number" data-t="${t}" data-i="${i}" data-k="amt" value="${r.amt}"></td>
+    <td><button class="del" data-del="${t}" data-i="${i}" aria-label="Delete row">✕</button></td></tr>`).join("");
+  const total = list.reduce((a, r) => a + num(r.amt), 0);
+  return `<section class="panel">
+    <div class="panel-head"><div><h2>${isCost ? "Costs Log" : "Payments Log"}</h2><p>${isCost
+      ? "Every receipt, payroll run, sub invoice and truck-stock pull, tied to a job and a category."
+      : "Every deposit and progress payment from a client. Add expected future payments to turn Cash Flow into a forecast."}</p></div>
+    <button class="btn btn-gold" data-add="${t}">+ Add ${isCost ? "cost" : "payment"}</button></div>
+    <div class="scroll"><table><thead><tr><th>Date</th><th>Job</th>${isCost ? "<th>Category</th><th>Vendor / worker</th>" : "<th>Invoice #</th>"}
+    <th>${isCost ? "Description" : "Note"}</th><th class="num">Amount ($)</th><th></th></tr></thead>
+    <tbody>${body}</tbody><tfoot><tr><td colspan="${isCost ? 5 : 4}">Total</td><td class="num">${usd(total)}</td><td></td></tr></tfoot></table></div></section>`;
+}
+
+function cashflow(c) {
+  const W = 900, H = 220, P = 44;
+  const vals = c.months.map(m => m.bal);
+  const lo = Math.min(0, ...vals), hi = Math.max(...vals, 1);
+  const x = i => P + i * (W - P - 16) / 11;
+  const y = v => 16 + (hi - v) * (H - 46) / (hi - lo || 1);
+  const pts = vals.map((v, i) => `${x(i)},${y(v)}`).join(" ");
+  const area = `${x(0)},${y(lo)} ${pts} ${x(11)},${y(lo)}`;
+  const ticks = [lo, (lo + hi) / 2, hi];
+  const svg = `<svg viewBox="0 0 ${W} ${H}" role="img" aria-label="Ending cash balance by month">
+    ${ticks.map(t => `<line x1="${P}" x2="${W - 16}" y1="${y(t)}" y2="${y(t)}" stroke="#1b3a78" stroke-width="1"/>
+      <text x="${P - 6}" y="${y(t) + 4}" text-anchor="end" fill="#9bb0d6" font-size="11" font-family="JetBrains Mono, monospace">${usd(t)}</text>`).join("")}
+    ${lo < 0 ? `<line x1="${P}" x2="${W - 16}" y1="${y(0)}" y2="${y(0)}" stroke="#ff5a7a" stroke-dasharray="4 4"/>` : ""}
+    <polygon points="${area}" fill="rgba(47,140,255,.16)"/>
+    <polyline points="${pts}" fill="none" stroke="#2f8cff" stroke-width="2.5" style="filter:drop-shadow(0 0 6px rgba(47,140,255,.9))"/>
+    ${vals.map((v, i) => `<circle cx="${x(i)}" cy="${y(v)}" r="${i === 11 ? 5 : 3}" fill="${v < 0 ? "#ff5a7a" : (i === 11 ? "#ff8a1f" : "#2f8cff")}"/>
+      <text x="${x(i)}" y="${H - 8}" text-anchor="middle" fill="#9bb0d6" font-size="10" font-family="JetBrains Mono, monospace">${c.months[i].label.split(" ")[0]}</text>`).join("")}
+  </svg>`;
+  const body = c.months.map(m => `<tr><td>${m.label}</td><td class="num">${usd(m.inn)}</td><td class="num">${usd(m.out)}</td><td class="num calc">${usd(m.ovh)}</td>
+    <td class="num ${m.net < 0 ? "neg" : ""}">${usd(m.net)}</td><td class="num ${m.bal < 0 ? "neg" : ""}">${usd(m.bal)}</td>
+    <td>${m.warn ? `<span class="flag ${m.bal < 0 ? "over" : "low"}">${m.warn}</span>` : ""}</td></tr>`).join("");
+  return `<section class="panel">
+    <div class="panel-head"><div><h2>12-Month Cash Flow</h2><p>Client payments in, job costs and overhead out, month by month from your opening balance. Red marks a month where the bank would go negative.</p></div></div>
+    <div class="chart">${svg}<div class="legend"><span><i style="background:#2f8cff"></i>Ending cash balance</span><span><i style="background:#ff5a7a"></i>Below zero</span></div></div>
+    <div class="scroll"><table><thead><tr><th>Month</th><th class="num">Cash in</th><th class="num">Job costs</th><th class="num">Overhead</th><th class="num">Net</th><th class="num">Ending balance</th><th>Warning</th></tr></thead>
+    <tbody>${body}</tbody></table></div></section>`;
+}
+
+function setup() {
+  const s = state.settings;
+  const f = (id, label, val, type, hint) => `<div class="field"><label for="s-${id}">${label}</label>
+    <input id="s-${id}" type="${type}" data-s="${id}" value="${esc(val)}" ${type === "number" ? 'step="any"' : ""}><small>${hint}</small></div>`;
+  return `<section class="panel">
+    <div class="panel-head"><div><h2>Settings</h2><p>Five numbers drive every calculation. Your edits are saved in this browser only.</p></div>
+    <button class="btn btn-ghost" id="reset">Reset to example data</button></div>
+    <div class="settings">
+      ${f("company", "Company name", s.company, "text", "Shown at the top.")}
+      ${f("cash", "Opening cash balance ($)", s.cash, "number", "Bank balance on the first day of the start month.")}
+      ${f("overhead", "Monthly fixed overhead ($)", s.overhead, "number", "Rent, insurance, trucks, software, office pay.")}
+      ${f("target", "Target margin after overhead", s.target, "number", "As a decimal: 0.10 = 10%.")}
+      ${f("start", "Forecast start month", s.start, "month", "First month of the 12-month cash flow.")}
+    </div>
+    <p class="note">This is a live preview of the TradeSheets PRO spreadsheet. The real product is an Excel / Google Sheets file with the same tabs and formulas.</p>
+  </section>`;
+}
+
+function render() {
+  const c = compute();
+  renderKpis(c);
+  document.querySelectorAll("#tabs button").forEach(b => b.setAttribute("aria-selected", String(b.dataset.tab === tab)));
+  const v = document.getElementById("view");
+  v.innerHTML = tab === "jobs" ? jobsTab(c) : tab === "costs" ? logTab("costs") : tab === "payments" ? logTab("payments")
+    : tab === "cashflow" ? cashflow(c) : tab === "setup" ? setup() : dashboard(c);
+}
+
+document.getElementById("tabs").addEventListener("click", e => {
+  const b = e.target.closest("button[data-tab]"); if (!b) return;
+  tab = b.dataset.tab; try { localStorage.setItem(KEY + "-tab", tab); } catch (err) {}
+  render();
+});
+
+const view = document.getElementById("view");
+view.addEventListener("change", e => {
+  const el = e.target;
+  if (el.dataset.s) {
+    const k = el.dataset.s;
+    state.settings[k] = el.type === "number" ? num(el.value) : el.value;
+  } else if (el.dataset.t) {
+    const row = state[el.dataset.t][+el.dataset.i];
+    const k = el.dataset.k;
+    if (k === "est") row.est[+el.dataset.e] = num(el.value);
+    else if (el.type === "number") row[k] = num(el.value);
+    else if (k === "id") {
+      const old = row.id; row.id = el.value.trim();
+      state.costs.forEach(x => { if (x.job === old) x.job = row.id; });
+      state.payments.forEach(x => { if (x.job === old) x.job = row.id; });
+    } else row[k] = el.value;
+  } else return;
+  save(); render();
+  const again = document.getElementById(el.id); if (again) again.focus();
+});
+view.addEventListener("click", e => {
+  const add = e.target.closest("[data-add]"), del = e.target.closest("[data-del]");
+  if (add) {
+    const t = add.dataset.add, today = new Date().toISOString().slice(0, 10), first = jobIds()[0] || "";
+    if (t === "jobs") state.jobs.push({ id: "J-" + (100 + state.jobs.length + 1), client: "", desc: "", status: "Bidding", contract: 0, co: 0, est: [0, 0, 0, 0, 0] });
+    if (t === "costs") state.costs.push({ date: today, job: first, cat: "Materials", vendor: "", desc: "", amt: 0 });
+    if (t === "payments") state.payments.push({ date: today, job: first, inv: "", note: "", amt: 0 });
+    save(); render();
+  } else if (del) {
+    state[del.dataset.del].splice(+del.dataset.i, 1); save(); render();
+  } else if (e.target.id === "reset") {
+    state = structuredClone(SAMPLE); save(); render();
+  }
+});
+
+render();
+</script>
