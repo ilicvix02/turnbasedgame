@@ -2,8 +2,10 @@
 
 **Owner does no work.** Claude runs everything 24/7. Owner decisions (2026-10-30): keep the 50% deposit (no pay-on-launch), plumbing and electrical only, no marketplaces, no calls.
 - **Payment:** PayPal.me link **https://www.paypal.me/viktor0702**, with the amount in the URL (`/150USD`). Founding Starter $299 = $150 deposit + $149 at launch. Regular Starter $399 = $200 + $199. Pro founding $699 = $350 + $349.
-  - Start the build only after the deposit shows up: a PayPal "You've got money" email in Gmail from service@paypal.com naming the amount. Ask the client to put their company name in the PayPal note.
-  - Release the site files only after the final payment shows up the same way. Tell the owner in chat when each payment arrives.
+  - PayPal notices go to the owner's other address (ilicv891@gmail.com), which Claude can't read. Proof of payment is EITHER a PayPal "You've got money" email forwarded into ilicvix@gmail.com (from service@paypal.com, naming the amount and the client's note) OR the owner confirming "paid" in chat. A client's own receipt or transaction ID alone is not proof.
+  - When a client says they paid and there's no forwarded notice: ask for their PayPal transaction ID, tell the owner in chat ("{company} says they paid $X, transaction ID ..., please confirm"), and wait.
+  - Start the build only after the deposit is proven. Ask the client to put their company name in the PayPal note.
+  - Release the site files only after the final payment is proven the same way. Tell the owner in chat when each payment arrives.
 - **Drafts:** show clients their draft as screenshots in the email (desktop + phone), never a public link to the files.
 - **Launch:** the client hosts the site themselves. Email them a step-by-step for a free Netlify account and Netlify Drop (drag the site folder in), sent as a .zip only after the final payment, then DNS steps for their registrar. No owner involvement.
 
