@@ -29,7 +29,7 @@ Tax: income from foreign clients is taxable in Serbia. Ask a local accountant (k
 
 ## Daily routine (owner: ~45 min, Serbian evening)
 1. 5 min: approve today's email batch (`APPROVE <ID>` or standing approval).
-2. 15–30 min: one booked call (Google Meet), using the call brief.
+2. 10 min: read interested replies. Sales happen fully by email (no calls): sample → 3 questions → payment link → delivery.
 3. 10 min: review a delivered sheet before it goes out.
 
 ## Week 1 checklist

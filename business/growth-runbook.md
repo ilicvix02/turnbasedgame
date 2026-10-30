@@ -5,7 +5,7 @@ Goal: 500 personalized first-touch emails to small US trade businesses (1–15 s
 ## Each hourly run, in order
 1. **Replies first.** Search Gmail for replies to our outreach (`in:inbox newer_than:2d`, threads with "TradeSheets" or our subjects).
    - "no", "unsubscribe", "stop" or anything negative → add to `business/leads/opt-outs.csv` and never email again.
-   - Interested → draft a reply offering 2–3 call slots (15:00–23:00 Serbian time) and flag it at the top of `business/outbox/this-week.md`.
+   - Interested ("yes") → label `TS-interested`, reply by email (no calls; the owner does not take calls) with a free sample: the FREE tracker adapted to their trade, plus 3 short questions (job types, number of trucks/techs, Excel or Google Sheets). Then send the setup offer with the Gumroad payment link once it exists. Tell the owner in chat.
 2. **Research** about 10 new companies: rotate trades (plumbing, electrical) and metros (DFW, Phoenix, then Houston, Atlanta, Tampa, Charlotte, Denver…). Only an email printed on the company's own site or Google Business Profile. Skip franchises and multi-location firms, and anything over about 15 staff. Record one true personalization detail with its source URL. Append to `business/leads/<date>-leads.csv`.
 3. **Write** each email from `business/trades/<trade>/outreach-emails.md` with the personalized first line, plus follow-ups on day 3 and day 8 for non-repliers (max 3 touches, then stop).
 4. **Send** only if ALL of these are true; otherwise leave the emails as Gmail drafts:

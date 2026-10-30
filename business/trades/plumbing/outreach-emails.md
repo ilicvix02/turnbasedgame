@@ -10,10 +10,10 @@ Quick question: do you know which of your jobs make the most money, or only what
 
 I set up simple job-costing spreadsheets for plumbing shops. Every part from truck stock and every labor hour is tied to a job, so unbilled parts and losing job types show up the same week. It's built for your business in 48 hours and works in Excel or Google Sheets.
 
-Worth a 15-minute video call?
+Want me to send you a short sample of how it would look for a shop like yours? Just reply "yes".
 
 Viktor Ilic
-TradeSheets · {street address}, 11420 Smederevska Palanka, Serbia
+TradeSheets · Kajmakcalanska 21/1, 11420 Smederevska Palanka, Serbia
 If this isn't for you, just reply "no" and I won't email again.
 
 ---
