@@ -17,3 +17,6 @@ business/webdev/previews/*/*-homepage-concept.jpg
 business/webdev/previews/*/*.pdf
 business/webdev/previews/*/email.html
 business/webdev/previews/*/email.txt
+# Prospect research and per-company previews stay private (not published)
+business/webdev/prospects/
+business/webdev/previews/
