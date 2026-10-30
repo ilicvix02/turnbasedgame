@@ -9,3 +9,7 @@
 - Expires: 2026-11-06
 - Status: APPROVED (in progress)
 - Signed: owner, in chat, 2026-10-30 ("APPROVE <ID>")
+
+## Update 2026-10-30
+- 17 drafts created (9 plumbing, 8 electrical) with the "[STREET ADDRESS]" placeholder. Status: EXECUTED.
+- Owner chat instruction: "send 500 personalized emails, research every company and send an email... hourly". Recorded as a **standing approval** under the limits in business/growth-runbook.md (ramped daily cap, opt-outs honored, pause triggers). Sending starts only once the owner's street address is known (CAN-SPAM).
