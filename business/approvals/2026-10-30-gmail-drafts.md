@@ -1,0 +1,11 @@
+# Approval request: A-2026-10-30-03
+- Action: Create up to 40 Gmail **drafts** (not sent) in the owner's Gmail, one per lead from A-2026-10-30-02, using templates P-1 (plumbing) and E-1 (electrical), with a personalized first line.
+- Where: owner's Gmail via the connected Gmail connector
+- Data entered: lead's business email, subject and body from the template, signature "Viktor Ilic, TradeSheets", postal address
+- Blocker: the owner's **street address** is missing. Drafts get the placeholder "[STREET ADDRESS]" until the owner sends it, then the drafts are updated.
+- Nothing is sent. Sending needs a separate standing approval (20/day cap).
+- Cost: $0 · Reversible: yes (drafts can be deleted)
+- Run by: plumbing-outreach-writer, electrical-outreach-writer, inbox-triager
+- Expires: 2026-11-06
+- Status: PENDING
+- Signed:
