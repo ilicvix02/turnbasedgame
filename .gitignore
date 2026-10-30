@@ -5,3 +5,6 @@ data/*.db-*
 *.log
 .DS_Store
 data/
+business/leads/
+business/products/clients/
+__pycache__/

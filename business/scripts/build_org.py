@@ -1,13 +1,20 @@
-"""Generate the TradeSheets agent org: business/agents/*.md (Claude Code subagents) + business/ORG.md.
+"""Generate the TradeSheets 500-agent library: business/org/agents/**.md, ORG.md and registry.json.
 
 Usage: python3 business/scripts/build_org.py
+The 50 core roles are defined below; the other 450 come from org_expansion.py.
 The five original agents (demand-scout, product-builder, listing-writer, content-engine,
-ops-analyst) keep their hand-written bodies; this script only adds their org header.
+ops-analyst) keep their hand-written bodies from business/org/source/; this script adds the org header.
 """
+import json
+import shutil
 from pathlib import Path
 
+from org_expansion import METROS, NEW_DEPTS, REGIONS, TRADES, expansion
+
 ROOT = Path(__file__).resolve().parents[1]
-AGENTS = ROOT / "agents"
+ORGDIR = ROOT / "org"
+AGENTS = ORGDIR / "agents"
+SOURCE = ORGDIR / "source"
 WEB = "WebSearch, WebFetch, Read, Write"
 DOC = "Read, Write, Edit, Glob, Grep"
 BUILD = "Read, Write, Edit, Bash, Glob, Grep"
@@ -297,70 +304,112 @@ ORG = [
 ]
 
 ORIGINAL = {"demand-scout", "product-builder", "listing-writer", "content-engine", "ops-analyst"}
-SHARED_RULES = """## Rules for every agent (from business/ORG.md)
-- You draft and prepare. Only the owner publishes, posts, uploads, sends, pays or opens accounts. Put those steps in `business/outbox/this-week.md`.
+SHARED_RULES = """## Rules for every agent (from business/org/ORG.md)
+- Outward actions (publishing, posting, sending email, creating accounts, submitting forms, issuing invoices or payment links) need a signed owner approval under `business/org/APPROVALS.md`. No signature, no action. Otherwise, draft and queue it in `business/outbox/this-week.md`.
+- Owner-only, always, even with approval: identity verification, passwords, bank or card details, sending money or refunds, and signing contracts or legal forms.
 - No fake reviews, testimonials, personas, sales numbers or scarcity. Cite only sources you opened.
-- $0 spend unless the CFO approves after $1,000 profit.
-- Keep personal data out of git."""
+- $0 spend unless the CFO approves after $1,000 profit. Keep personal and lead data out of git (`business/leads/` is gitignored)."""
+
+DEPTS.update(NEW_DEPTS)
+ALL = ORG + expansion()
+
+
+def folder(name, dept):
+    for slug in TRADES:
+        if name == f"pod-lead-{slug}" or name.startswith(f"{slug}-"):
+            return AGENTS / "trades" / slug
+    for slug, (_, _, region) in METROS.items():
+        if name.startswith(f"{slug}-"):
+            return AGENTS / "regional" / region
+    return AGENTS / dept
 
 
 def header(name, dept, boss):
     dname, _ = DEPTS[dept]
-    reports = [n for n, _, b, *_ in ORG if b == name]
+    reports = [n for n, _, b, *_ in ALL if b == name]
     lines = [f"**Department:** {dname} · **Reports to:** {boss}"]
     if reports:
-        lines.append(f"**Manages:** {', '.join(reports)}")
+        shown = ", ".join(reports[:15]) + (f" (+{len(reports) - 15} more)" if len(reports) > 15 else "")
+        lines.append(f"**Manages ({len(reports)}):** {shown}")
     return "\n".join(lines)
 
 
+def chain(name):
+    boss = {n: b for n, _, b, *_ in ALL}
+    out = [name]
+    while out[-1] in boss:
+        out.append(boss[out[-1]])
+    return out
+
+
 def main():
-    assert len(ORG) == 50, len(ORG)
-    for name, dept, boss, tools, desc, duties, output in ORG:
-        path = AGENTS / f"{name}.md"
+    names = [r[0] for r in ALL]
+    assert len(ALL) == 500, len(ALL)
+    assert len(set(names)) == 500, "duplicate agent names"
+    known = set(names) | {"owner"}
+    assert all(r[2] in known for r in ALL), [r for r in ALL if r[2] not in known]
+    if AGENTS.exists():
+        shutil.rmtree(AGENTS)
+    registry = []
+    for name, dept, boss, tools, desc, duties, output in ALL:
+        d = folder(name, dept)
+        d.mkdir(parents=True, exist_ok=True)
+        path = d / f"{name}.md"
         if name in ORIGINAL:
-            text = path.read_text()
+            text = (SOURCE / f"{name}.md").read_text()
             fm_end = text.index("---", 3) + 3
             body = text[fm_end:].split("\n## Rules for every agent")[0]
             body = "\n".join(l for l in body.splitlines()
-                             if not l.startswith(("**Department:**", "**Manages:**"))).strip()
+                             if not l.startswith(("**Department:**", "**Manages"))).strip()
+            desc = next(l[len("description: "):] for l in text.splitlines() if l.startswith("description: "))
             path.write_text(f"{text[:fm_end]}\n{header(name, dept, boss)}\n\n{body}\n\n{SHARED_RULES}\n")
-            continue
-        body = [f"---\nname: {name}\ndescription: {desc}\ntools: {tools}\n---",
-                header(name, dept, boss), "",
-                f"You are the {name.upper() if len(name) == 3 else name.replace('-', ' ')} of TradeSheets, a $0-capital spreadsheet-template business (see business/README.md).",
-                "", "## Responsibilities"]
-        body += [f"{i}. {d}" for i, d in enumerate(duties, 1)]
-        body += ["", f"## Output\n`{output}`", "", SHARED_RULES, ""]
-        path.write_text("\n".join(body))
+        else:
+            fm = f"---\nname: {name}\ndescription: {desc}\n" + (f"tools: {tools}\n" if tools else "") + "---"
+            title = name.upper() if len(name) == 3 else name.replace("-", " ")
+            body = [fm, header(name, dept, boss), "",
+                    f"You are the {title} of TradeSheets: spreadsheet templates plus done-for-you setup for small trade businesses (see business/README.md).",
+                    "", "## Responsibilities"]
+            body += [f"{i}. {x}" for i, x in enumerate(duties, 1)]
+            body += ["", f"## Output\n`{output}`", "", SHARED_RULES, ""]
+            path.write_text("\n".join(body))
+        registry.append({"name": name, "department": DEPTS[dept][0], "reports_to": boss,
+                         "chain": chain(name)[1:], "description": desc,
+                         "path": str(path.relative_to(ROOT.parent)), "browser": tools is None})
+    (ORGDIR / "registry.json").write_text(json.dumps(registry, indent=1) + "\n")
 
-    # ORG.md
-    out = ["# TradeSheets org chart: 50 agents, 8 departments", "",
-           "The owner sits above the CEO and holds everything that touches money, accounts or publishing.", "",
-           "```"]
+    # ORG.md: department heads tree (2 levels below each head), plus counts
+    out = ["# TradeSheets org: 500 agents", "",
+           "Generated by `business/scripts/build_org.py`. Agents are role cards loaded on demand by the "
+           "**skill-fetcher** skill (`business/org/skills/skill-fetcher/`), not installed all at once. "
+           "500 descriptions in `.claude/agents` would bloat every session's context.", "",
+           "## Chain of command", "```", "owner (human, signs approvals)"]
 
-    def tree(node, depth):
-        for n, _, b, *_ in ORG:
-            if b == node:
-                out.append("  " * depth + ("└─ " if depth else "") + n)
-                tree(n, depth + 1)
-    out.append("owner (human)")
-    tree("owner", 1)
+    def tree(node, depth, limit):
+        kids = [n for n, _, b, *_ in ALL if b == node]
+        for i, n in enumerate(kids):
+            if depth > limit:
+                out.append("  " * depth + f"└─ … {len(kids)} agents")
+                return
+            out.append("  " * depth + "└─ " + n)
+            tree(n, depth + 1, limit)
+    tree("owner", 1, 4)
     out.append("```")
     out += ["", "| Department | Agents | Writes to |", "|---|---|---|"]
     for key, (dname, where) in DEPTS.items():
-        members = [n for n, d, *_ in ORG if d == key]
-        out.append(f"| {dname} | {len(members)}: {', '.join(members)} | `{where}` |")
-    out += ["", "## How it runs",
-            "Claude Code subagents can't spawn other subagents, so the **main session acts as the CEO's hands**: it reads the CEO's plan and calls each agent in turn. The weekly scheduled run follows this order:",
+        n = sum(1 for r in ALL if r[1] == key)
+        out.append(f"| {dname} | {n} | `{where}` |")
+    out += ["", f"**Trade pods ({len(TRADES)} × 14):** " + ", ".join(t[0] for t in TRADES.values()),
+            "", f"**Metros ({len(METROS)} × 3, under {len(REGIONS)} regional directors):** " + ", ".join(m[0] for m in METROS.values()),
+            "", "## How it runs",
             "1. **Monday:** ops-analyst → bookkeeper → cfo → ceo (weekly plan) → coo (task board).",
-            "2. **Departments** run only the tasks on the board. Most agents are idle most weeks, and that's intended. Agents for channels and products that don't exist yet stay idle until they do.",
-            "3. **Review gate:** product work passes spreadsheet-qa + formula-auditor. All outward copy passes honesty-reviewer + platform-policy-checker → compliance-director.",
-            "4. **Hand-off:** chief-of-staff writes `business/outbox/this-week.md`. The owner does the human steps and drops exports into `business/metrics/`.",
-            "", "Enable them: `mkdir -p .claude/agents && cp business/agents/*.md .claude/agents/`.",
-            "Regenerate after editing roles: `python3 business/scripts/build_org.py`.", "",
-            SHARED_RULES.replace("## Rules for every agent (from business/ORG.md)", "## Rules for every agent")]
-    (ROOT / "ORG.md").write_text("\n".join(out) + "\n")
-    print("wrote", len(ORG), "agents")
+            "2. Only the departments, pods and metros on the board are active. The rest stay idle, and that's intended. Start with 1-3 trades and 1-2 metros.",
+            "3. **Gated actions** (accounts, forms, payments, sending) go through approval-clerk → owner signature → the admin agent that runs them (see APPROVALS.md).",
+            "4. **Review gate:** QA for builds, honesty-reviewer + platform-policy-checker + cold-email-compliance for outward copy.",
+            "5. chief-of-staff writes `business/outbox/this-week.md`.",
+            "", "Find an agent: `python3 business/org/skills/skill-fetcher/fetch.py \"invoice a roofing client\"`.", "",
+            SHARED_RULES.replace(" (from business/org/ORG.md)", "")]
+    (ORGDIR / "ORG.md").write_text("\n".join(out) + "\n")
+    print("wrote", len(ALL), "agents")
 
 
 if __name__ == "__main__":
