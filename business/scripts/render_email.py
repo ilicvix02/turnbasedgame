@@ -151,6 +151,7 @@ def render(slug, to_override=None, note=None, img_base=None, html_only=False):
 </td></tr></table></td></tr>
 <tr><td style="padding:10px 22px 24px;color:#e6f7fb;font-size:15px;line-height:24px;">
 <img src="{RAW}/email-assets/founder-card.jpg" width="556" alt="Viktor Ilic, Founder, TradeSheets: websites built for the trades" style="display:block;width:100%;max-width:556px;height:auto;border:0;border-radius:14px;margin:0 0 14px;">
+<p style="margin:0 0 12px;font-size:14px;"><a href="{SITE}/" style="color:{CYAN};text-decoration:none;font-weight:bold;">&#127760; tradesheets &middot; see all 6 designs &rarr;</a></p>
 <p style="margin:0;font-size:14px;color:#9fc3cd;"><b style="color:#e6f7fb;">P.S.</b> I only take 5 founding clients at $299. Reply YES today and one of them is yours.</p>
 </td></tr>
 <tr><td style="padding:14px 28px;background:#05090b;color:#5f7d86;font-size:12px;line-height:18px;">TradeSheets &middot; {POSTAL}<br>You're getting this because {e(company)} lists this address on its website. Tap "No thanks" or reply "no" and you'll never hear from me again.</td></tr>
@@ -172,6 +173,7 @@ Reply YES and I'll make it live. Reply NO and I won't email again.
 
 Viktor Ilic
 TradeSheets, websites for the trades
+{SITE}/
 
 P.S. I only take 5 founding clients at $299. Reply YES today and one of them is yours.
 
