@@ -4,10 +4,10 @@ Updated by each hourly run. Source of truth: Gmail labels `TS-outreach`, `TS-int
 
 | Metric | Count |
 |---|---|
-| First-touch emails sent (TS-outreach) | 108 |
+| First-touch emails sent (TS-outreach) | 111 |
 | Accepted: "I want it" (TS-interested) | 0 |
 | Rejected: "Not interested" (TS-optout) | 0 |
-| No reply yet | 108 |
+| No reply yet | 111 |
 | Bounced (TS-bounced) | 0 |
 | Buyers (TS-buyer) | 0 |
 | Founding spots left (of 5) | 5 |
@@ -29,4 +29,4 @@ Updated by each hourly run. Source of truth: Gmail labels `TS-outreach`, `TS-int
 | 2026-11-04 | 18 | 0 | 0 | 0 |
 | 2026-11-05 | 18 | 0 | 0 | 0 |
 | 2026-11-06 | 12 | 0 | 0 | 0 |
-| 2026-11-09 | 6 | 0 | 0 | 0 |
+| 2026-11-09 | 9 | 0 | 0 | 0 |
